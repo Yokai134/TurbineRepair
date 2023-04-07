@@ -14,6 +14,6 @@
         WindowStartupLocation="CenterScreen">
     
     <Grid>
-        <Frame x:Name="contentControl" NavigationUIVisibility="Hidden"/>
+        <Frame/>
     </Grid>
 </Window>

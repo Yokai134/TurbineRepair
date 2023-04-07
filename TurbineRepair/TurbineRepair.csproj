@@ -11,8 +11,4 @@
     <Folder Include="Model\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Resource Include="View\Pages\Phonk.jpg" />
-  </ItemGroup>
-
 </Project>

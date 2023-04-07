@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TurbineRepair.ViewModel.Base
 {
-    internal class ViewModel : INotifyPropertyChanged, IDisposable
+    internal abstract class ViewModel : INotifyPropertyChanged, IDisposable
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
