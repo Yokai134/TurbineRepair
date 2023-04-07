@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -8,15 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="ResourceApp\Image\images.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Model\" />
   </ItemGroup>
+
 
   <ItemGroup>
     <Resource Include="ResourceApp\Image\images.jpg" />
   </ItemGroup>
-
 </Project>

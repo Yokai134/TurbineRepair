@@ -24,9 +24,6 @@ namespace TurbineRepair.View.ContentGUI
         public Authetication()
         {
             InitializeComponent();
-
-            
-            
         }
     }
 }
