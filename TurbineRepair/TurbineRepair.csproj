@@ -8,11 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ResourceApp\Image\images.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Model\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="View\Pages\Phonk.jpg" />
+    <Resource Include="ResourceApp\Image\images.jpg" />
   </ItemGroup>
 
 </Project>

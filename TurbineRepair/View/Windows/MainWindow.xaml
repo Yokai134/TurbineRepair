@@ -4,16 +4,25 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TurbineRepair"
+        xmlns:viewModel="clr-namespace:TurbineRepair.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" 
-        Height="450"
-        Width="800"
+        Title="MainWindow"
+        SizeToContent="WidthAndHeight"
         ResizeMode="NoResize"
         WindowStyle="None"
         FontFamily="Inter"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        AllowsTransparency="True">
+
+    <Window.DataContext>
+        <viewModel:MainWindowViewModel/>
+    </Window.DataContext>
+
+    <Window.Clip>
+        <RectangleGeometry RadiusX="10" RadiusY="10" Rect="{Binding SizeWindows}"/>
+    </Window.Clip>
     
     <Grid>
-        <Frame x:Name="contentControl" NavigationUIVisibility="Hidden"/>
+        <ContentControl Content="{Binding CurrentControl}"/>
     </Grid>
 </Window>

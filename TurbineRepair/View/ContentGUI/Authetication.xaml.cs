@@ -13,16 +13,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TurbineRepair.View.Pages
+
+namespace TurbineRepair.View.ContentGUI
 {
     /// <summary>
     /// Логика взаимодействия для Authetication.xaml
     /// </summary>
-    public partial class Authetication : Page
+    public partial class Authetication : UserControl
     {
         public Authetication()
         {
             InitializeComponent();
+
+            
+            
         }
     }
 }

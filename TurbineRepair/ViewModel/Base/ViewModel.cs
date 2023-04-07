@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TurbineRepair.ViewModel.Base
 {
-    internal class ViewModel : INotifyPropertyChanged, IDisposable
+    internal abstract class ViewModel : INotifyPropertyChanged, IDisposable
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -17,7 +17,7 @@ namespace TurbineRepair.ViewModel.Base
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
         }
 
-        protected virtual bool Set<T>(T field, T value, [CallerMemberName] string PropertyName = null)
+        protected virtual bool Set<T>(ref T field, T value, [CallerMemberName] string PropertyName = null)
         {
             if(Equals(field, value)) return false;
             field = value;
