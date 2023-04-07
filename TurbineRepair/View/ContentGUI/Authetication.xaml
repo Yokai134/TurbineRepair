@@ -37,7 +37,6 @@
                          Height="50"
                          TextWrapping="Wrap"
                          Padding="20,13,0,0"
-                         Padding="20,10,0,0"
                          FontSize="20"
                          MaxLength="32"/>
                 <Label Content="Password"
@@ -50,7 +49,6 @@
                              PasswordChar="•"
                              FontSize="20"
                              Padding="20,13,0,0"
-                             Padding="20,10,0,0"
                              MaxLength="32"/>
                 <StackPanel Margin="20,20"
                             Orientation="Horizontal">
@@ -58,7 +56,6 @@
                     <Label Content="Remember me"
                            FontSize="15"
                            Margin="0,-6"/>
-                           Margin="0,-8"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel Width="350" 
@@ -79,7 +76,6 @@
                         FontWeight="SemiBold"
                         Margin="50,0"
                         Command="{Binding CloseAppCommand}"/>
-                        Margin="50,0"/>
             </StackPanel>
         </StackPanel>
     </Grid>
