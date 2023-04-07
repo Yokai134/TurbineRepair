@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="ResourceApp\Image\images.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Model\" />
   </ItemGroup>
 
