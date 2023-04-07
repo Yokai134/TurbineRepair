@@ -17,11 +17,7 @@
     <Window.DataContext>
         <viewModel:MainWindowViewModel/>
     </Window.DataContext>
-
-    <Window.Clip>
-        <RectangleGeometry RadiusX="10" RadiusY="10" Rect="{Binding SizeWindows}"/>
-    </Window.Clip>
-    
+  
     <Grid>
         <ContentControl Content="{Binding CurrentControl}"/>
     </Grid>

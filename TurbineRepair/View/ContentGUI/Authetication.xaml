@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TurbineRepair.View.ContentGUI"
-
              xmlns:viewModel="clr-namespace:TurbineRepair.ViewModel"
              mc:Ignorable="d">
     <UserControl.DataContext>
@@ -62,20 +61,20 @@
                         Margin="0,50"
                         Orientation="Horizontal">
                 <Button Style="{DynamicResource ButtonAuthetication}" 
-                        Content="Login"
-                        Width="150"
-                        Height="50"
-                        FontSize="20"
-                        FontWeight="SemiBold">
-                </Button>
-                <Button Style="{DynamicResource ButtonAuthetication}" 
                         Content="Exit"
                         Width="150"
                         Height="50"
                         FontSize="20"
                         FontWeight="SemiBold"
-                        Margin="50,0"
                         Command="{Binding CloseAppCommand}"/>
+                <Button Style="{DynamicResource ButtonAuthetication}" 
+                        Content="Login"
+                        Width="150"
+                        Height="50"
+                        FontSize="20"
+                        FontWeight="SemiBold"
+                        Margin="50,0"
+                        Command="{Binding VerificationLogin}"/>
             </StackPanel>
         </StackPanel>
     </Grid>

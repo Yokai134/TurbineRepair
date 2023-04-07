@@ -16,6 +16,10 @@
             <DataTemplate DataType="{x:Type viewModel:AutheticationVM}">
                 <view:Authetication/>
             </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:PinCodeVM}">
+                <view:Pincode/>
+            </DataTemplate>
             
         </ResourceDictionary>
     </Application.Resources>

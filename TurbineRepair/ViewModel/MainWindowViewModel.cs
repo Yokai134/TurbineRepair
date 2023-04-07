@@ -13,7 +13,11 @@ namespace TurbineRepair.ViewModel
 {
     internal class MainWindowViewModel : Base.ViewModel
     {
+        public static MainWindowViewModel main;
+        #region UserControl
         private AutheticationVM autheticationVM { get; set; }
+        private PinCodeVM pinCodeVM { get; set; }
+        #endregion
 
         #region Property
 
@@ -25,44 +29,19 @@ namespace TurbineRepair.ViewModel
             get => _currentControl;
             set => Set(ref _currentControl, value);
         }
-        #endregion
-
-        #region SizeWindows
-        private object _sizeWindows;
-        public object SizeWindows
-        {
-            get => _sizeWindows;
-            set => Set(ref _sizeWindows, value);
-        }
-        #endregion
-
-        #region Height and Width Windows
-
-        private double _heightWin = 500;
-        public double HeightWin
-        {
-            get => (int)_heightWin;
-            set => Set(ref _heightWin, value);
-        }
-
-        private double _widthWin = 500;
-        public double WidthWin
-        {
-            get => (int)_widthWin;
-            set => Set(ref _widthWin, value);
-        }
-        #endregion
+        #endregion      
 
         #endregion
 
 
         public MainWindowViewModel() 
-        {
-           
-            autheticationVM = new AutheticationVM();
-            CurrentControl = autheticationVM;
-            SizeWindows = new RectangleGeometry().Rect = new Rect(0,0, _widthWin,_heightWin);        
+        {           
+            CurrentControl = new AutheticationVM();
+            main = this;     
         }
+
+
+
 
     }
 }

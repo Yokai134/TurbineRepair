@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using TurbineRepair.Infrastructure;
 
 namespace TurbineRepair.ViewModel
 {
-    internal class AutheticationVM : Base.ViewModel
+    internal class PinCodeVM : Base.ViewModel
     {
 
         #region Command
@@ -27,21 +25,9 @@ namespace TurbineRepair.ViewModel
         }
         #endregion
 
-        #region
-        public ICommand VerificationLogin { get; }
-
-        private bool CanVerificationLoginExecut(object parameter) => true;
-        private void OnVerificationLoginExecut(object parametr)
-        {
-            MainWindowViewModel.main.CurrentControl = new PinCodeVM();
-        }
         #endregion
 
-        #endregion
-
-
-
-        public AutheticationVM()
+        public PinCodeVM() 
         {
             #region Command
 
@@ -49,12 +35,7 @@ namespace TurbineRepair.ViewModel
             CloseAppCommand = new LambdaCommand(OnCloseAppCommandExecution, CanCloseAppCommandExecute);
             #endregion
 
-            #region VerificationLogin
-            VerificationLogin = new LambdaCommand(OnVerificationLoginExecut, CanVerificationLoginExecut);
-            #endregion
-
             #endregion
         }
-
     }
 }
