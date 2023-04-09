@@ -43,10 +43,11 @@
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal"
-                            HorizontalAlignment="Right">
+                            HorizontalAlignment="Right"
+                            Margin="0,0,5,0">
 
-                    <Button Width="20"
-                            Height="20"
+                    <Button Width="30"
+                            Height="25"
                             Background="Transparent"
                             BorderThickness="0"
                             FontWeight="Bold"
@@ -54,8 +55,8 @@
                             Padding="0,0,0,5"
                             Command="{Binding WindowsMinimizedCommadn}"/>
 
-                    <Button Width="20"
-                            Height="20"
+                    <Button Width="30"
+                            Height="25"
                             Background="Transparent"
                             BorderThickness="0"
                             FontWeight="Bold"
@@ -63,8 +64,8 @@
                             Command="{Binding WindowsStateCommand}"/>
 
                     <Button Style="{DynamicResource ButtonExiMain}"
-                            Width="20"
-                            Height="20"
+                            Width="30"
+                            Height="25"
                             Background="Transparent"
                             BorderThickness="0"
                             Content="✕"

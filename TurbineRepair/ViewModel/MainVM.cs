@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using TurbineRepair.Infrastructure;
 using System.Security.Cryptography.X509Certificates;
+using System.Windows.Media;
+using System.Windows.Media.Effects;
 
 namespace TurbineRepair.ViewModel
 {
@@ -36,10 +38,12 @@ namespace TurbineRepair.ViewModel
 
         private void OnWindowsStateCommandExecute(object parameter)
         {
-            if(Application.Current.MainWindow.WindowState != WindowState.Maximized)
+            if (Application.Current.MainWindow.WindowState != WindowState.Maximized)
+            {
                 Application.Current.MainWindow.WindowState = WindowState.Maximized;
+            }
             else
-                Application.Current.MainWindow.WindowState= WindowState.Normal;
+                Application.Current.MainWindow.WindowState = WindowState.Normal;
         }
 
         #endregion
