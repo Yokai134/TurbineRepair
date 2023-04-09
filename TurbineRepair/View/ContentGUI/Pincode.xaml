@@ -42,14 +42,15 @@
                         Height="50"
                         FontSize="20"
                         FontWeight="SemiBold"
-                        Command="{Binding CloseAppCommand}"/>
+                        Command="{Binding AutheticationBackCommand}"/>
                 <Button Style="{DynamicResource ButtonAuthetication}" 
                         Content="Enter"
                         Width="100"
                         Height="50"
                         FontSize="20"
                         FontWeight="SemiBold"
-                        Margin="10,0,0,0"/>
+                        Margin="10,0,0,0"
+                        Command="{Binding VerificationPin}"/>
             </StackPanel>
         </StackPanel>  
     </Grid>

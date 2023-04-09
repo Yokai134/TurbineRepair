@@ -8,7 +8,6 @@
         mc:Ignorable="d"
         Title="MainWindow"
         SizeToContent="WidthAndHeight"
-        ResizeMode="NoResize"
         WindowStyle="None"
         FontFamily="Inter"
         WindowStartupLocation="CenterScreen"

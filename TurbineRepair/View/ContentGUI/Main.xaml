@@ -1,0 +1,81 @@
+﻿<UserControl x:Class="TurbineRepair.View.ContentGUI.Main"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TurbineRepair.View.ContentGUI"
+             xmlns:viewModel="clr-namespace:TurbineRepair.ViewModel"
+             mc:Ignorable="d"
+             d:Width="900"
+             d:Height="550">
+
+    <UserControl.DataContext>
+        <viewModel:MainVM/>
+    </UserControl.DataContext>
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.ColumnSpan="2"
+                Background="LightGray"
+                MouseDown="Border_MouseDown">
+
+            <Grid HorizontalAlignment="Stretch">
+
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Left"
+                            Margin="10,0,0,0">
+                    <Image Width="25"
+                           Height="25"
+                           Source="/ResourceApp/Image/images.jpg"/>
+
+                    <Label Content="Turbine repair"
+                           FontWeight="SemiBold"/>
+
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+
+                    <Button Width="20"
+                            Height="20"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            FontWeight="Bold"
+                            Content="_"
+                            Padding="0,0,0,5"
+                            Command="{Binding WindowsMinimizedCommadn}"/>
+
+                    <Button Width="20"
+                            Height="20"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            FontWeight="Bold"
+                            Content="☐"
+                            Command="{Binding WindowsStateCommand}"/>
+
+                    <Button Style="{DynamicResource ButtonExiMain}"
+                            Width="20"
+                            Height="20"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Content="✕"
+                            FontWeight="Bold"
+                            Command="{Binding CloseAppCommand}"/>
+
+                </StackPanel>
+                
+            </Grid>
+
+
+        </Border>
+    </Grid>
+</UserControl>

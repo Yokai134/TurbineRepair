@@ -14,10 +14,16 @@ namespace TurbineRepair.ViewModel
     internal class MainWindowViewModel : Base.ViewModel
     {
         public static MainWindowViewModel main;
+
+        /* ---------------------------------------------------- UserControl -------------------------------- */
+
         #region UserControl
         private AutheticationVM autheticationVM { get; set; }
-        private PinCodeVM pinCodeVM { get; set; }
         #endregion
+
+        /* ---------------------------------------------------- UserControl -------------------------------- */
+
+        /* ---------------------------------------------------- Property -------------------------------- */
 
         #region Property
 
@@ -33,7 +39,12 @@ namespace TurbineRepair.ViewModel
 
         #endregion
 
+        /* ---------------------------------------------------- Property -------------------------------- */
 
+
+        /// <summary>
+        /// Логика взаимодействия с MainWindow.xaml
+        /// </summary>
         public MainWindowViewModel() 
         {           
             CurrentControl = new AutheticationVM();

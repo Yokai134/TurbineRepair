@@ -13,6 +13,7 @@ namespace TurbineRepair.ViewModel
 {
     internal class AutheticationVM : Base.ViewModel
     {
+        /*------------------------------------------- Command ---------------------------------------------------*/
 
         #region Command
 
@@ -27,22 +28,29 @@ namespace TurbineRepair.ViewModel
         }
         #endregion
 
-        #region
+        #region VerificationLogin
         public ICommand VerificationLogin { get; }
 
         private bool CanVerificationLoginExecut(object parameter) => true;
         private void OnVerificationLoginExecut(object parametr)
         {
             MainWindowViewModel.main.CurrentControl = new PinCodeVM();
+            
         }
         #endregion
 
         #endregion
 
+        /*------------------------------------------- Command ---------------------------------------------------*/
 
 
+        /// <summary>
+        /// Логика взаимодействия с Authetication.xaml
+        /// </summary>
         public AutheticationVM()
         {
+            /*------------------------------------------- Command ---------------------------------------------------*/
+
             #region Command
 
             #region CloseAppCommand
@@ -54,6 +62,8 @@ namespace TurbineRepair.ViewModel
             #endregion
 
             #endregion
+
+            /*------------------------------------------- Command ---------------------------------------------------*/
         }
 
     }
