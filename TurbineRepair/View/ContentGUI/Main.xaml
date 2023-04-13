@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:fa6="http://schemas.fontawesome.com/icons/svg"
+             xmlns:fa6p="http://schemas.fontawesome.com/icons/svg/properties"
              xmlns:local="clr-namespace:TurbineRepair.View.ContentGUI"
              xmlns:viewModel="clr-namespace:TurbineRepair.ViewModel"
              mc:Ignorable="d"
@@ -20,7 +22,19 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition>
+                <ColumnDefinition.Style>
+                    <Style TargetType="{x:Type ColumnDefinition}">
+                        <Setter Property="Width" Value="200"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=ScaleChange, Path=IsChecked}"
+                                         Value="True">
+                                <Setter Property="Width" Value="50"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ColumnDefinition.Style>
+            </ColumnDefinition>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
@@ -73,10 +87,98 @@
                             Command="{Binding CloseAppCommand}"/>
 
                 </StackPanel>
-                
             </Grid>
-
-
         </Border>
+        <Border Grid.Row="1" BorderThickness="0,0,1,0"
+                BorderBrush="Black">
+            <Grid Grid.Row="1">
+                <StackPanel Margin="10">
+                    <StackPanel HorizontalAlignment="Stretch"
+                                Orientation="Horizontal"
+                                Margin="0,5">
+                        <fa6:SvgAwesome Icon="Solid_User"
+                                        Height="25"
+                                        Width="25"/>
+                        <Label Content="My profile"                           
+                               FontSize="20"
+                               FontWeight="SemiBold"/>
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Stretch"
+                                Orientation="Horizontal"
+                                Margin="0,5">
+                        <fa6:SvgAwesome Icon="Solid_File"
+                                        Height="25"
+                                        Width="25"/>
+                        <Label Content="Project"
+                               FontSize="20"
+                               FontWeight="SemiBold"/>
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Stretch"
+                                Orientation="Horizontal"
+                                Margin="0,5">
+                        <fa6:SvgAwesome Icon="Solid_Bell"
+                                        Height="25"
+                                        Width="25"/>
+                        <Label Content="Notification"
+                               FontSize="20"
+                               FontWeight="SemiBold"/>
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Stretch"
+                                Orientation="Horizontal"
+                                Margin="0,5">
+                        <fa6:SvgAwesome Icon="Solid_Comments"
+                                        Height="25"
+                                        Width="25"/>
+                        <Label Content="Chat"
+                               FontSize="20"
+                               FontWeight="SemiBold"/>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel VerticalAlignment="Bottom"
+                            Margin="10">
+                    <StackPanel HorizontalAlignment="Stretch"
+                                Orientation="Horizontal"
+                                Margin="0,5">
+                        <fa6:SvgAwesome Icon="Solid_DoorOpen"
+                                    Width="25"
+                                    Height="25"/>
+                        <Label Content="Exit"
+                               FontSize="20"
+                               FontWeight="SemiBold"/>
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Stretch"
+                                Orientation="Horizontal">
+                        <ToggleButton x:Name="ScaleChange"
+                                      Width="25"
+                                      Height="25"
+                                      Background="Transparent"
+                                      BorderThickness="0">
+                            <ToggleButton.Template>
+                                <ControlTemplate>
+                                    <Image>
+                                        <Image.Style>
+                                            <Style TargetType="Image">
+                                                <Setter Property="fa6p:FontAwesome.Icon" Value="Solid_ArrowLeft"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ElementName=ScaleChange, Path=IsChecked}"
+                                                                 Value="True">
+                                                        <Setter Property="fa6p:FontAwesome.Icon" Value="Solid_ArrowRight"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                </ControlTemplate>
+                            </ToggleButton.Template>
+
+                        </ToggleButton>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <UserControl Grid.Column="1"
+                     Grid.Row="1"
+                     Content=""/>
     </Grid>
 </UserControl>

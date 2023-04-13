@@ -11,6 +11,10 @@
     <Folder Include="Model\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="FontAwesome6.Svg" Version="2.5.1" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <Resource Include="ResourceApp\Image\images.jpg" />
