@@ -179,6 +179,6 @@
 
         <UserControl Grid.Column="1"
                      Grid.Row="1"
-                     Content=""/>
+                     Content="{Binding MainCurrentControl}"/>
     </Grid>
 </UserControl>

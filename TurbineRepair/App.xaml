@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:TurbineRepair"
              xmlns:viewModel="clr-namespace:TurbineRepair.ViewModel"
              xmlns:view="clr-namespace:TurbineRepair.View.ContentGUI"   
+             xmlns:viewMain="clr-namespace:TurbineRepair.View.ContentGUI.MainContentGUI"  
              StartupUri="View/Windows/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
@@ -23,6 +24,10 @@
 
             <DataTemplate DataType="{x:Type viewModel:MainVM}">
                 <view:Main/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:MyProfileVM}">
+                <viewMain:MyProfile/>
             </DataTemplate>
             
         </ResourceDictionary>

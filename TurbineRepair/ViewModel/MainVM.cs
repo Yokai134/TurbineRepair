@@ -9,6 +9,7 @@ using TurbineRepair.Infrastructure;
 using System.Security.Cryptography.X509Certificates;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
+using TurbineRepair.View.ContentGUI.MainContentGUI;
 
 namespace TurbineRepair.ViewModel
 {
@@ -65,11 +66,33 @@ namespace TurbineRepair.ViewModel
 
         /*------------------------------------------- Command ---------------------------------------------------*/
 
+
+        /* ------------------------------------------ Property --------------------------------------------------*/
+
+        #region MainCurrentControl
+
+        private object _mainCurrentControl;
+
+        public object MainCurrentControl 
+        { 
+            get => _mainCurrentControl;
+            set => Set(ref _mainCurrentControl, value);
+        
+        }
+
+        #endregion
+
+
+        /* ------------------------------------------ Property --------------------------------------------------*/
+
+
+
         /// <summary>
         /// Логика взаимодействия с Main.xaml
         /// </summary>
         public MainVM() 
         {
+            MainCurrentControl = new MyProfileVM();
 
             /*------------------------------------------- Command ---------------------------------------------------*/
 
