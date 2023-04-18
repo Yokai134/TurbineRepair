@@ -5,10 +5,90 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TurbineRepair.View.ContentGUI.MainContentGUI"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="OrangeRed">
-        <TextBox Margin="10"
-                 Height="50"
-                 Style="{DynamicResource AutheticationTextBox}"/>
+             d:DesignHeight="520" d:DesignWidth="700">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="10">
+            <Image Width="100"
+                   Height="100" 
+                   Source="/ResourceApp/Image/images.jpg"
+                   Stretch="UniformToFill">
+                <Image.Clip>
+                    <RectangleGeometry RadiusX="30" RadiusY="30" Rect="0,0,100,100"/>
+                </Image.Clip>
+            </Image>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1">
+
+        </StackPanel>
+
+        <StackPanel Grid.Column="1"
+                    Grid.Row="1"
+                    Margin="10">
+
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="112"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Name"
+                       FontSize="20"
+                       FontWeight="SemiBold"/>
+                <TextBox Grid.Column="1"
+                         Margin="10,0,0,10"
+                         FontSize="20"
+                         IsReadOnly="True"
+                         HorizontalContentAlignment="Center"
+                         FontWeight="SemiBold"
+                         Text="1111"
+                         Style="{DynamicResource ProfileTextBox}"/>
+            </Grid>
+
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="112"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Surname"
+                       FontSize="20"
+                       FontWeight="SemiBold"/>
+                <TextBox Grid.Column="1"
+                         IsReadOnly="True"
+                         Margin="10,0,0,10"
+                         FontSize="20"
+                         HorizontalContentAlignment="Center"
+                         FontWeight="SemiBold"
+                         Text="1111"
+                         Style="{DynamicResource ProfileTextBox}"/>
+            </Grid>
+
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="112"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Patronymic"
+                       FontSize="20"
+                       FontWeight="SemiBold"/>
+                <TextBox Grid.Column="1"
+                         IsReadOnly="True"
+                         Margin="10,0,0,10"
+                         FontSize="20"
+                         HorizontalContentAlignment="Center"
+                         FontWeight="SemiBold"
+                         Text="1111"
+                         Style="{DynamicResource ProfileTextBox}"/>
+            </Grid>
+
+        </StackPanel>
+
     </Grid>
 </UserControl>

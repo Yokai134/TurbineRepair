@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="FontAwesome6.Svg" Version="2.5.1" />
+    <PackageReference Include="ScottPlot" Version="4.1.63" />
   </ItemGroup>
 
 
