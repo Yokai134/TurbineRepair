@@ -106,6 +106,10 @@
                     <StackPanel HorizontalAlignment="Stretch"
                                 Orientation="Horizontal"
                                 Margin="0,5">
+                        <StackPanel.InputBindings>
+                            <MouseBinding Command="{Binding OpenProjectControl}"
+                                          MouseAction="LeftClick"/>
+                        </StackPanel.InputBindings>
                         <fa6:SvgAwesome Icon="Solid_File"
                                         Height="25"
                                         Width="25"/>

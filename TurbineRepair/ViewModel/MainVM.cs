@@ -16,6 +16,7 @@ namespace TurbineRepair.ViewModel
     internal class MainVM : Base.ViewModel
     {
         /*------------------------------------------- Command ---------------------------------------------------*/
+
         #region Command
 
         #region CloseAppCommand
@@ -62,6 +63,16 @@ namespace TurbineRepair.ViewModel
 
         #endregion
 
+        #region OpenProjectControl
+        public ICommand OpenProjectControl { get; }
+
+        private bool CanOpenProjectControlExecute(object parameter) => true;
+        private void OnOpenProjectControlExecute(object parameter)
+        {
+            MainCurrentControl = new ProjectVM();
+        }
+        #endregion
+
         #endregion
 
         /*------------------------------------------- Command ---------------------------------------------------*/
@@ -81,7 +92,6 @@ namespace TurbineRepair.ViewModel
         }
 
         #endregion
-
 
         /* ------------------------------------------ Property --------------------------------------------------*/
 
@@ -106,8 +116,12 @@ namespace TurbineRepair.ViewModel
             WindowsStateCommand = new LambdaCommand(OnWindowsStateCommandExecute, CanWindowsStateCommandExecute);
             #endregion
 
-            #region
+            #region WindowsMinimizedCommadn
             WindowsMinimizedCommadn = new LambdaCommand(OnWindowsMinimizedCommadnExecute, CanWindowsMinimizedCommadnExecute);
+            #endregion
+
+            #region OpenProjectControl
+            OpenProjectControl = new LambdaCommand(OnOpenProjectControlExecute, CanOpenProjectControlExecute);
             #endregion
 
             #endregion
