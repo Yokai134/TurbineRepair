@@ -96,6 +96,10 @@
                     <StackPanel HorizontalAlignment="Stretch"
                                 Orientation="Horizontal"
                                 Margin="0,5">
+                        <StackPanel.InputBindings>
+                            <MouseBinding Command="{Binding OpenProfileControl}"
+                                          MouseAction="LeftClick"/>
+                        </StackPanel.InputBindings>
                         <fa6:SvgAwesome Icon="Solid_User"
                                         Height="25"
                                         Width="25"/>
@@ -120,6 +124,10 @@
                     <StackPanel HorizontalAlignment="Stretch"
                                 Orientation="Horizontal"
                                 Margin="0,5">
+                        <StackPanel.InputBindings>
+                            <MouseBinding Command="{Binding OpenNotificationControl}"
+                                          MouseAction="LeftClick"/>
+                        </StackPanel.InputBindings>
                         <fa6:SvgAwesome Icon="Solid_Bell"
                                         Height="25"
                                         Width="25"/>
@@ -140,6 +148,10 @@
                 </StackPanel>
                 <StackPanel VerticalAlignment="Bottom"
                             Margin="10">
+                    <StackPanel.InputBindings>
+                        <MouseBinding Command="{Binding LogOut}"
+                                      MouseAction="LeftClick"/>
+                    </StackPanel.InputBindings>
                     <StackPanel HorizontalAlignment="Stretch"
                                 Orientation="Horizontal"
                                 Margin="0,5">

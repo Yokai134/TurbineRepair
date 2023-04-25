@@ -73,6 +73,48 @@ namespace TurbineRepair.ViewModel
         }
         #endregion
 
+        #region OpenNotificationControl
+        public ICommand OpenNotificationControl { get; }
+
+        private bool CanOpenNotificationControlExecute(object parameter) => true;
+        private void OnOpenNotificationControlExecute(object parameter)
+        {
+            MainCurrentControl = new NotificationVM();
+        }
+        #endregion
+
+        #region OpenProfileControl
+        public ICommand OpenProfileControl { get; }
+
+        private bool CanOpenProfileControlExecute(object parameter) => true;
+        private void OnOpenProfileControlExecute(object parameter)
+        {
+            MainCurrentControl = new MyProfileVM();
+        }
+        #endregion
+
+        #region LogOut
+        public ICommand LogOut { get; }
+
+        private bool CanLogOutExecute(object parameter) => true;
+        private void OnLogOutExecute(object parameter)
+        {
+            MessageBoxResult result = MessageBox.Show("Вы уверены что хотите выйти, все не сохраненные данные будут утеряны?", "Уведомление",
+                MessageBoxButton.OKCancel, MessageBoxImage.Question);
+            switch (result)
+            {
+                case MessageBoxResult.OK:
+                    MainWindowViewModel.main.CurrentControl = new AutheticationVM();
+                    Application.Current.MainWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                    Application.Current.MainWindow.SizeToContent = SizeToContent.WidthAndHeight;
+                    break;
+                case MessageBoxResult.Cancel:
+                    break;
+            }
+            
+        }
+        #endregion
+
         #endregion
 
         /*------------------------------------------- Command ---------------------------------------------------*/
@@ -122,6 +164,18 @@ namespace TurbineRepair.ViewModel
 
             #region OpenProjectControl
             OpenProjectControl = new LambdaCommand(OnOpenProjectControlExecute, CanOpenProjectControlExecute);
+            #endregion
+
+            #region OpenNotificationControl
+            OpenNotificationControl = new LambdaCommand(OnOpenNotificationControlExecute, CanOpenNotificationControlExecute);
+            #endregion
+
+            #region OpenProfileControl
+            OpenProfileControl = new LambdaCommand(OnOpenProfileControlExecute, CanOpenProfileControlExecute);
+            #endregion
+
+            #region LogOut
+            LogOut = new LambdaCommand(OnLogOutExecute, CanLogOutExecute);
             #endregion
 
             #endregion

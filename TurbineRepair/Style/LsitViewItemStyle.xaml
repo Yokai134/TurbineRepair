@@ -14,7 +14,7 @@
                             Margin="10,10">
 
                         <StackPanel Orientation="Vertical">
-                            <StackPanel>
+                            <StackPanel Margin="10,0,0,0">
                                 <Label Content="{Binding nameProject}"
                                        FontSize="20"
                                        FontWeight="SemiBold"/>
@@ -25,7 +25,8 @@
                                        FontSize="20"
                                        FontWeight="SemiBold"/>
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal"
+                                        Margin="10,0,0,0">
                                 <Label Content="Дата начала: "
                                        FontWeight="SemiBold"
                                        FontSize="20"/>
@@ -40,11 +41,14 @@
                                        FontSize="20"
                                        FontWeight="SemiBold"/>
                             </StackPanel>
-                            <StackPanel HorizontalAlignment="Right">
+                            <StackPanel HorizontalAlignment="Right"
+                                        Margin="0,0,10,10">
                                 <Button Content="Open project"
                                         Style="{DynamicResource ButtonAuthetication}"
                                         FontWeight="SemiBold"
-                                        FontSize="20"/>
+                                        FontSize="20"
+                                        Height="40"
+                                        Width="150"/>
                             </StackPanel>
                         </StackPanel>
                         
@@ -53,6 +57,44 @@
             </Setter.Value>
         </Setter>
         
+    </Style>
+
+    <Style TargetType="ListViewItem" x:Key="NotificationCard">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border BorderBrush="Black"
+                            BorderThickness="1"
+                            CornerRadius="25"
+                            Width="660"
+                            Margin="10,10">
+
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Margin="10,0,0,0">
+                                <Label Content="{Binding nameSender}"
+                                   FontSize="20"
+                                   FontWeight="SemiBold"/>
+                                <TextBlock Text="{Binding descriptionNotification}"
+                                       TextTrimming="CharacterEllipsis"
+                                       FontSize="20"
+                                       FontWeight="SemiBold"/>
+                            </StackPanel>
+                            <StackPanel HorizontalAlignment="Right"
+                                        Margin="0,0,10,10">
+                                <Button Content="Go"
+                                        Style="{DynamicResource ButtonAuthetication}"
+                                        FontWeight="SemiBold"
+                                        FontSize="20"
+                                        Height="40"
+                                        Width="150"/>
+                            </StackPanel>
+                        </StackPanel>
+
+
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
     
 </ResourceDictionary>
