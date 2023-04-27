@@ -115,6 +115,15 @@ namespace TurbineRepair.ViewModel
         }
         #endregion
 
+        #region OpenChatControl
+        public ICommand OpenChatControl { get; }
+        private bool CanOpenChatControlExecute(object parameter) => true;
+        private void OnOpenChatControlExecute(object parameter)
+        {
+            MainCurrentControl = new ChatVM();
+        }
+        #endregion
+
         #endregion
 
         /*------------------------------------------- Command ---------------------------------------------------*/
@@ -176,6 +185,10 @@ namespace TurbineRepair.ViewModel
 
             #region LogOut
             LogOut = new LambdaCommand(OnLogOutExecute, CanLogOutExecute);
+            #endregion
+
+            #region OpenChatControl
+            OpenChatControl = new LambdaCommand(OnOpenChatControlExecute, CanOpenChatControlExecute);
             #endregion
 
             #endregion

@@ -12,7 +12,7 @@
                 <ResourceDictionary Source="/Style/TextBoxStyle.xaml"/>
                 <ResourceDictionary Source="/Style/PasswordBoxStyle.xaml"/>
                 <ResourceDictionary Source="/Style/ButtonStyle.xaml"/>
-                <ResourceDictionary Source="/Style/LsitViewItemStyle.xaml"/>
+                <ResourceDictionary Source="/Style/ListViewItemStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate DataType="{x:Type viewModel:AutheticationVM}">
@@ -37,6 +37,10 @@
 
             <DataTemplate DataType="{x:Type viewModel:NotificationVM}">
                 <viewMain:Notification/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:ChatVM}">
+                <viewMain:Chat/>
             </DataTemplate>
             
         </ResourceDictionary>

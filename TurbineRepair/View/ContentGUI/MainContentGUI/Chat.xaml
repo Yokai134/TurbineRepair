@@ -1,0 +1,92 @@
+﻿<UserControl x:Class="TurbineRepair.View.ContentGUI.MainContentGUI.Chat"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TurbineRepair.View.ContentGUI.MainContentGUI"
+             xmlns:viewModel="clr-namespace:TurbineRepair.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="520" d:DesignWidth="700">
+    <UserControl.DataContext>
+        <viewModel:ChatVM/>
+    </UserControl.DataContext>
+
+    <UserControl.Resources>
+
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Margin="10,0,10,0"
+                    VerticalAlignment="Center">
+            <TextBox FontSize="15"
+                     Padding="10,5,0,0"
+                     Height="30"
+                     FontWeight="SemiBold"
+                     Style="{DynamicResource AutheticationTextBox}"
+                     Text="{Binding SearchUser, UpdateSourceTrigger=PropertyChanged}">
+                <TextBox.InputBindings>
+                    <KeyBinding Command="{Binding ContactSearch}" Key="Return"/>
+                </TextBox.InputBindings>
+            </TextBox>
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel>
+                <Label Content="Контакты"
+                   FontSize="20"
+                   FontWeight="SemiBold"
+                       Margin="10,0"/>
+
+                <ListView ItemsSource="{Binding ContactItem, UpdateSourceTrigger=PropertyChanged}"
+                          SelectedItem="{Binding SelectedContact}"
+                      Background="Transparent"
+                      BorderThickness="0"
+                      ItemContainerStyle="{StaticResource ContactCard}"/>
+              
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="1">
+                <Label Content="{Binding SearchUser, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+
+          
+
+        </Grid>
+        <Label Content="11"
+               FontSize="20"
+               Margin="10,5"
+               FontWeight="SemiBold"
+               Grid.Column="1"/>
+
+        <Grid Grid.Row="1"
+              Grid.Column="1">
+
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="70"/>
+            </Grid.RowDefinitions>
+
+            <ListView ItemsSource="{Binding SelectedContact.messages}"
+                      BorderThickness="0"
+                      Background="Transparent"
+                      Margin="8,0,0,0"
+                      ItemContainerStyle="{StaticResource ChatCard}"/>
+
+        </Grid>
+    </Grid>
+</UserControl>
