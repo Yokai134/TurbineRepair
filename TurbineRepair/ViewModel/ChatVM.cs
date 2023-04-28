@@ -112,20 +112,7 @@ namespace TurbineRepair.ViewModel
                 isNativeOrigin = false,
                 firstMessage = true
             });
-
-            for(int i = 0; i < 3;i++)
-            {
-                Messages.Add(new MessageInfo()
-                {
-                    contactName = "test",
-                    contactColor = "#FFFF00",
-                    imageSource = "https://i.imgur.com/xI3Imav.jpeg",
-                    message = "testMessage",
-                    time = DateTime.Now,
-                    isNativeOrigin = false,
-                    firstMessage = false
-                });
-            }
+        
 
             for(int i = 0; i < 4;i++)
             {

@@ -67,7 +67,7 @@
           
 
         </Grid>
-        <Label Content="11"
+        <Label Content="{Binding SelectedContact.contactName}"
                FontSize="20"
                Margin="10,5"
                FontWeight="SemiBold"

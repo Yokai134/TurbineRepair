@@ -34,8 +34,7 @@ namespace TurbineRepair.ViewModel
         private bool CanVerificationLoginExecut(object parameter) => true;
         private void OnVerificationLoginExecut(object parametr)
         {
-            MainWindowViewModel.main.CurrentControl = new PinCodeVM();
-            
+            MainWindowViewModel.main.CurrentControl = new PinCodeVM();       
         }
         #endregion
 
