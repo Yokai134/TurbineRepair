@@ -15,6 +15,7 @@ namespace TurbineRepair.ViewModel
 {
     internal class MainVM : Base.ViewModel
     {
+        #region Command
         /*------------------------------------------- Command ---------------------------------------------------*/
 
         #region Command
@@ -127,8 +128,9 @@ namespace TurbineRepair.ViewModel
         #endregion
 
         /*------------------------------------------- Command ---------------------------------------------------*/
+        #endregion
 
-
+        #region Prop
         /* ------------------------------------------ Property --------------------------------------------------*/
 
         #region MainCurrentControl
@@ -145,7 +147,7 @@ namespace TurbineRepair.ViewModel
         #endregion
 
         /* ------------------------------------------ Property --------------------------------------------------*/
-
+        #endregion
 
 
         /// <summary>
@@ -155,6 +157,7 @@ namespace TurbineRepair.ViewModel
         {
             MainCurrentControl = new MyProfileVM();
 
+            #region Command
             /*------------------------------------------- Command ---------------------------------------------------*/
 
             #region Command
@@ -194,7 +197,7 @@ namespace TurbineRepair.ViewModel
             #endregion
 
             /*------------------------------------------- Command ---------------------------------------------------*/
-
+            #endregion
         }
     }
 }

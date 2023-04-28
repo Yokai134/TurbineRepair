@@ -15,8 +15,6 @@ public partial class UserDatum
 
     public int? Role { get; set; }
 
-    public int? Deportament { get; set; }
-
     public int? Post { get; set; }
 
     public string Phone { get; set; } = null!;
@@ -25,5 +23,9 @@ public partial class UserDatum
 
     public string Password { get; set; } = null!;
 
-    public string Pincode { get; set; }
+    public string Pincode { get; set; } = null!;
+
+    public virtual Post? PostNavigation { get; set; }
+
+    public virtual Role? RoleNavigation { get; set; }
 }

@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security;
+using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,7 +19,7 @@ namespace TurbineRepair.ViewModel
 {
     internal class AutheticationVM : Base.ViewModel
     {
-        TurbinerepairContext context = new TurbinerepairContext();
+        TurbinerepairContext context = new TurbinerepairContext(); 
 
         #region Command
         /*------------------------------------------- Command ---------------------------------------------------*/
@@ -45,11 +46,18 @@ namespace TurbineRepair.ViewModel
             try
             {
                 List<UserDatum> selectUser = context.UserData.Where(x => x.Login == LoginApp && x.Password == PasswordApp).ToList();
+                List<Post> posts = context.Posts.Where(x => x.Id == selectUser[0].Post).ToList();
+                List<Deportament> deportaments = context.Deportaments.Where(x => x.Id == posts[0].DeportamentId).ToList();
                 UserDatum userCurrent = selectUser.FirstOrDefault();
+                Deportament deportamentCurrent = deportaments.FirstOrDefault();
+                Post postCurrent = posts.FirstOrDefault();
                 if (userCurrent != null)
                 {
                     MainWindowViewModel.main.CurrentControl = new PinCodeVM();
                     MainWindowViewModel.main.CurrentUser = userCurrent;
+                    MainWindowViewModel.main.Posts = postCurrent;
+                    MainWindowViewModel.main.Deport = deportamentCurrent;
+
                 }
                 else
                 {
@@ -69,17 +77,6 @@ namespace TurbineRepair.ViewModel
         /*------------------------------------------- Command ---------------------------------------------------*/
         #endregion
 
-        #region List
-
-        /* ---------------------------------------------------- List ---------------------------------- */
-
-        #region ListUser
-        private List<UserDatum> Users;
-        #endregion
-
-        /* ---------------------------------------------------- List ---------------------------------- */
-
-        #endregion
 
         #region Property
         /* ---------------------------------------- Property ---------------------------------------- */
@@ -140,7 +137,7 @@ namespace TurbineRepair.ViewModel
 
             /*------------------------------------------- Command ---------------------------------------------------*/
 
-            Users = context.UserData.ToList();
+
         }
 
     }

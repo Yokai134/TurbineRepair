@@ -55,7 +55,7 @@
                          IsReadOnly="True"
                          HorizontalContentAlignment="Center"
                          FontWeight="SemiBold"
-                         Text="1"
+                         Text="{Binding UserDatum.Name}"
                          Style="{DynamicResource ProfileTextBox}"/>
             </Grid>
 
@@ -73,7 +73,7 @@
                          FontSize="20"
                          HorizontalContentAlignment="Center"
                          FontWeight="SemiBold"
-                         Text="1111"
+                         Text="{Binding UserDatum.Surname}"
                          Style="{DynamicResource ProfileTextBox}"/>
             </Grid>
 
@@ -91,7 +91,7 @@
                          FontSize="20"
                          HorizontalContentAlignment="Center"
                          FontWeight="SemiBold"
-                         Text="1111"
+                         Text="{Binding UserDatum.Patronomyc}"
                          Style="{DynamicResource ProfileTextBox}"/>
             </Grid>
 
@@ -99,7 +99,7 @@
                     BorderThickness="1"
                     Margin="10,0"/>
 
-            <Grid Margin="10">
+            <Grid Margin="10,20,10,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="115"/>
                     <ColumnDefinition/>
@@ -113,7 +113,7 @@
                          FontSize="20"
                          HorizontalContentAlignment="Center"
                          FontWeight="SemiBold"
-                         Text="1111"
+                         Text="{Binding Deport.DeportamentName}"
                          Style="{DynamicResource ProfileTextBox}"/>
             </Grid>
 
@@ -131,7 +131,7 @@
                          FontSize="20"
                          HorizontalContentAlignment="Center"
                          FontWeight="SemiBold"
-                         Text="1111"
+                         Text="{Binding Posts.PostName}"
                          Style="{DynamicResource ProfileTextBox}"/>
             </Grid>
             
@@ -139,7 +139,7 @@
                     BorderThickness="1"
                     Margin="10,0"/>
 
-            <Grid Margin="10">
+            <Grid Margin="10,20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="115"/>
                     <ColumnDefinition/>
@@ -153,7 +153,7 @@
                          FontSize="20"
                          HorizontalContentAlignment="Center"
                          FontWeight="SemiBold"
-                         Text="1111"
+                         Text="{Binding UserDatum.Phone}"
                          Style="{DynamicResource ProfileTextBox}"/>
             </Grid>
 
