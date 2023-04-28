@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TurbineRepair.View.ContentGUI"
-             xmlns:viewModel="clr-namespace:TurbineRepair.ViewModel"
+             xmlns:viewModel="clr-namespace:TurbineRepair.ViewModel" xmlns:component="clr-namespace:TurbineRepair.Component"
              mc:Ignorable="d">
 
     <UserControl.DataContext>
@@ -24,16 +24,15 @@
                         HorizontalAlignment="Center">
                 <Image Width="60"
                        Height="60" Source="/ResourceApp/Image/images.jpg"/>
-                <PasswordBox Style="{DynamicResource PasswordBoxAuthetication}"
-                             x:Name="dataPin"
-                             Height="50"
-                             PasswordChar="•"
-                             FontSize="20"
-                             Margin="10,0,0,0"
-                             Padding="20,13,0,0"
-                             MaxLength="32"
-                             Width="290"/>
+                <component:BindablePasswordBox
+                    Password="{Binding Pin, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    Width="290"
+                    Margin="10"/>
             </StackPanel>
+            <TextBlock Text="{Binding ErrorMessage}"
+                       Foreground="Red"
+                       HorizontalAlignment="Center"
+                       Margin="10,0"/>
             <StackPanel HorizontalAlignment="Center"
                         Orientation="Horizontal">
                 <Button Style="{DynamicResource ButtonAuthetication}" 

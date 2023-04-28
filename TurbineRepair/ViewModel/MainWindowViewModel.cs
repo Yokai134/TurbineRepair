@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Controls;
+using TurbineRepair.Model;
 
 namespace TurbineRepair.ViewModel
 {
@@ -35,7 +36,16 @@ namespace TurbineRepair.ViewModel
             get => _currentControl;
             set => Set(ref _currentControl, value);
         }
-        #endregion      
+        #endregion
+
+        #region CurrentUser
+        private UserDatum _currentUser;
+        public UserDatum CurrentUser
+        {
+            get => _currentUser;
+            set => Set(ref _currentUser, value);
+        }
+        #endregion
 
         #endregion
 

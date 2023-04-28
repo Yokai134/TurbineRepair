@@ -1,18 +1,26 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using TurbineRepair.Infrastructure;
+using TurbineRepair.Migration;
+using TurbineRepair.Model;
 
 namespace TurbineRepair.ViewModel
 {
     internal class AutheticationVM : Base.ViewModel
     {
+        TurbinerepairContext context = new TurbinerepairContext();
+
+        #region Command
         /*------------------------------------------- Command ---------------------------------------------------*/
 
         #region Command
@@ -34,13 +42,81 @@ namespace TurbineRepair.ViewModel
         private bool CanVerificationLoginExecut(object parameter) => true;
         private void OnVerificationLoginExecut(object parametr)
         {
-            MainWindowViewModel.main.CurrentControl = new PinCodeVM();       
+            try
+            {
+                List<UserDatum> selectUser = context.UserData.Where(x => x.Login == LoginApp && x.Password == PasswordApp).ToList();
+                UserDatum userCurrent = selectUser.FirstOrDefault();
+                if (userCurrent != null)
+                {
+                    MainWindowViewModel.main.CurrentControl = new PinCodeVM();
+                    MainWindowViewModel.main.CurrentUser = userCurrent;
+                }
+                else
+                {
+                    ErrorMessage = "*Invalid login or password";
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = "*No connection";
+            }
+
         }
         #endregion
 
         #endregion
 
         /*------------------------------------------- Command ---------------------------------------------------*/
+        #endregion
+
+        #region List
+
+        /* ---------------------------------------------------- List ---------------------------------- */
+
+        #region ListUser
+        private List<UserDatum> Users;
+        #endregion
+
+        /* ---------------------------------------------------- List ---------------------------------- */
+
+        #endregion
+
+        #region Property
+        /* ---------------------------------------- Property ---------------------------------------- */
+
+        #region Property
+
+        #region Login and Password
+
+        private string _loginApp;
+        private string _passwordApp;
+        public string LoginApp
+        {
+            get => _loginApp;
+            set => Set(ref _loginApp, value);
+        }
+
+        public string PasswordApp
+        {
+            get => _passwordApp;
+            set => Set(ref _passwordApp, value);
+        }
+        #endregion
+
+        #region ErrorMessage
+        private string _errorMessage;
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set => Set(ref _errorMessage, value);
+        }
+        #endregion
+
+        #endregion
+
+        /* ---------------------------------------- Property ---------------------------------------- */
+
+        #endregion
 
 
         /// <summary>
@@ -63,6 +139,8 @@ namespace TurbineRepair.ViewModel
             #endregion
 
             /*------------------------------------------- Command ---------------------------------------------------*/
+
+            Users = context.UserData.ToList();
         }
 
     }

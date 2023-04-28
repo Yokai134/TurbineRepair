@@ -4,7 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TurbineRepair.View.ContentGUI"
-             xmlns:viewModel="clr-namespace:TurbineRepair.ViewModel"
+             xmlns:fa6p="http://schemas.fontawesome.com/icons/svg/properties"
+             xmlns:viewModel="clr-namespace:TurbineRepair.ViewModel" 
+             xmlns:component="clr-namespace:TurbineRepair.Component"
              mc:Ignorable="d">
     <UserControl.DataContext>
         <viewModel:AutheticationVM/>
@@ -31,25 +33,26 @@
                        FontWeight="SemiBold"
                        Margin="10,0,0,0"/>
                 <TextBox Style="{DynamicResource AutheticationTextBox}" 
-                         x:Name="dataLogin"
                          Width="440"
                          Height="50"
                          TextWrapping="Wrap"
                          Padding="20,13,0,0"
                          FontSize="20"
-                         MaxLength="32"/>
+                         MaxLength="32"
+                         Text="{Binding LoginApp, UpdateSourceTrigger=PropertyChanged}"/>
+
                 <Label Content="Password"
                        FontSize="20"
                        FontWeight="SemiBold"
                        Margin="10,0,0,0"/>
-                <PasswordBox Style="{DynamicResource PasswordBoxAuthetication}"
-                             x:Name="dataPassword"
-                             Height="50"
-                             PasswordChar="•"
-                             FontSize="20"
-                             Padding="20,13,0,0"
-                             MaxLength="32"/>
-                <StackPanel Margin="20,20"
+                <component:BindablePasswordBox
+                    Height="50"
+                    Password="{Binding PasswordApp, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <TextBlock Text="{Binding ErrorMessage}"
+                       Margin="10,10"
+                       Foreground="Red"
+                       Visibility="Visible"/>
+                <StackPanel Margin="20,10"
                             Orientation="Horizontal">
                     <CheckBox x:Name="rememberData"/>
                     <Label Content="Remember me"
@@ -58,7 +61,7 @@
                 </StackPanel>
             </StackPanel>
             <StackPanel Width="350" 
-                        Margin="0,50"
+                        Margin="0,60"
                         Orientation="Horizontal">
                 <Button Style="{DynamicResource ButtonAuthetication}" 
                         Content="Exit"
