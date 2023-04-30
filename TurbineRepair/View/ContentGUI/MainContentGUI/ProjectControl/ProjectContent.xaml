@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="TurbineRepair.View.ContentGUI.MainContentGUI.ProjectControl.ProjectContent"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TurbineRepair.View.ContentGUI.MainContentGUI.ProjectControl"
+             mc:Ignorable="d" 
+             d:DesignHeight="520" d:DesignWidth="700">
+    <Grid>
+        <TabControl>
+            <TabItem Header="Чёртеж">
+                <StackPanel Margin="10">
+                    <Button
+                        Height="20"/>
+                    <Image Source="/ResourceApp/Image/images.jpg"
+                           Stretch="UniformToFill"/>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Описание">
+                
+            </TabItem>
+        </TabControl>
+         
+    </Grid>
+</UserControl>
