@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using TurbineRepair.Model;
+
 
 namespace TurbineRepair.Migration;
 

@@ -5,33 +5,20 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TurbineRepair.Migration;
 using TurbineRepair.Test;
 
 namespace TurbineRepair.ViewModel
 {
     internal class ProjectVM : Base.ViewModel
     {
+        TurbinerepairContext context = new TurbinerepairContext();
 
-        public ObservableCollection<ProjectInfo> Projects { get; set; }
+        public List<ProjectDatum> Projects { get; set; }
 
         public ProjectVM() 
-        { 
-            Projects = new ObservableCollection<ProjectInfo>();
-
-            for(int i = 0; i < 5; i++) 
-            {
-                Projects.Add(new ProjectInfo()
-                {
-                    nameProject = $"test{i}",
-                    executor = $"test{i}",
-                    status = $"test{i}",
-                    dateStart = Convert.ToDateTime(DateTime.Now.ToShortDateString()),
-                    dateEnd = Convert.ToDateTime(DateTime.Now.ToShortDateString())
-                });
-            }
-           
-            
-           
+        {
+            Projects = MainWindowViewModel.main.ProjectData.Where(x=>x.ProjectExecutor == MainWindowViewModel.main.CurrentUser.Id).ToList();                              
         }
     }
 }

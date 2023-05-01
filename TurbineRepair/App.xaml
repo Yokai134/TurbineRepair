@@ -13,6 +13,7 @@
                 <ResourceDictionary Source="/Style/PasswordBoxStyle.xaml"/>
                 <ResourceDictionary Source="/Style/ButtonStyle.xaml"/>
                 <ResourceDictionary Source="/Style/ListViewItemStyle.xaml"/>
+                <ResourceDictionary Source="/Style/TabItemStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate DataType="{x:Type viewModel:AutheticationVM}">

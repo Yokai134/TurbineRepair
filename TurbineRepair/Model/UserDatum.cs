@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TurbineRepair.Model;
+namespace TurbineRepair;
 
 public partial class UserDatum
 {
@@ -26,6 +26,8 @@ public partial class UserDatum
     public string Pincode { get; set; } = null!;
 
     public virtual Post? PostNavigation { get; set; }
+
+    public virtual ICollection<ProjectDatum> ProjectData { get; set; } = new List<ProjectDatum>();
 
     public virtual Role? RoleNavigation { get; set; }
 }

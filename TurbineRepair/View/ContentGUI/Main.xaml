@@ -14,6 +14,7 @@
     <UserControl.DataContext>
         <viewModel:MainVM/>
     </UserControl.DataContext>
+
     <Grid>
 
         <Grid.RowDefinitions>
@@ -39,7 +40,7 @@
         </Grid.ColumnDefinitions>
 
         <Border Grid.ColumnSpan="2"
-                Background="LightGray"
+                Background="#252525"
                 MouseDown="Border_MouseDown">
 
             <Grid HorizontalAlignment="Stretch">
@@ -52,7 +53,8 @@
                            Source="/ResourceApp/Image/images.jpg"/>
 
                     <Label Content="Turbine repair"
-                           FontWeight="SemiBold"/>
+                           FontWeight="SemiBold"
+                           Foreground="Gray"/>
 
                 </StackPanel>
 
@@ -63,6 +65,7 @@
                     <Button Width="30"
                             Height="25"
                             Background="Transparent"
+                            Foreground="Gray"
                             BorderThickness="0"
                             FontWeight="Bold"
                             Content="_"
@@ -72,6 +75,7 @@
                     <Button Width="30"
                             Height="25"
                             Background="Transparent"
+                            Foreground="Gray"
                             BorderThickness="0"
                             FontWeight="Bold"
                             Content="☐"
@@ -79,8 +83,9 @@
 
                     <Button Style="{DynamicResource ButtonExiMain}"
                             Width="30"
-                            Height="25"
+                            Height="25"                           
                             Background="Transparent"
+                            Foreground="Gray"
                             BorderThickness="0"
                             Content="✕"
                             FontWeight="Bold"
@@ -92,66 +97,133 @@
         <Border Grid.Row="1" BorderThickness="0,0,1,0"
                 BorderBrush="Black">
             <Grid Grid.Row="1">
-                <StackPanel Margin="10">
-                    <StackPanel HorizontalAlignment="Stretch"
-                                Orientation="Horizontal"
-                                Margin="0,5">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0,5,0,0">
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=BoolBackgroundProfile, UpdateSourceTrigger=PropertyChanged}"
+                                                 Value="True">
+                                        <Setter Property="Background" Value="#252b2F"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Path=BoolBackgroundProfile, UpdateSourceTrigger=PropertyChanged}"
+                                                 Value="false">
+                                        <Setter Property="Background" Value="#36393F"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
                         <StackPanel.InputBindings>
                             <MouseBinding Command="{Binding OpenProfileControl}"
                                           MouseAction="LeftClick"/>
                         </StackPanel.InputBindings>
                         <fa6:SvgAwesome Icon="Solid_User"
                                         Height="25"
-                                        Width="25"/>
-                        <Label Content="My profile"                           
+                                        PrimaryColor="Gray"
+                                        Width="25"
+                                        Margin="12.5,0,0,0"/>
+                        <Label Content="Профиль"
                                FontSize="20"
+                               Margin="10,0,0,0"
+                               Foreground="Gray"
                                FontWeight="SemiBold"/>
                     </StackPanel>
                     <StackPanel HorizontalAlignment="Stretch"
-                                Orientation="Horizontal"
-                                Margin="0,5">
+                                Orientation="Horizontal">
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=BoolBackgroundProject, UpdateSourceTrigger=PropertyChanged}"
+                                                 Value="True">
+                                        <Setter Property="Background" Value="#252b2F"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Path=BoolBackgroundProject, UpdateSourceTrigger=PropertyChanged}"
+                                                 Value="false">
+                                        <Setter Property="Background" Value="#36393F"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
                         <StackPanel.InputBindings>
                             <MouseBinding Command="{Binding OpenProjectControl}"
                                           MouseAction="LeftClick"/>
                         </StackPanel.InputBindings>
                         <fa6:SvgAwesome Icon="Solid_File"
                                         Height="25"
-                                        Width="25"/>
-                        <Label Content="Project"
+                                        PrimaryColor="Gray"
+                                        Width="25"
+                                        Margin="12.5,0,0,0"/>
+                        <Label Content="Проект"
                                FontSize="20"
+                               Margin="10,0,0,0"
+                               Foreground="Gray"
                                FontWeight="SemiBold"/>
                     </StackPanel>
                     <StackPanel HorizontalAlignment="Stretch"
-                                Orientation="Horizontal"
-                                Margin="0,5">
+                                Orientation="Horizontal">
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=BoolBackgroundNotification, UpdateSourceTrigger=PropertyChanged}"
+                                                 Value="True">
+                                        <Setter Property="Background" Value="#252b2F"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Path=BoolBackgroundNotification, UpdateSourceTrigger=PropertyChanged}"
+                                                 Value="false">
+                                        <Setter Property="Background" Value="#36393F"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
                         <StackPanel.InputBindings>
                             <MouseBinding Command="{Binding OpenNotificationControl}"
                                           MouseAction="LeftClick"/>
                         </StackPanel.InputBindings>
                         <fa6:SvgAwesome Icon="Solid_Bell"
                                         Height="25"
-                                        Width="25"/>
-                        <Label Content="Notification"
+                                        PrimaryColor="Gray"
+                                        Width="25"
+                                        Margin="12.5,0,0,0"/>
+                        <Label Content="Уведомление"
                                FontSize="20"
+                               Margin="10,0,0,0"
+                               Foreground="Gray"
                                FontWeight="SemiBold"/>
                     </StackPanel>
                     <StackPanel HorizontalAlignment="Stretch"
-                                Orientation="Horizontal"
-                                Margin="0,5">
+                                Orientation="Horizontal">
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=BoolBackgroundChat, UpdateSourceTrigger=PropertyChanged}"
+                                                 Value="True">
+                                        <Setter Property="Background" Value="#252b2F"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Path=BoolBackgroundChat, UpdateSourceTrigger=PropertyChanged}"
+                                                 Value="false">
+                                        <Setter Property="Background" Value="#36393F"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
                         <StackPanel.InputBindings>
                             <MouseBinding Command="{Binding OpenChatControl}"
                                           MouseAction="LeftClick"/>
                         </StackPanel.InputBindings>
                         <fa6:SvgAwesome Icon="Solid_Comments"
                                         Height="25"
-                                        Width="25"/>
-                        <Label Content="Chat"
+                                        PrimaryColor="Gray"
+                                        Width="25"
+                                        Margin="12.5,0,0,0"/>
+                        <Label Content="Чат"
                                FontSize="20"
+                               Margin="10,0,0,0"
+                               Foreground="Gray"
                                FontWeight="SemiBold"/>
                     </StackPanel>
                 </StackPanel>
-                <StackPanel VerticalAlignment="Bottom"
-                            Margin="10">
+                <StackPanel VerticalAlignment="Bottom">
                     <StackPanel.InputBindings>
                         <MouseBinding Command="{Binding LogOut}"
                                       MouseAction="LeftClick"/>
@@ -160,10 +232,14 @@
                                 Orientation="Horizontal"
                                 Margin="0,5">
                         <fa6:SvgAwesome Icon="Solid_DoorOpen"
-                                    Width="25"
-                                    Height="25"/>
+                                        Width="25"
+                                        PrimaryColor="Gray"
+                                        Height="25"
+                                        Margin="10,0,0,0"/>
                         <Label Content="Exit"
                                FontSize="20"
+                               Margin="10,0,0,0"
+                               Foreground="Gray"
                                FontWeight="SemiBold"/>
                     </StackPanel>
                     <StackPanel HorizontalAlignment="Stretch"
@@ -172,17 +248,20 @@
                                       Width="25"
                                       Height="25"
                                       Background="Transparent"
-                                      BorderThickness="0">
+                                      BorderThickness="0"
+                                      Margin="10,0,0,5">
                             <ToggleButton.Template>
                                 <ControlTemplate>
                                     <Image>
                                         <Image.Style>
                                             <Style TargetType="Image">
                                                 <Setter Property="fa6p:FontAwesome.Icon" Value="Solid_ArrowLeft"/>
+                                                <Setter Property="fa6p:FontAwesome.PrimaryColor" Value="Gray"/>
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding ElementName=ScaleChange, Path=IsChecked}"
                                                                  Value="True">
                                                         <Setter Property="fa6p:FontAwesome.Icon" Value="Solid_ArrowRight"/>
+                                                        <Setter Property="fa6p:FontAwesome.PrimaryColor" Value="Gray"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>

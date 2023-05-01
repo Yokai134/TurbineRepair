@@ -18,6 +18,7 @@
                     Margin="20">
             <Label Content="Please enter your pin code"
                    FontSize="20"
+                   Foreground="Gray"
                    FontWeight="SemiBold"/>
 
             <StackPanel Orientation="Horizontal"
@@ -27,7 +28,8 @@
                 <component:BindablePasswordBox
                     Password="{Binding Pin, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                     Width="290"
-                    Margin="10"/>
+                    Height="40"
+                    Margin="10,0"/>
             </StackPanel>
             <TextBlock Text="{Binding ErrorMessage}"
                        Foreground="Red"

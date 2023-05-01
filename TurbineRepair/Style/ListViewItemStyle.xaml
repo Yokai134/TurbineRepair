@@ -15,29 +15,60 @@
 
                         <StackPanel Orientation="Vertical">
                             <StackPanel Margin="10,0,0,0">
-                                <Label Content="{Binding nameProject}"
+                                <Label Content="{Binding ProjectName}"
                                        FontSize="20"
                                        FontWeight="SemiBold"/>
-                                <Label Content="{Binding executor}"
-                                       FontSize="20"
-                                       FontWeight="SemiBold"/>
-                                <Label Content="{Binding status}"
-                                       FontSize="20"
-                                       FontWeight="SemiBold"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="Исполнитель: "
+                                           FontSize="20"
+                                           FontWeight="SemiBold"/>
+                                    <Label Content="{Binding ProjectExecutorNavigation.Surname}"
+                                           FontSize="20"
+                                           FontWeight="SemiBold"/>
+                                    <Label Content="{Binding ProjectExecutorNavigation.Name}"
+                                           FontSize="20"
+                                           FontWeight="SemiBold"/>
+                                    <Label Content="{Binding ProjectExecutorNavigation.Patronomyc}"
+                                           FontSize="20"
+                                           FontWeight="SemiBold"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="Статус: "
+                                           FontSize="20"
+                                           FontWeight="SemiBold"/>
+                                    <Label Content="{Binding ProjectStatusNavigation.StatusName}"
+                                           FontSize="20"
+                                           FontWeight="SemiBold"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="Заказчик: "
+                                           FontSize="20"
+                                           FontWeight="SemiBold"/>
+                                    <Label Content="{Binding ProjectCustomerNavigation.CustomerSurname}"
+                                           FontSize="20"
+                                           FontWeight="SemiBold"/>
+                                    <Label Content="{Binding ProjectCustomerNavigation.CustomerName}"
+                                           FontSize="20"
+                                           FontWeight="SemiBold"/>
+                                    <Label Content="{Binding ProjectCustomerNavigation.CustomerPatronomyc}"
+                                           FontSize="20"
+                                           FontWeight="SemiBold"/>
+                                </StackPanel>
+                              
                             </StackPanel>
                             <StackPanel Orientation="Horizontal"
                                         Margin="10,0,0,0">
                                 <Label Content="Дата начала: "
                                        FontWeight="SemiBold"
                                        FontSize="20"/>
-                                <Label Content="{Binding dateStart}"
+                                <Label Content="{Binding ProjectDataStart}"
                                        FontSize="20"
                                        FontWeight="SemiBold"/>
                                 <Label Content="Дата окончания: "
                                        FontWeight="SemiBold"
                                        FontSize="20"
                                        Margin="50,0,0,0"/>
-                                <Label Content="{Binding dateEnd}"
+                                <Label Content="{Binding ProjectDataEnd}"
                                        FontSize="20"
                                        FontWeight="SemiBold"/>
                             </StackPanel>
@@ -130,7 +161,6 @@
                                            Margin="5,0,0,0"/>
                             </StackPanel>
                         </StackPanel>
-                        
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
@@ -198,6 +228,42 @@
             </DataTrigger>
         </Style.Triggers>
            
+    </Style>
+
+    <Style TargetType="ListViewItem" x:Key="ImageCard">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <StackPanel>
+                        
+                        <StackPanel Margin="10,5">
+                            <Image Source="{Binding ImageOne}"
+                                   Height="200"
+                                   Stretch="UniformToFill"/>
+                        </StackPanel>
+                        
+                        <StackPanel Margin="10,5">
+                            <Image Source="{Binding ImageTwo}"
+                                   Height="200"
+                                   Stretch="UniformToFill"/>
+                        </StackPanel>
+
+                        <StackPanel Margin="10,5">
+                            <Image Source="{Binding ImageThree}"
+                                   Stretch="UniformToFill"
+                                   Height="200"/>
+                        </StackPanel>
+
+                        <StackPanel Margin="10,5">
+                            <Image Source="{Binding ImageFour}"
+                                   Stretch="UniformToFill"
+                                   Height="200"/>
+                        </StackPanel>
+
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
     
 </ResourceDictionary>

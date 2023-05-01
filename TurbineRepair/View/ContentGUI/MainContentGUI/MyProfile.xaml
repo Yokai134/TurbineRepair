@@ -48,6 +48,7 @@
                 </Grid.ColumnDefinitions>
                 <Label Content="Имя"
                        FontSize="20"
+                       Foreground="Gray"
                        FontWeight="SemiBold"/>
                 <TextBox Grid.Column="1"
                          Margin="10,0,0,10"
@@ -66,6 +67,7 @@
                 </Grid.ColumnDefinitions>
                 <Label Content="Фамилия"
                        FontSize="20"
+                       Foreground="Gray"
                        FontWeight="SemiBold"/>
                 <TextBox Grid.Column="1"
                          IsReadOnly="True"
@@ -84,6 +86,7 @@
                 </Grid.ColumnDefinitions>
                 <Label Content="Отчество"
                        FontSize="20"
+                       Foreground="Gray"
                        FontWeight="SemiBold"/>
                 <TextBox Grid.Column="1"
                          IsReadOnly="True"
@@ -95,7 +98,7 @@
                          Style="{DynamicResource ProfileTextBox}"/>
             </Grid>
 
-            <Border BorderBrush="Black"
+            <Border BorderBrush="Gray"
                     BorderThickness="1"
                     Margin="10,0"/>
 
@@ -106,6 +109,7 @@
                 </Grid.ColumnDefinitions>
                 <Label Content="Отдел"
                        FontSize="20"
+                       Foreground="Gray"
                        FontWeight="SemiBold"/>
                 <TextBox Grid.Column="1"
                          IsReadOnly="True"
@@ -124,6 +128,7 @@
                 </Grid.ColumnDefinitions>
                 <Label Content="Должность"
                        FontSize="20"
+                       Foreground="Gray"
                        FontWeight="SemiBold"/>
                 <TextBox Grid.Column="1"
                          IsReadOnly="True"
@@ -135,7 +140,7 @@
                          Style="{DynamicResource ProfileTextBox}"/>
             </Grid>
             
-            <Border BorderBrush="Black"
+            <Border BorderBrush="Gray"
                     BorderThickness="1"
                     Margin="10,0"/>
 
@@ -146,6 +151,7 @@
                 </Grid.ColumnDefinitions>
                 <Label Content="Номер"
                        FontSize="20"
+                       Foreground="Gray"
                        FontWeight="SemiBold"/>
                 <TextBox Grid.Column="1"
                          IsReadOnly="True"

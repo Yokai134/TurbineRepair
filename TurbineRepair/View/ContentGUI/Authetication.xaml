@@ -30,6 +30,7 @@
             <StackPanel HorizontalAlignment="Center">
                 <Label Content="Login"
                        FontSize="20"
+                       Foreground="Gray"
                        FontWeight="SemiBold"
                        Margin="10,0,0,0"/>
                 <TextBox Style="{DynamicResource AutheticationTextBox}" 
@@ -43,6 +44,7 @@
 
                 <Label Content="Password"
                        FontSize="20"
+                       Foreground="Gray"
                        FontWeight="SemiBold"
                        Margin="10,0,0,0"/>
                 <component:BindablePasswordBox
@@ -57,6 +59,7 @@
                     <CheckBox x:Name="rememberData"/>
                     <Label Content="Remember me"
                            FontSize="15"
+                           Foreground="Gray"
                            Margin="0,-6"/>
                 </StackPanel>
             </StackPanel>

@@ -71,6 +71,10 @@ namespace TurbineRepair.ViewModel
         private void OnOpenProjectControlExecute(object parameter)
         {
             MainCurrentControl = new ProjectVM();
+            BoolBackgroundProfile = false;
+            BoolBackgroundChat = false;
+            BoolBackgroundProject = true;
+            BoolBackgroundNotification = false;
         }
         #endregion
 
@@ -81,6 +85,10 @@ namespace TurbineRepair.ViewModel
         private void OnOpenNotificationControlExecute(object parameter)
         {
             MainCurrentControl = new NotificationVM();
+            BoolBackgroundProfile = false;
+            BoolBackgroundChat = false;
+            BoolBackgroundProject = false;
+            BoolBackgroundNotification = true;
         }
         #endregion
 
@@ -91,6 +99,10 @@ namespace TurbineRepair.ViewModel
         private void OnOpenProfileControlExecute(object parameter)
         {
             MainCurrentControl = new MyProfileVM();
+            BoolBackgroundProfile = true;
+            BoolBackgroundChat = false;
+            BoolBackgroundProject = false;
+            BoolBackgroundNotification = false;
         }
         #endregion
 
@@ -122,6 +134,10 @@ namespace TurbineRepair.ViewModel
         private void OnOpenChatControlExecute(object parameter)
         {
             MainCurrentControl = new ChatVM();
+            BoolBackgroundProfile = false;
+            BoolBackgroundChat = true;
+            BoolBackgroundProject = false;
+            BoolBackgroundNotification = false;
         }
         #endregion
 
@@ -145,6 +161,43 @@ namespace TurbineRepair.ViewModel
         }
 
         #endregion
+
+        #region BoolBackgroundProfile
+        private bool _boolBackgroundProfile = false;
+        public bool BoolBackgroundProfile
+        {
+            get => _boolBackgroundProfile;
+            set => Set(ref _boolBackgroundProfile, value);
+        }
+        #endregion
+
+        #region BoolBackgroundProject
+        private bool _boolBackgroundProject = false;
+        public bool BoolBackgroundProject
+        {
+            get => _boolBackgroundProject;
+            set => Set(ref _boolBackgroundProject, value);
+        }
+        #endregion
+
+        #region BoolBackgroundNotification
+        private bool _boolBackgroundNotification = false;
+        public bool BoolBackgroundNotification
+        {
+            get => _boolBackgroundNotification;
+            set => Set(ref _boolBackgroundNotification, value);
+        }
+        #endregion
+
+        #region BoolBackgroundChat
+        private bool _boolBackgroundChat = false;
+        public bool BoolBackgroundChat
+        {
+            get => _boolBackgroundChat;
+            set => Set(ref _boolBackgroundChat, value);
+        }
+        #endregion
+
 
         /* ------------------------------------------ Property --------------------------------------------------*/
         #endregion

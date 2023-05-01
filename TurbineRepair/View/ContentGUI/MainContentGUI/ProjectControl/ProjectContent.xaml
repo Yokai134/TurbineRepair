@@ -6,17 +6,17 @@
              xmlns:local="clr-namespace:TurbineRepair.View.ContentGUI.MainContentGUI.ProjectControl"
              mc:Ignorable="d" 
              d:DesignHeight="520" d:DesignWidth="700">
-    <Grid>
-        <TabControl>
-            <TabItem Header="Чёртеж">
-                <StackPanel Margin="10">
-                    <Button
-                        Height="20"/>
-                    <Image Source="/ResourceApp/Image/images.jpg"
-                           Stretch="UniformToFill"/>
-                </StackPanel>
+    <Grid Background="Transparent">
+        <TabControl Background="Transparent"
+                    BorderBrush="Transparent">
+            <TabItem Style="{StaticResource TabItemStyle}" 
+                     Header="Изображения">
+                <ListView Margin="10"
+                          Background="Transparent"
+                          ItemContainerStyle="{StaticResource ImageCard}"/>
             </TabItem>
-            <TabItem Header="Описание">
+            <TabItem Style="{StaticResource TabItemStyle}" 
+                     Header="Описание">
                 
             </TabItem>
         </TabControl>

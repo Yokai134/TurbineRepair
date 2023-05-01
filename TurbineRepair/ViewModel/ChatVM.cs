@@ -9,7 +9,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using TurbineRepair.Infrastructure;
 using TurbineRepair.Migration;
-using TurbineRepair.Model;
 using TurbineRepair.Test;
 
 namespace TurbineRepair.ViewModel

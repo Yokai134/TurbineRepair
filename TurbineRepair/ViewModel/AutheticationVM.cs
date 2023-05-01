@@ -13,7 +13,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using TurbineRepair.Infrastructure;
 using TurbineRepair.Migration;
-using TurbineRepair.Model;
+
 
 namespace TurbineRepair.ViewModel
 {
@@ -66,7 +66,7 @@ namespace TurbineRepair.ViewModel
             }
             catch (Exception ex)
             {
-                ErrorMessage = "*No connection";
+                ErrorMessage = "*Invalid login or password";
             }
 
         }

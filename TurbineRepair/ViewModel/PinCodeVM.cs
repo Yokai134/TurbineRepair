@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using TurbineRepair.Infrastructure;
-using TurbineRepair.Model;
+
 
 namespace TurbineRepair.ViewModel
 {

@@ -11,7 +11,8 @@
         WindowStyle="None"
         FontFamily="Inter"
         WindowStartupLocation="CenterScreen"
-        AllowsTransparency="True">
+        AllowsTransparency="True"
+        Background="#36393F">
 
     <Window.DataContext>
         <viewModel:MainWindowViewModel/>

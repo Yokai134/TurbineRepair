@@ -32,5 +32,6 @@ namespace TurbineRepair.View.ContentGUI
                 Application.Current.MainWindow.DragMove();
             }
         }
+
     }
 }
