@@ -3,6 +3,7 @@
                     xmlns:cmd ="clr-namespace:TurbineRepair.ViewModel">
 
 
+
     <Style TargetType="ListViewItem" x:Key="ProjectCard">
 
         <Style.Triggers>
@@ -91,11 +92,6 @@
                                     <Button.Command>
                                         <cmd:OpenProjectCommand/>
                                     </Button.Command>
-                                    <Button.DataContext>
-                                        <Binding Path="Projects" Mode="TwoWay"
-                                                 UpdateSourceTrigger="PropertyChanged"/>
-                                    </Button.DataContext>
-
                                 </Button>
                             </StackPanel>
                         </StackPanel>
@@ -278,33 +274,527 @@
                 <ControlTemplate>
 
                     <StackPanel Margin="10">
-                        <StackPanel>
-                            <Label Content="Выроботка электроэнергии по простому циклу"
-                                   FontSize="20"
+                         <StackPanel>
+                               <!--TurbineScpgNavigation-->
+                               <Label Content="Выроботка электроэнергии по простому циклу:"
+                                      FontSize="20"
+                                      HorizontalAlignment="Center"
+                                      Foreground="Gray"
+                                      FontWeight="SemiBold"/>
+                               <StackPanel>
+                                   <StackPanel Orientation="Horizontal">
+                                       <Label Content="Выходная мощность: "
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                       <TextBlock Text="{Binding ProjectTurbineNavigation.TurbineScpgNavigation.PowerOutput}" 
+                                                  TextAlignment="Center"
+                                                  TextDecorations="Underline"
+                                                  FontSize="15"
+                                                  Padding="0,5,0,0"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                       <Label Content=" МВт (эл.)"
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                   </StackPanel>
+                                   <StackPanel Orientation="Horizontal">
+                                       <Label Content="Топливо: "
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                       <TextBlock Text="{Binding ProjectTurbineNavigation.TurbineScpgNavigation.Fuel}" 
+                                                  TextAlignment="Center"
+                                                  TextDecorations="Underline"
+                                                  FontSize="15"
+                                                  Padding="0,5,0,0"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                   </StackPanel>
+                                   <StackPanel Orientation="Horizontal">
+                                       <Label Content="Частота: "
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                       <TextBlock Text="{Binding ProjectTurbineNavigation.TurbineScpgNavigation.Frequency}" 
+                                                  TextAlignment="Center"
+                                                  TextDecorations="Underline"
+                                                  FontSize="15"
+                                                  Padding="0,5,0,0"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                       <Label Content=" HZ"
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                   </StackPanel>
+                                   <StackPanel Orientation="Horizontal">
+                                       <Label Content="Общая эффективность: "
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                       <TextBlock Text="{Binding ProjectTurbineNavigation.TurbineScpgNavigation.GrossEfficiency}" 
+                                                  TextAlignment="Center"
+                                                  TextDecorations="Underline"
+                                                  FontSize="15"
+                                                  Padding="0,5,0,0"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                       <Label Content=" %"
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                   </StackPanel>
+                                   <StackPanel Orientation="Horizontal">
+                                       <Label Content="Скорость нагрева: "
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                       <TextBlock Text="{Binding ProjectTurbineNavigation.TurbineScpgNavigation.HeatRate}" 
+                                                  TextAlignment="Center"
+                                                  TextDecorations="Underline"
+                                                  FontSize="15"
+                                                  Padding="0,5,0,0"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                       <Label Content=" кДж/кВтч"
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                   </StackPanel>
+                                   <StackPanel Orientation="Horizontal">
+                                       <Label Content="Скорость турбины: "
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                       <TextBlock Text="{Binding ProjectTurbineNavigation.TurbineScpgNavigation.TurbineSpeed}" 
+                                                  TextAlignment="Center"
+                                                  TextDecorations="Underline"
+                                                  FontSize="15"
+                                                  Padding="0,5,0,0"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                       <Label Content=" об/мин"
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                   </StackPanel>
+                                   <StackPanel Orientation="Horizontal">
+                                       <Label Content="Коэффициент давления: "
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                       <TextBlock Text="{Binding ProjectTurbineNavigation.TurbineScpgNavigation.PressureRatio}" 
+                                                  TextAlignment="Center"
+                                                  TextDecorations="Underline"
+                                                  FontSize="15"
+                                                  Padding="0,5,0,0"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                   </StackPanel>
+                                   <StackPanel Orientation="Horizontal">
+                                       <Label Content="Массовый расход выхлопных газов: "
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                       <TextBlock Text="{Binding ProjectTurbineNavigation.TurbineScpgNavigation.ExhaustMassFlow}" 
+                                                  TextAlignment="Center"
+                                                  TextDecorations="Underline"
+                                                  FontSize="15"
+                                                  Padding="0,5,0,0"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                       <Label Content=" кг/c"
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                   </StackPanel>
+                                   <StackPanel Orientation="Horizontal">
+                                       <Label Content="Температура выхлопа: "
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                       <TextBlock Text="{Binding ProjectTurbineNavigation.TurbineScpgNavigation.ExhaustTemperature}" 
+                                                  TextAlignment="Center"
+                                                  TextDecorations="Underline"
+                                                  FontSize="15"
+                                                  Padding="0,5,0,0"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                       <Label Content=" °C"
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                   </StackPanel>
+                                   <StackPanel Orientation="Horizontal">
+                                       <Label Content="Выбросы: "
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                       <Label Content=" &lt;= "
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                       <TextBlock Text="{Binding ProjectTurbineNavigation.TurbineScpgNavigation.Emissions}" 
+                                                  TextAlignment="Center"
+                                                  TextDecorations="Underline"
+                                                  FontSize="15"
+                                                  Padding="0,5,0,0"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                       <Label Content=" ppmvd"
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                   </StackPanel>
+                                   <!-- TurbineMdaNavigation Block-->
+                                   <Label Content="Характеристики механического привода:"
+                                          FontSize="20"
+                                          HorizontalAlignment="Center"
+                                          Foreground="Gray"
+                                          Margin="0,10,0,0"
+                                          FontWeight="SemiBold"/>
+                                   <StackPanel>
+                                       <StackPanel Orientation="Horizontal">
+                                           <Label Content="Выходная мощность: "
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                           <TextBlock Text="{Binding ProjectTurbineNavigation.TurbineMdaNavigation.PowerOutput}" 
+                                                  TextAlignment="Center"
+                                                  TextDecorations="Underline"
+                                                  FontSize="15"
+                                                  Padding="0,5,0,0"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                           <Label Content=" МВт (эл.)"
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                       </StackPanel>
+                                       <StackPanel Orientation="Horizontal">
+                                           <Label Content="Топливо: "
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                           <TextBlock Text="{Binding ProjectTurbineNavigation.TurbineMdaNavigation.Fuel}" 
+                                                  TextAlignment="Center"
+                                                  TextDecorations="Underline"
+                                                  FontSize="15"
+                                                  Padding="0,5,0,0"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                       </StackPanel>
+                                       <StackPanel Orientation="Horizontal">
+                                           <Label Content="Эффективность: "
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                           <TextBlock Text="{Binding ProjectTurbineNavigation.TurbineMdaNavigation.Efficiency}" 
+                                                  TextAlignment="Center"
+                                                  TextDecorations="Underline"
+                                                  FontSize="15"
+                                                  Padding="0,5,0,0"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                           <Label Content=" %"
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                       </StackPanel>
+                                       <StackPanel Orientation="Horizontal">
+                                           <Label Content="Скорость нагрева: "
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                           <TextBlock Text="{Binding ProjectTurbineNavigation.TurbineMdaNavigation.HeatRate}" 
+                                                  TextAlignment="Center"
+                                                  TextDecorations="Underline"
+                                                  FontSize="15"
+                                                  Padding="0,5,0,0"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                           <Label Content=" кДж/кВтч"
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                       </StackPanel>
+                                       <StackPanel Orientation="Horizontal">
+                                           <Label Content="Скорость приводного вала: "
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                           <TextBlock Text="{Binding ProjectTurbineNavigation.TurbineMdaNavigation.DriveShaftSpeed}" 
+                                                  TextAlignment="Center"
+                                                  TextDecorations="Underline"
+                                                  FontSize="15"
+                                                  Padding="0,5,0,0"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                           <Label Content=" об/мин"
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                       </StackPanel>
+                                       <StackPanel Orientation="Horizontal">
+                                           <Label Content="Коэффициент давления: "
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                           <TextBlock Text="{Binding ProjectTurbineNavigation.TurbineMdaNavigation.PressureRatio}" 
+                                                  TextAlignment="Center"
+                                                  TextDecorations="Underline"
+                                                  FontSize="15"
+                                                  Padding="0,5,0,0"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                       </StackPanel>
+                                       <StackPanel Orientation="Horizontal">
+                                           <Label Content="Массовый расход выхлопных газов: "
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                           <TextBlock Text="{Binding ProjectTurbineNavigation.TurbineMdaNavigation.ExhaustMassFlow}" 
+                                                  TextAlignment="Center"
+                                                  TextDecorations="Underline"
+                                                  FontSize="15"
+                                                  Padding="0,5,0,0"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                           <Label Content=" кг/c"
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                       </StackPanel>
+                                       <StackPanel Orientation="Horizontal">
+                                           <Label Content="Температура выхлопа: "
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                           <TextBlock Text="{Binding ProjectTurbineNavigation.TurbineMdaNavigation.ExhaustTemperature}" 
+                                                  TextAlignment="Center"
+                                                  TextDecorations="Underline"
+                                                  FontSize="15"
+                                                  Padding="0,5,0,0"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                           <Label Content=" °C"
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                       </StackPanel>
+                                       <StackPanel Orientation="Horizontal">
+                                           <Label Content="Выбросы: "
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                           <Label Content=" &lt;= "
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                           <TextBlock Text="{Binding ProjectTurbineNavigation.TurbineMdaNavigation.Emissions}" 
+                                                  TextAlignment="Center"
+                                                  TextDecorations="Underline"
+                                                  FontSize="15"
+                                                  Padding="0,5,0,0"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                           <Label Content=" ppmvd"
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                       </StackPanel>
+                                   </StackPanel>
+                                   <Label Content="Физические размеры и вес:"
+                                          FontSize="20"
+                                          HorizontalAlignment="Center"
+                                          Foreground="Gray"
+                                          Margin="0,10,0,0"
+                                          FontWeight="SemiBold"/>
+                                   <!--TurbinePGP-->
+                                   <Label Content="Пакет выработки электроэнергии:"
+                                          FontSize="18"
+                                          HorizontalAlignment="Center"
+                                          Foreground="Gray"
+                                          Margin="0,10,0,0"
+                                          FontWeight="SemiBold"/>
+                                   <StackPanel>
+                                       <StackPanel Orientation="Horizontal">
+                                           <Label Content="Приблизительный вес: "
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                           <TextBlock Text="{Binding ProjectTurbineNavigation.TurbinePgpNavigation.Weight}" 
+                                                  TextAlignment="Center"
+                                                  TextDecorations="Underline"
+                                                  FontSize="15"
+                                                  Padding="0,5,0,0"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                           <Label Content=" кг"
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                       </StackPanel>
+                                       <StackPanel Orientation="Horizontal">
+                                           <Label Content="Длина: "
+                                                  FontSize="15"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                           <TextBlock Text="{Binding ProjectTurbineNavigation.TurbinePgpNavigation.Lenght}" 
+                                                  TextAlignment="Center"
+                                                  TextDecorations="Underline"
+                                                  FontSize="15"
+                                                  Padding="0,5,0,0"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                           <Label Content=" м"
+                                                  FontSize="15"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                       </StackPanel>
+                                       <StackPanel Orientation="Horizontal">
+                                           <Label Content="Ширина: "
+                                                  FontSize="15"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                           <TextBlock Text="{Binding ProjectTurbineNavigation.TurbinePgpNavigation.Width}" 
+                                                      TextAlignment="Center"
+                                                      TextDecorations="Underline"
+                                                      FontSize="15"
+                                                      Padding="0,5,0,0"
+                                                      Foreground="Gray"
+                                                      FontWeight="SemiBold"/>
+                                           <Label Content=" м"
+                                                  FontSize="15"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                       </StackPanel>
+                                       <StackPanel Orientation="Horizontal">
+                                           <Label Content="Высота: "
+                                                  FontSize="15"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                           <TextBlock Text="{Binding ProjectTurbineNavigation.TurbinePgpNavigation.Height}" 
+                                                      TextAlignment="Center"
+                                                      TextDecorations="Underline"
+                                                      FontSize="15"
+                                                      Padding="0,5,0,0"
+                                                      Foreground="Gray"
+                                                      FontWeight="SemiBold"/>
+                                           <Label Content=" м"
+                                                  FontSize="15"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                       </StackPanel>
+                                   </StackPanel>
+                                   <!-- TurbineMdpNavigation -->
+                                    <Label Content="Пакет механического привода:"
+                                          FontSize="18"
+                                          HorizontalAlignment="Center"
+                                          Foreground="Gray"
+                                          Margin="0,10,0,0"
+                                          FontWeight="SemiBold"/>
+                                   <StackPanel>
+                                       <StackPanel Orientation="Horizontal">
+                                           <Label Content="Приблизительный вес: "
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                           <TextBlock Text="{Binding ProjectTurbineNavigation.TurbineMdpNavigation.Weight}" 
+                                                  TextAlignment="Center"
+                                                  TextDecorations="Underline"
+                                                  FontSize="15"
+                                                  Padding="0,5,0,0"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                           <Label Content=" кг"
+                                              FontSize="15"
+                                              Foreground="Gray"
+                                              FontWeight="SemiBold"/>
+                                       </StackPanel>
+                                       <StackPanel Orientation="Horizontal">
+                                           <Label Content="Длина: "
+                                                  FontSize="15"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                           <TextBlock Text="{Binding ProjectTurbineNavigation.TurbineMdpNavigation.Lenght}" 
+                                                  TextAlignment="Center"
+                                                  TextDecorations="Underline"
+                                                  FontSize="15"
+                                                  Padding="0,5,0,0"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                           <Label Content=" м"
+                                                  FontSize="15"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                       </StackPanel>
+                                       <StackPanel Orientation="Horizontal">
+                                           <Label Content="Ширина: "
+                                                  FontSize="15"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                           <TextBlock Text="{Binding ProjectTurbineNavigation.TurbineMdpNavigation.Width}" 
+                                                      TextAlignment="Center"
+                                                      TextDecorations="Underline"
+                                                      FontSize="15"
+                                                      Padding="0,5,0,0"
+                                                      Foreground="Gray"
+                                                      FontWeight="SemiBold"/>
+                                           <Label Content=" м"
+                                                  FontSize="15"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                       </StackPanel>
+                                       <StackPanel Orientation="Horizontal">
+                                           <Label Content="Высота: "
+                                                  FontSize="15"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                           <TextBlock Text="{Binding ProjectTurbineNavigation.TurbineMdpNavigation.Height}" 
+                                                      TextAlignment="Center"
+                                                      TextDecorations="Underline"
+                                                      FontSize="15"
+                                                      Padding="0,5,0,0"
+                                                      Foreground="Gray"
+                                                      FontWeight="SemiBold"/>
+                                           <Label Content=" м"
+                                                  FontSize="15"
+                                                  Foreground="Gray"
+                                                  FontWeight="SemiBold"/>
+                                       </StackPanel>
+                                   </StackPanel>
+                               </StackPanel>
+                         </StackPanel>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="ListViewItem" x:Key="DescriptionCard">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel HorizontalAlignment="Center">
+                            <Image Source="{Binding ProjectTurbineNavigation.TurbineImageNavigation.ImageOne}"
+                                   Width="320"
+                                   Height="190"
+                                   Stretch="UniformToFill"/>
+                        </StackPanel>
+                        <TextBlock Text="{Binding ProjectTurbineNavigation.TurbineDescription}"
+                                   FontSize="15"
+                                   Margin="0,10,0,0"
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch"
+                                   TextWrapping="Wrap"
+                                   Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ScrollViewer}}, Path=ActualWidth  }"
                                    Foreground="Gray"
                                    FontWeight="SemiBold"/>
-                            <StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Content="Выходная мощность: "
-                                           FontSize="15"
-                                           Foreground="Gray"
-                                           FontWeight="SemiBold"/>
-                                    <TextBlock Text="{Binding ProjectTurbineNavigation.TurbineScpgNavigation.PowerOutput}" 
-                                               TextAlignment="Center"
-                                               TextDecorations="Underline"
-                                               FontSize="15"
-                                               Padding="0,5,0,0"
-                                               Foreground="Gray"
-                                               FontWeight="SemiBold"/>
-                                    <Label Content=" МВт (эл.)"
-                                           FontSize="15"
-                                           Foreground="Gray"
-                                           FontWeight="SemiBold"/>
-                                </StackPanel>
-                            </StackPanel>
-                        </StackPanel>
                     </StackPanel>
-                    
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

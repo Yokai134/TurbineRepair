@@ -13,7 +13,7 @@ namespace TurbineRepair.ViewModel
         public class ImageSource
         {
             public string imageSource { get; set; }
-        }
+        }      
         public List<ImageSource> ImageSources { get; set; }
         public ProjectContentVM() 
         { 

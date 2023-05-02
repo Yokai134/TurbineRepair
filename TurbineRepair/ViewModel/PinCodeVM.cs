@@ -41,7 +41,7 @@ namespace TurbineRepair.ViewModel
                 MainWindowViewModel.main.CurrentControl = new MainVM();
                 Application.Current.MainWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                 Application.Current.MainWindow.SizeToContent = SizeToContent.Manual;
-                Application.Current.MainWindow.Width = 900;
+                Application.Current.MainWindow.Width = 950;
                 Application.Current.MainWindow.Height = 550;
             }
             else ErrorMessage = "*Invalid pincode";

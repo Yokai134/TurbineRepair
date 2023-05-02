@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:TurbineRepair.View.ContentGUI.MainContentGUI"
              xmlns:viewModel="clr-namespace:TurbineRepair.ViewModel"
              mc:Ignorable="d" 
-             d:DesignHeight="520" d:DesignWidth="700">
+             d:DesignHeight="520" d:DesignWidth="750">
 
     <UserControl.DataContext>
         <viewModel:ProjectContentVM/>
@@ -24,13 +24,26 @@
                           ItemContainerStyle="{StaticResource ImageCard}"/>
             </TabItem>
             <TabItem Style="{StaticResource TabItemStyle}" 
-                     Header="Описание">
-                <ListView Background="Transparent"
-                          BorderThickness="0"
-                          Margin="10"
-                          ItemsSource="{Binding Projects}"
-                          ItemContainerStyle="{StaticResource TurbineCard}"/>
+                     Header="Характеристики">
+                <ScrollViewer Margin="10,10,5,10">
+                    <ListView Background="Transparent"
+                              BorderThickness="0"
+                              Margin="10,0,15,0"
+                              ItemsSource="{Binding Projects}"
+                              ItemContainerStyle="{StaticResource TurbineCard}"/>
+                </ScrollViewer>
             </TabItem>
+            <TabItem Style="{StaticResource TabItemStyle}"
+                     Header="Описание">
+                <ScrollViewer>
+                    <ListView Background="Transparent"
+                          BorderThickness="0"
+                          ItemsSource="{Binding Projects}"
+                          ItemContainerStyle="{StaticResource DescriptionCard}"/>
+                </ScrollViewer>
+            </TabItem>
+
+
         </TabControl>
 
     </Grid>

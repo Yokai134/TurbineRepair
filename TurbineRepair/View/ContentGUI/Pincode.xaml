@@ -28,7 +28,7 @@
                 <component:BindablePasswordBox
                     Password="{Binding Pin, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                     Width="290"
-                    Height="40"
+                    Height="50"
                     Margin="10,0"/>
             </StackPanel>
             <TextBlock Text="{Binding ErrorMessage}"
