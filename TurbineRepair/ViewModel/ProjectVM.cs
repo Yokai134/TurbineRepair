@@ -12,13 +12,21 @@ namespace TurbineRepair.ViewModel
 {
     internal class ProjectVM : Base.ViewModel
     {
-        TurbinerepairContext context = new TurbinerepairContext();
+        public static ProjectVM projectVM;
 
+        private ProjectDatum _selectedProject;
+        public ProjectDatum SelectedProject
+        {
+            get => _selectedProject;
+            set => Set(ref _selectedProject,value);
+        }
         public List<ProjectDatum> Projects { get; set; }
 
         public ProjectVM() 
         {
-            Projects = MainWindowViewModel.main.ProjectData.Where(x=>x.ProjectExecutor == MainWindowViewModel.main.CurrentUser.Id).ToList();                              
+            Projects = MainWindowViewModel.main.ProjectData.Where(x=>x.ProjectExecutor == MainWindowViewModel.main.CurrentUser.Id).ToList();
+            projectVM = this;
+            
         }
     }
 }

@@ -43,6 +43,10 @@
             <DataTemplate DataType="{x:Type viewModel:ChatVM}">
                 <viewMain:Chat/>
             </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:ProjectContentVM}">
+                <viewMain:ProjectContent/>
+            </DataTemplate>
             
         </ResourceDictionary>
     </Application.Resources>

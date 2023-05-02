@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TurbineRepair.View.ContentGUI.MainContentGUI.ProjectControl
+namespace TurbineRepair.View.ContentGUI.MainContentGUI
 {
     /// <summary>
     /// Логика взаимодействия для ProjectContent.xaml

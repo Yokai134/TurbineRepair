@@ -13,8 +13,10 @@
     
     <Grid>
         <ListView ItemsSource="{Binding Projects}"
+                  SelectedItem="{Binding SelectedProject}"
                   Background="Transparent"
                   BorderThickness="0"
-                  ItemContainerStyle="{StaticResource ProjectCard}"/>
+                  ItemContainerStyle="{StaticResource ProjectCard}">
+        </ListView>
     </Grid>
 </UserControl>

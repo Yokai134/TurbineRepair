@@ -20,15 +20,17 @@ namespace TurbineRepair.ViewModel
         public static TurbinerepairContext context = new TurbinerepairContext();
 
 
-        /* ---------------------------------------------------- UserControl -------------------------------- */
+        /* ------------------------------------------ UserControl ----------------------------------*/
 
         #region UserControl
         private AutheticationVM autheticationVM { get; set; }
         #endregion
 
-        /* ---------------------------------------------------- UserControl -------------------------------- */
+        /* ------------------------------------------ UserControl ----------------------------------*/
 
-        /* ---------------------------------------------------- Property -------------------------------- */
+
+
+        /* ------------------------------------------- Property ------------------------------------*/
 
         #region Property
 
@@ -69,9 +71,20 @@ namespace TurbineRepair.ViewModel
         }
         #endregion
 
+        #region CurrentProject
+        private ProjectDatum _currentProject = null;
+        public ProjectDatum CurrentProject
+        {
+            get => _currentProject;
+            set => Set(ref _currentProject, value);
+        }
+
         #endregion
 
-        /* ---------------------------------------------------- Property -------------------------------- */
+        #endregion
+
+        /* ------------------------------------------- Property ------------------------------------*/
+
 
 
         /* --------------------------------------------- List --------------------------------------*/
@@ -125,6 +138,46 @@ namespace TurbineRepair.ViewModel
             get => _usersAll;
             set => Set(ref _usersAll, value);
         }
+        #endregion
+
+        #region TurbineData
+
+        private List<TurbineScpg> _turbineScpg = context.TurbineScpgs.ToList();
+        public List<TurbineScpg> TurbineScpgs
+        {
+            get => _turbineScpg;
+            set => Set(ref _turbineScpg, value);
+        }
+
+        private List<TurbineMdum> _turbineMda = context.TurbineMda.ToList();
+        public List<TurbineMdum> TurbineMda
+        {
+            get => _turbineMda;
+            set => Set(ref _turbineMda, value);
+        }
+
+
+        private List<TurbinePgp> _turbinePgp = context.TurbinePgps.ToList();
+        public List<TurbinePgp> TurbinePgp
+        {
+            get => _turbinePgp;
+            set => Set(ref _turbinePgp, value);
+        }
+
+        private List<TurbineMdp> _turbineMdp = context.TurbineMdps.ToList();
+        public List<TurbineMdp> TurbineMdp
+        {
+            get => _turbineMdp;
+            set => Set(ref _turbineMdp, value);
+        }
+
+        private List<TurbineImage> _turbineImage = context.TurbineImages.ToList();
+        public List<TurbineImage> TurbineImage
+        {
+            get => _turbineImage;
+            set => Set(ref _turbineImage, value);
+        }
+
         #endregion
 
         #endregion

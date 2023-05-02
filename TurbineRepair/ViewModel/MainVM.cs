@@ -15,6 +15,8 @@ namespace TurbineRepair.ViewModel
 {
     internal class MainVM : Base.ViewModel
     {
+        public static MainVM mainVM;
+
         #region Command
         /*------------------------------------------- Command ---------------------------------------------------*/
 
@@ -209,6 +211,7 @@ namespace TurbineRepair.ViewModel
         public MainVM() 
         {
             MainCurrentControl = new MyProfileVM();
+            mainVM = this;
 
             #region Command
             /*------------------------------------------- Command ---------------------------------------------------*/

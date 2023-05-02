@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="TurbineResource\SGT-100\SGT-100-1.jpg" />
+    <None Remove="TurbineResource\SGT-100\SGT-100-2.jpg" />
+    <None Remove="TurbineResource\SGT-100\SGT-100-3.jpg" />
+    <None Remove="TurbineResource\SGT-100\SGT-100-4.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="FontAwesome6.Svg" Version="2.5.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
@@ -24,15 +31,14 @@
 
   <ItemGroup>
     <Resource Include="ResourceApp\Image\images.jpg" />
+    <Resource Include="TurbineResource\SGT-100\SGT-100-1.jpg" />
+    <Resource Include="TurbineResource\SGT-100\SGT-100-2.jpg" />
+    <Resource Include="TurbineResource\SGT-100\SGT-100-3.jpg" />
+    <Resource Include="TurbineResource\SGT-100\SGT-100-4.png" />
   </ItemGroup>
 
 
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Folder Include="TurbineResource\SGT-100\" />
   </ItemGroup>
 </Project>
