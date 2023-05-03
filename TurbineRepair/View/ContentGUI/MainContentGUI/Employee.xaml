@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="TurbineRepair.View.ContentGUI.MainContentGUI.Employee"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TurbineRepair.View.ContentGUI.MainContentGUI"
+             xmlns:viewModel="clr-namespace:TurbineRepair.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="520" d:DesignWidth="750">
+
+    <UserControl.DataContext>
+        <viewModel:EmployeeVM/>
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <TextBox Style="{StaticResource AutheticationTextBox}"
+                     Height="50"
+                     Text="{Binding SearchUser, UpdateSourceTrigger=PropertyChanged}"
+                     Padding="20,13,0,0"
+                     FontSize="20"
+                     Margin="10">
+                <TextBox.InputBindings>
+                    <KeyBinding Command="{Binding UserSearch}" Key="Return"/>
+                </TextBox.InputBindings>
+            </TextBox>
+        </StackPanel>
+        <ListView Grid.Row="1"
+                  Background="Transparent"
+                  BorderThickness="0"
+                  ItemContainerStyle="{StaticResource UserCard}"
+                  ItemsSource="{Binding UserItem, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <Label Grid.Row="2"
+               Content="{Binding SearchUser, UpdateSourceTrigger=PropertyChanged}"
+               FontSize="20"
+               Foreground="Gray"/>
+    </Grid>
+</UserControl>

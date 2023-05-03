@@ -26,7 +26,7 @@
                     HorizontalAlignment="Center">
             <Image Width="100"
                    Height="100" 
-                   Source="/ResourceApp/Image/images.jpg"
+                   Source="{Binding UserDatum.Image}"
                    Stretch="UniformToFill">
                 <Image.Clip>
                     <RectangleGeometry RadiusX="30" RadiusY="30" Rect="0,0,100,100"/>

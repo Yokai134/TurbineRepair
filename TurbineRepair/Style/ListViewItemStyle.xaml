@@ -18,12 +18,13 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ListViewItem">
                     <Border Background="{TemplateBinding Background}"
+                            BorderBrush="#3e4147"
                             BorderThickness="1"
                             CornerRadius="25"
                             Margin="10,10">
 
                         <StackPanel Orientation="Vertical">
-                            <StackPanel Margin="10,0,0,0">
+                            <StackPanel Margin="10">
                                 <Label Content="{Binding ProjectName}"
                                        FontSize="20"
                                        FontWeight="SemiBold"/>
@@ -107,7 +108,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListViewItem">
-                    <Border BorderBrush="Black"
+                    <Border BorderBrush="#3e4147"
                             BorderThickness="1"
                             CornerRadius="25"
                             Width="660"
@@ -795,6 +796,83 @@
                                    Foreground="Gray"
                                    FontWeight="SemiBold"/>
                     </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="ListViewItem" x:Key="UserCard">
+
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="#292b2F"/>
+            </Trigger>
+        </Style.Triggers>
+
+        <Setter Property="Background" Value="#36393F"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="#3e4147"
+                            BorderThickness="1"
+                            CornerRadius="25"
+                            Margin="10,10">
+
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+                                <Image Width="100"
+                                       Height="100" 
+                                       Source="{Binding Image}"
+                                       Stretch="UniformToFill"
+                                       Margin="50,10">
+                                    <Image.Clip>
+                                        <RectangleGeometry RadiusX="30" RadiusY="30" Rect="0,0,100,100"/>
+                                    </Image.Clip>
+                                </Image>
+
+                            </StackPanel>
+                            <StackPanel VerticalAlignment="Center">
+                                <Label Content="{Binding Surname}"
+                                       Margin="10"
+                                       Foreground="Gray"
+                                       FontSize="20"
+                                       FontWeight="SemiBold"/>
+                                <Label Content="{Binding Name}"
+                                       Margin="10"
+                                       Foreground="Gray"
+                                       FontSize="20"
+                                       FontWeight="SemiBold"/>
+                                <Label Content="{Binding Patronomyc}"
+                                       Margin="10"
+                                       Foreground="Gray"
+                                       FontSize="20"
+                                       FontWeight="SemiBold"/>
+                            </StackPanel>
+
+                            <StackPanel VerticalAlignment="Center">
+                                <Label Content="{Binding PostNavigation.PostName}"
+                                       Margin="10"
+                                       Foreground="Gray"
+                                       FontSize="20"
+                                       FontWeight="SemiBold"/>
+                                <Label Content="{Binding PostNavigation.Deportament.DeportamentName}"
+                                       Margin="10"
+                                       Foreground="Gray"
+                                       FontSize="20"
+                                       FontWeight="SemiBold"/>
+                                <Label Content="{Binding Phone}"
+                                       Margin="10"
+                                       Foreground="Gray"
+                                       FontSize="20"
+                                       FontWeight="SemiBold"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

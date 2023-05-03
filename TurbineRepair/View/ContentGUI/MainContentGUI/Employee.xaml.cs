@@ -12,25 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TurbineRepair.ViewModel;
 
 namespace TurbineRepair.View.ContentGUI.MainContentGUI
 {
     /// <summary>
-    /// Логика взаимодействия для Project.xaml
+    /// Логика взаимодействия для Employee.xaml
     /// </summary>
-    public partial class Project : UserControl
+    public partial class Employee : UserControl
     {
-        public Project()
+        public Employee()
         {
             InitializeComponent();
-            for (int i = 0; i < MainWindowViewModel.main.UsersAll.Count; i++)
-            {
-                cb_users.Items.Add(MainWindowViewModel.main.UsersAll[i].Surname + " " +
-                    MainWindowViewModel.main.UsersAll[i].Name + " " + MainWindowViewModel.main.UsersAll[i].Patronomyc);
-            }
         }
-
-
     }
 }

@@ -12,9 +12,21 @@
     </UserControl.DataContext>
     
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <ComboBox Style="{DynamicResource ComboBoxProject}" 
+                  x:Name="cb_users"
+                  Margin="10"
+                  Padding="20,13,0,0"
+                  FontSize="20"
+                  ItemContainerStyle="{StaticResource }"
+                  Foreground="Gray"/>
         <ListView ItemsSource="{Binding Projects}"
                   SelectedItem="{Binding SelectedProject}"
                   Background="Transparent"
+                  Grid.Row="1"
                   BorderThickness="0"
                   ItemContainerStyle="{StaticResource ProjectCard}">
         </ListView>

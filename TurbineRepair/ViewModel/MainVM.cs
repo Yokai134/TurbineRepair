@@ -77,6 +77,7 @@ namespace TurbineRepair.ViewModel
             BoolBackgroundChat = false;
             BoolBackgroundProject = true;
             BoolBackgroundNotification = false;
+            BoolBackgroundEmployee = false;
         }
         #endregion
 
@@ -91,6 +92,7 @@ namespace TurbineRepair.ViewModel
             BoolBackgroundChat = false;
             BoolBackgroundProject = false;
             BoolBackgroundNotification = true;
+            BoolBackgroundEmployee = false;
         }
         #endregion
 
@@ -105,6 +107,7 @@ namespace TurbineRepair.ViewModel
             BoolBackgroundChat = false;
             BoolBackgroundProject = false;
             BoolBackgroundNotification = false;
+            BoolBackgroundEmployee = false;
         }
         #endregion
 
@@ -140,6 +143,21 @@ namespace TurbineRepair.ViewModel
             BoolBackgroundChat = true;
             BoolBackgroundProject = false;
             BoolBackgroundNotification = false;
+            BoolBackgroundEmployee = false;
+        }
+        #endregion
+
+        #region OpenEmployeeControl
+        public ICommand OpenEmployeeControl { get; }
+        private bool CanOpenEmployeeControlExecute(object parameter) => true;
+        private void OnOpenEmployeeControlExecute(object parameter)
+        {
+            MainCurrentControl = new EmployeeVM();
+            BoolBackgroundProfile = false;
+            BoolBackgroundChat = false;
+            BoolBackgroundProject = false;
+            BoolBackgroundNotification = false;
+            BoolBackgroundEmployee = true;
         }
         #endregion
 
@@ -200,6 +218,15 @@ namespace TurbineRepair.ViewModel
         }
         #endregion
 
+        #region BoolBackgroundEmployee
+        private bool _boolBackgroundEmployee = false;
+        public bool BoolBackgroundEmployee
+        {
+            get => _boolBackgroundEmployee;
+            set => Set(ref _boolBackgroundEmployee, value);
+        }
+        #endregion
+
 
         /* ------------------------------------------ Property --------------------------------------------------*/
         #endregion
@@ -248,6 +275,10 @@ namespace TurbineRepair.ViewModel
 
             #region OpenChatControl
             OpenChatControl = new LambdaCommand(OnOpenChatControlExecute, CanOpenChatControlExecute);
+            #endregion
+
+            #region OpenEmployeeControl
+            OpenEmployeeControl = new LambdaCommand(OnOpenEmployeeControlExecute, CanOpenEmployeeControlExecute);
             #endregion
 
             #endregion

@@ -180,6 +180,25 @@ namespace TurbineRepair.ViewModel
 
         #endregion
 
+        #region Posts
+        private List<Post> _postsAll = context.Posts.ToList();
+        public List<Post> PostsAll
+        {
+            get => _postsAll;
+            set => Set(ref _postsAll, value);
+        }
+        #endregion
+
+        #region Deportaments
+
+        private List<Deportament> _deportamentsAll = context.Deportaments.ToList();
+        public List <Deportament> DeportamentsAll
+        {
+            get => _deportamentsAll;
+            set => Set(ref _deportamentsAll, value);
+        }
+        #endregion
+
         #endregion
 
         /* --------------------------------------------- List --------------------------------------*/

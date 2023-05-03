@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 using TurbineRepair.Infrastructure;
 using TurbineRepair.Migration;
 using TurbineRepair.Test;
@@ -45,7 +46,7 @@ namespace TurbineRepair.ViewModel
         public ObservableCollection<ContractInfo> Contact { get; set; }
         public ObservableCollection<MessageInfo> Messages { get; set; }
 
-        public List<UserDatum> User { get; set; }   
+        public List<UserDatum> User { get; set; }
         #endregion
 
         #region ContactItem
@@ -87,10 +88,11 @@ namespace TurbineRepair.ViewModel
 
         /*--------------------------------------------------- Property ------------------------------------------*/
 
+
         /// <summary>
         /// 
         /// </summary>
-        public ChatVM() 
+        public ChatVM()
         {
             /*--------------------------------------------------- Command -------------------------------------------*/
 
@@ -117,9 +119,9 @@ namespace TurbineRepair.ViewModel
                 isNativeOrigin = false,
                 firstMessage = true
             });
-        
 
-            for(int i = 0; i < 4;i++)
+
+            for (int i = 0; i < 4; i++)
             {
                 Messages.Add(new MessageInfo()
                 {
@@ -148,7 +150,7 @@ namespace TurbineRepair.ViewModel
                 Contact.Add(new ContractInfo()
                 {
                     contactName = User[i].Name,
-                    imageSource = "https://i.imgur.com/xI3Imav.jpeg",
+                    imageSource = User[i].Image,
                     messages = Messages
                 });
             }
@@ -156,5 +158,6 @@ namespace TurbineRepair.ViewModel
 
             ContactItem = Contact;
         }
+
     }
 }

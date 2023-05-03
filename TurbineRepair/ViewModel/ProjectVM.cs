@@ -14,6 +14,7 @@ namespace TurbineRepair.ViewModel
     {
         public static ProjectVM projectVM;
 
+
         private ProjectDatum _selectedProject;
         public ProjectDatum SelectedProject
         {
@@ -24,7 +25,13 @@ namespace TurbineRepair.ViewModel
 
         public ProjectVM() 
         {
-            Projects = MainWindowViewModel.main.ProjectData.Where(x=>x.ProjectExecutor == MainWindowViewModel.main.CurrentUser.Id).ToList();
+            if (MainWindowViewModel.main.CurrentUser.Role != 1)
+            {
+                Projects = MainWindowViewModel.main.ProjectData.Where(x => x.ProjectExecutor == MainWindowViewModel.main.CurrentUser.Id).ToList();
+            }
+
+            Projects = MainWindowViewModel.main.ProjectData;
+          
             projectVM = this;
             
         }
