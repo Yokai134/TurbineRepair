@@ -24,11 +24,6 @@ namespace TurbineRepair.View.ContentGUI.MainContentGUI
         public Project()
         {
             InitializeComponent();
-            for (int i = 0; i < MainWindowViewModel.main.UsersAll.Count; i++)
-            {
-                cb_users.Items.Add(MainWindowViewModel.main.UsersAll[i].Surname + " " +
-                    MainWindowViewModel.main.UsersAll[i].Name + " " + MainWindowViewModel.main.UsersAll[i].Patronomyc);
-            }
         }
 
 

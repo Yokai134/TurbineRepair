@@ -16,6 +16,7 @@
                 <ResourceDictionary Source="/Style/TabItemStyle.xaml"/>
                 <ResourceDictionary Source="/Style/ScrollStyle.xaml"/>
                 <ResourceDictionary Source="/Style/ComboBoxStyle.xaml"/>
+                <ResourceDictionary Source="/Style/ComboBoxItemStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate DataType="{x:Type viewModel:AutheticationVM}">
