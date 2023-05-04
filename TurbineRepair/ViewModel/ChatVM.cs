@@ -18,6 +18,13 @@ namespace TurbineRepair.ViewModel
     {
         TurbinerepairContext context = new TurbinerepairContext();
 
+        private UserDatum _currentUser = MainWindowViewModel.main.CurrentUser;
+        public UserDatum CurrentUser
+        {
+            get=>_currentUser;
+            set => Set(ref _currentUser, value);
+        }
+
         /*--------------------------------------------------- Command -------------------------------------------*/
 
         #region Command
@@ -109,6 +116,7 @@ namespace TurbineRepair.ViewModel
             Messages = new ObservableCollection<MessageInfo>();
             User = MainWindowViewModel.main.UsersAll;
 
+
             Messages.Add(new MessageInfo()
             {
                 contactName = "test",
@@ -147,7 +155,7 @@ namespace TurbineRepair.ViewModel
 
             for (int i = 0; i < User.Count; i++)
             {
-                if (User[i].Id != MainWindowViewModel.main.CurrentUser.Id)
+                if (User[i].Id != CurrentUser.Id)
                 {
                     Contact.Add(new ContractInfo()
                     {

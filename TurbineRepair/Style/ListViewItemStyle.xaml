@@ -27,41 +27,52 @@
                             <StackPanel Margin="10">
                                 <Label Content="{Binding ProjectName}"
                                        FontSize="20"
+                                       Foreground="Gray"
                                        FontWeight="SemiBold"/>
                                 <StackPanel Orientation="Horizontal">
                                     <Label Content="Исполнитель: "
                                            FontSize="20"
+                                           Foreground="Gray"
                                            FontWeight="SemiBold"/>
                                     <Label Content="{Binding ProjectExecutorNavigation.Surname}"
                                            FontSize="20"
+                                           Foreground="Gray"
                                            FontWeight="SemiBold"/>
                                     <Label Content="{Binding ProjectExecutorNavigation.Name}"
                                            FontSize="20"
+                                           Foreground="Gray"
                                            FontWeight="SemiBold"/>
                                     <Label Content="{Binding ProjectExecutorNavigation.Patronomyc}"
                                            FontSize="20"
+                                           Foreground="Gray"
                                            FontWeight="SemiBold"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <Label Content="Статус: "
                                            FontSize="20"
+                                           Foreground="Gray"
                                            FontWeight="SemiBold"/>
                                     <Label Content="{Binding ProjectStatusNavigation.StatusName}"
                                            FontSize="20"
+                                           Foreground="Gray"
                                            FontWeight="SemiBold"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <Label Content="Заказчик: "
                                            FontSize="20"
+                                           Foreground="Gray"
                                            FontWeight="SemiBold"/>
                                     <Label Content="{Binding ProjectCustomerNavigation.CustomerSurname}"
                                            FontSize="20"
+                                           Foreground="Gray"
                                            FontWeight="SemiBold"/>
                                     <Label Content="{Binding ProjectCustomerNavigation.CustomerName}"
                                            FontSize="20"
+                                           Foreground="Gray"
                                            FontWeight="SemiBold"/>
                                     <Label Content="{Binding ProjectCustomerNavigation.CustomerPatronomyc}"
                                            FontSize="20"
+                                           Foreground="Gray"
                                            FontWeight="SemiBold"/>
                                 </StackPanel>
                               
@@ -70,16 +81,20 @@
                                         Margin="10,0,0,0">
                                 <Label Content="Дата начала: "
                                        FontWeight="SemiBold"
+                                       Foreground="Gray"
                                        FontSize="20"/>
                                 <Label Content="{Binding ProjectDataStart}"
                                        FontSize="20"
+                                       Foreground="Gray"
                                        FontWeight="SemiBold"/>
                                 <Label Content="Дата окончания: "
                                        FontWeight="SemiBold"
+                                       Foreground="Gray"
                                        FontSize="20"
                                        Margin="50,0,0,0"/>
                                 <Label Content="{Binding ProjectDataEnd}"
                                        FontSize="20"
+                                       Foreground="Gray"
                                        FontWeight="SemiBold"/>
                             </StackPanel>
                             <StackPanel HorizontalAlignment="Right"
