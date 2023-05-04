@@ -107,7 +107,7 @@ namespace TurbineRepair.ViewModel
             /*--------------------------------------------------- Command -------------------------------------------*/
             Contact = new ObservableCollection<ContractInfo>();
             Messages = new ObservableCollection<MessageInfo>();
-            User = context.UserData.ToList();
+            User = MainWindowViewModel.main.UsersAll;
 
             Messages.Add(new MessageInfo()
             {
@@ -147,12 +147,16 @@ namespace TurbineRepair.ViewModel
 
             for (int i = 0; i < User.Count; i++)
             {
-                Contact.Add(new ContractInfo()
+                if (User[i].Id != MainWindowViewModel.main.CurrentUser.Id)
                 {
-                    contactName = User[i].Name,
-                    imageSource = User[i].Image,
-                    messages = Messages
-                });
+                    Contact.Add(new ContractInfo()
+                    {
+                        contactName = User[i].Name,
+                        imageSource = User[i].Image,
+                        messages = Messages
+                    });
+                }
+
             }
 
 

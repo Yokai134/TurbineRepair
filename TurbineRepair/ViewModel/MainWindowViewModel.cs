@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using TurbineRepair.ViewModel;
 using TurbineRepair.Migration;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace TurbineRepair.ViewModel
 {
@@ -79,6 +80,15 @@ namespace TurbineRepair.ViewModel
             set => Set(ref _currentProject, value);
         }
 
+        #endregion
+
+        #region UpdateDataUser
+        private UserDatum _updateUser;
+        public UserDatum UpdateUser
+        {
+            get => _updateUser;
+            set => Set(ref _updateUser, value);
+        }
         #endregion
 
         #endregion
@@ -220,6 +230,21 @@ namespace TurbineRepair.ViewModel
         {           
             CurrentControl = new AutheticationVM();
             main = this;
+        }
+
+
+        public async Task UpdateData()
+        {
+            await Task.Run(() => ProjectData = context.ProjectData.ToList());
+            await Task.Run(() => CustomersAll = context.Customers.ToList());
+            await Task.Run(() => TurbinesAll = context.Turbines.ToList());
+            await Task.Run(() => StatusesAll = context.StatusProjects.ToList());
+            await Task.Run(() => UsersAll = context.UserData.ToList());
+            await Task.Run(() => TurbineImage = context.TurbineImages.ToList());
+            await Task.Run(() => TurbineScpgs = context.TurbineScpgs.ToList());
+            await Task.Run(() => TurbineMda = context.TurbineMda.ToList());
+            await Task.Run(() => TurbinePgp = context.TurbinePgps.ToList());
+            await Task.Run(() => TurbineMdp = context.TurbineMdps.ToList());
         }
 
 

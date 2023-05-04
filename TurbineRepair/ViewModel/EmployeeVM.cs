@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using TurbineRepair.Infrastructure;
@@ -31,15 +32,31 @@ namespace TurbineRepair.ViewModel
         #region OpenCreateUser
 
         public ICommand OpenCreateUser { get; }
-        private bool CanOPenCreateUserExecute(object parametr) => true;
+        private bool CanOpenCreateUserExecute(object parametr) => true;
         private void OnOpenCreateUserExecute(object parametr)
         {
+            MainWindowViewModel.main.UpdateUser = null;
             MainVM.mainVM.MainCurrentControl = new CreateOrUpdateEmployee();
         }
 
         #endregion
 
+        #region OpenUpdateUser
 
+        public ICommand OpenUpdateUser { get; }
+        private bool CanOpenUpdateUserExecute(object parametr) => true;
+        private void OnOpenUpdateUserExecute(object parametr)
+        {
+            if(UserUpd != null)
+            {
+                MainWindowViewModel.main.UpdateUser = UserUpd;
+                MainVM.mainVM.MainCurrentControl = new CreateOrUpdateEmployee();
+            }
+            else MessageBox.Show("Не выбран пользователь","Уведомление",MessageBoxButton.OK,MessageBoxImage.Question);
+           
+        }
+
+        #endregion
 
         #region UserItem
         private object _userItem;
@@ -49,7 +66,6 @@ namespace TurbineRepair.ViewModel
             set => Set(ref _userItem, value);
         }
         #endregion
-
 
         #region List
 
@@ -76,6 +92,15 @@ namespace TurbineRepair.ViewModel
 
         #endregion
 
+        #region UpdUser
+        private UserDatum _userUpd;
+        public UserDatum UserUpd
+        {
+            get => _userUpd;
+            set => Set(ref _userUpd, value);
+        }
+        #endregion
+
         /*----------------------------------- Property ---------------------------*/
 
         #endregion
@@ -93,8 +118,12 @@ namespace TurbineRepair.ViewModel
 
             #region OpenCreateUser
 
-            OpenCreateUser = new LambdaCommand(OnOpenCreateUserExecute, CanOPenCreateUserExecute);
+            OpenCreateUser = new LambdaCommand(OnOpenCreateUserExecute, CanOpenCreateUserExecute);
 
+            #endregion
+
+            #region OpenUpdateUser
+            OpenUpdateUser = new LambdaCommand(OnOpenUpdateUserExecute, CanOpenUpdateUserExecute);
             #endregion
 
             /*----------------------------------- Command --------------------------------*/

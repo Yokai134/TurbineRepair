@@ -33,11 +33,17 @@
                   Background="Transparent"
                   BorderThickness="0"
                   ItemContainerStyle="{StaticResource UserCard}"
+                  SelectedItem="{Binding UserUpd, UpdateSourceTrigger=PropertyChanged}"
                   ItemsSource="{Binding UserItem, UpdateSourceTrigger=PropertyChanged}"/>
 
         <StackPanel Grid.Row="2"
                    Orientation="Horizontal"
                     HorizontalAlignment="Right">
+            <Button Style="{StaticResource ButtonMain}"
+                    Command="{Binding OpenUpdateUser}"
+                    Margin="10"
+                    Width="100"
+                    Content="Изменить"/>
             <Button Style="{StaticResource ButtonMain}"
                     Command="{Binding OpenCreateUser}"
                     Margin="10"
