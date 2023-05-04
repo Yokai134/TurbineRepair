@@ -199,6 +199,15 @@ namespace TurbineRepair.ViewModel
         }
         #endregion
 
+        #region Role
+        private List<Role> _roleAll = context.Roles.ToList();
+        public List<Role> RoleAll
+        {
+            get => _roleAll;
+            set => Set(ref _roleAll, value);
+        }
+        #endregion
+
         #endregion
 
         /* --------------------------------------------- List --------------------------------------*/

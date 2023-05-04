@@ -29,10 +29,9 @@ namespace TurbineRepair.ViewModel
 
                 if (SelectUser != null)
                 {
-                    UserDatum user = MainWindowViewModel.main.UsersAll.Where(x => x.Surname == SelectUser).First();
-                    ProjectItem = Projects.Where(x => x.ProjectExecutor == user.Id).ToList();
+                    ProjectItem = Projects.Where(x => x.ProjectExecutorNavigation.Surname.StartsWith(SelectUser)).ToList();
                 }
-                else ProjectItem = Projects;
+                else if(SelectUser == "")ProjectItem = Projects;
             }
             catch
             {

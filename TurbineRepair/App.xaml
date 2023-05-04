@@ -54,6 +54,10 @@
             <DataTemplate DataType="{x:Type viewModel:EmployeeVM}">
                 <viewMain:Employee/>
             </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:CreateOrUpdateEmployee}">
+                <viewMain:CreateOrUpdateEmployee/>
+            </DataTemplate>
             
         </ResourceDictionary>
     </Application.Resources>

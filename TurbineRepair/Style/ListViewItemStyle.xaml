@@ -877,5 +877,71 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
+    <Style TargetType="ListViewItem" x:Key="RoleCard">
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="#252b2F"/>
+            </Trigger>
+        </Style.Triggers>
+
+        <Setter Property="Background" Value="#36393F"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListViewItem">
+
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="#3e4147"
+                            BorderThickness="1"
+                            CornerRadius="15"
+                            Margin="10,10">
+                        <StackPanel>
+                            <Label Content="{Binding RoleName}"
+                                   Foreground="Gray"
+                                   Margin="20,0"
+                                   FontSize="20"/>
+                        </StackPanel>
+                        
+                    </Border>
+                    
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+    <Style TargetType="ListViewItem" x:Key="PostCard">
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="#252b2F"/>
+            </Trigger>
+        </Style.Triggers>
+
+        <Setter Property="Background" Value="#36393F"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListViewItem">
+
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="#3e4147"
+                            BorderThickness="1"
+                            CornerRadius="15"
+                            Margin="10,10">
+                        <StackPanel>
+                            <Label Content="{Binding PostName}"
+                                   Foreground="Gray"
+                                   Margin="20,0"
+                                   FontSize="20"/>
+                        </StackPanel>
+
+                    </Border>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
 </ResourceDictionary>

@@ -27,7 +27,7 @@
                 <KeyBinding Command="{Binding SearchUserProject}" Key="Return"/>
             </TextBox.InputBindings>
         </TextBox>
-        <ListView ItemsSource="{Binding ProjectItem}"
+        <ListView ItemsSource="{Binding ProjectItem, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedProject}"
                   Background="Transparent"
                   Grid.Row="1"

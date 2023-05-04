@@ -28,6 +28,17 @@ namespace TurbineRepair.ViewModel
         }
         #endregion
 
+        #region OpenCreateUser
+
+        public ICommand OpenCreateUser { get; }
+        private bool CanOPenCreateUserExecute(object parametr) => true;
+        private void OnOpenCreateUserExecute(object parametr)
+        {
+            MainVM.mainVM.MainCurrentControl = new CreateOrUpdateEmployee();
+        }
+
+        #endregion
+
 
 
         #region UserItem
@@ -75,7 +86,21 @@ namespace TurbineRepair.ViewModel
             UserSearch = new LambdaCommand(OnUserSearchExecute, CanUserSearchExecute);
             Users = MainWindowViewModel.main.UsersAll;
             UserItem = Users;
-        } 
+
+            #region Command
+
+            /*----------------------------------- Command --------------------------------*/
+
+            #region OpenCreateUser
+
+            OpenCreateUser = new LambdaCommand(OnOpenCreateUserExecute, CanOPenCreateUserExecute);
+
+            #endregion
+
+            /*----------------------------------- Command --------------------------------*/
+
+            #endregion
+        }
 
     }
 }
