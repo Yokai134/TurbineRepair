@@ -235,6 +235,9 @@
                                                  Value="false">
                                         <Setter Property="Background" Value="#36393F"/>
                                     </DataTrigger>
+                                    <DataTrigger Binding="{Binding CurrentUser.Role}" Value="2">
+                                        <Setter Property="Height" Value="0"/>
+                                    </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </StackPanel.Style>
@@ -248,6 +251,40 @@
                                         Width="25"
                                         Margin="12.5,0,0,0"/>
                         <Label Content="Сотрудники"
+                               FontSize="20"
+                               Margin="10,0,0,0"
+                               Foreground="Gray"
+                               FontWeight="SemiBold"/>
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Stretch"
+                                Orientation="Horizontal">
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=BoolBackgroundTurbine, UpdateSourceTrigger=PropertyChanged}"
+                                                 Value="True">
+                                        <Setter Property="Background" Value="#252b2F"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Path=BoolBackgroundTurbine, UpdateSourceTrigger=PropertyChanged}"
+                                                 Value="false">
+                                        <Setter Property="Background" Value="#36393F"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding CurrentUser.Role}" Value="3">
+                                        <Setter Property="Height" Value="0"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+                        <StackPanel.InputBindings>
+                            <MouseBinding Command="{Binding OpenTurbineControl}"
+                                          MouseAction="LeftClick"/>
+                        </StackPanel.InputBindings>
+                        <fa6:SvgAwesome Icon="Solid_Industry"
+                                        Height="25"
+                                        PrimaryColor="Gray"
+                                        Width="25"
+                                        Margin="12.5,0,0,0"/>
+                        <Label Content="Турбины"
                                FontSize="20"
                                Margin="10,0,0,0"
                                Foreground="Gray"

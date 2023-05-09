@@ -109,6 +109,8 @@ public partial class TurbinerepairContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.ProjectName).HasMaxLength(255);
+            entity.Property(e => e.DeleteProject);
+            entity.Property(e => e.ProjectCost).HasPrecision(15, 4);
 
             entity.HasOne(d => d.ProjectCustomerNavigation).WithMany(p => p.ProjectData)
                 .HasForeignKey(d => d.ProjectCustomer)
@@ -126,6 +128,8 @@ public partial class TurbinerepairContext : DbContext
                 .HasForeignKey(d => d.ProjectTurbine)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Turbine_fk");
+
+           
         });
 
         modelBuilder.Entity<Role>(entity =>
@@ -160,6 +164,7 @@ public partial class TurbinerepairContext : DbContext
             entity.Property(e => e.TurbineName).HasMaxLength(30);
             entity.Property(e => e.TurbinePgp).HasColumnName("TurbinePGP");
             entity.Property(e => e.TurbineScpg).HasColumnName("TurbineSCPG");
+            entity.Property(e => e.DeleteTurbine);
 
             entity.HasOne(d => d.TurbineImageNavigation).WithMany(p => p.Turbines)
                 .HasForeignKey(d => d.TurbineImage)

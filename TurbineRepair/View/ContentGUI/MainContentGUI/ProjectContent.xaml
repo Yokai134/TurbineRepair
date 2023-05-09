@@ -169,8 +169,27 @@
                                        FontSize="15"
                                        Foreground="Gray"/>
                         </Grid>
-                        <DataGrid ItemsSource="{Binding Projects}" Background="Transparent" Foreground="Gray"
-                                      FontSize="15">
+                        <StackPanel HorizontalAlignment="Center"
+                                    Margin="0,10">
+                            <Label Content="СПЕЦИФИКАЦИЯ ПРОДУКЦИИ"
+                                   FontSize="20"
+                                   Foreground="Gray"
+                                   FontWeight="SemiBold"/>
+                        </StackPanel>
+                        <DataGrid ItemsSource="{Binding GridInfo}" 
+                                  Background="#36393F" 
+                                  Foreground="Gray"
+                                  AutoGenerateColumns="False"
+                                  IsReadOnly="True"
+                                  FontSize="15">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Наименование продукции" Binding="{Binding ProductName}"/>
+                                <DataGridTextColumn Header="Ед. изм." Binding="{Binding Unit}"/>
+                                <DataGridTextColumn Header="Количество" Binding="{Binding ProductCount}"/>
+                                <DataGridTextColumn Header="Стоимость" Binding="{Binding ProductCost}"/>
+                                <DataGridTextColumn Header="НДС" Binding="{Binding NDS}"/>
+                                <DataGridTextColumn Header="Стоимость с ндс" Binding="{Binding ProductCostNDS}"/>
+                            </DataGrid.Columns>
 
                         </DataGrid>
                     </StackPanel>

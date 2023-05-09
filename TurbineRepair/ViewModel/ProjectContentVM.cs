@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace TurbineRepair.ViewModel
@@ -11,6 +12,27 @@ namespace TurbineRepair.ViewModel
         {
             public string imageSource { get; set; }
         }
+
+        public class DataGridInfo
+        {
+            public string ProductName { get; set; }
+            public string Unit { get; set; }
+            public int ProductCount { get; set; }
+            public double ProductCost { get; set; }
+            public double NDS { get; set; }
+            public double ProductCostNDS { get; set; }
+
+            double CostNds(double ProductCost)
+            {
+                return ProductCost * 0.10;
+            }
+
+            double CostSum(double ProductCost, double NDS)
+            {
+                return NDS + ProductCost;
+            }
+        }
+
         #endregion
 
         #region List
@@ -76,7 +98,15 @@ namespace TurbineRepair.ViewModel
             set => Set(ref _sevenParagraph, value);
         }
 
+        private List<DataGridInfo> _gridInfo = new List<DataGridInfo>();
+        public List<DataGridInfo> GridInfo
+        {
+            get => _gridInfo;
+            set => Set(ref _gridInfo, value);
+        }
+
         #endregion
+
 
         public ProjectContentVM() 
         {
@@ -184,6 +214,17 @@ namespace TurbineRepair.ViewModel
                 "\r\n6.2. Настоящий Договор составлен в двух экземплярах – по одному для каждой из Сторон. \r\n");
 
             await Task.Run(() => SevenParagraph = "Приложение 1 к Договору на изготовление и поставку персонализированной деловой и канцелярской продукции от " + Projects[0].ProjectDataStart);
+
+            await Task.Run(() => GridInfo.Add(new DataGridInfo()
+            {
+                ProductName = Projects[0].ProjectTurbineNavigation.TurbineName,
+                Unit = "шт.",
+                ProductCount = Projects.Count,
+                ProductCost = Projects[0].ProjectCost,
+                NDS = Projects[0].ProjectCost * 0.1,
+                ProductCostNDS = Projects[0].ProjectCost + (Projects[0].ProjectCost * 0.1),
+            }));
+
         }
 
     }

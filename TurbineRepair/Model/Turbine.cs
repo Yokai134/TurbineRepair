@@ -21,6 +21,8 @@ public partial class Turbine
 
     public string TurbineDescription { get; set; } = null!;
 
+    public bool? DeleteTurbine { get; set; }
+
     public virtual ICollection<ProjectDatum> ProjectData { get; set; } = new List<ProjectDatum>();
 
     public virtual TurbineImage TurbineImageNavigation { get; set; } = null!;

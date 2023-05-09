@@ -961,4 +961,52 @@
 
     </Style>
 
+    <Style TargetType="ListViewItem" x:Key="TurbineListCard">
+
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="#292b2F"/>
+            </Trigger>
+        </Style.Triggers>
+
+        <Setter Property="Background" Value="#36393F"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListViewItem">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="#3e4147"
+                            BorderThickness="1"
+                            CornerRadius="25"
+                            Margin="10,10">
+
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+                                <Image Width="320"
+                                       Height="200" 
+                                       Source="{Binding TurbineImageNavigation.ImageOne}"
+                                       Stretch="Uniform"
+                                       Margin="50,10">
+                                    <Image.Clip>
+                                        <RectangleGeometry RadiusX="30" RadiusY="30" Rect="0,0,320,170"/>
+                                    </Image.Clip>
+                                </Image>
+                            </StackPanel>
+                            <StackPanel HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+                                <Label Content="{Binding TurbineName}"
+                                       FontSize="20"
+                                       Foreground="Gray"
+                                       FontWeight="SemiBold"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        
+    </Style>
+
 </ResourceDictionary>

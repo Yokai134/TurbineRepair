@@ -21,6 +21,10 @@ public partial class ProjectDatum
 
     public int ProjectTurbine { get; set; }
 
+    public bool? DeleteProject { get; set; }
+
+    public double ProjectCost { get; set; }
+
     public virtual Customer? ProjectCustomerNavigation { get; set; }
 
     public virtual UserDatum? ProjectExecutorNavigation { get; set; }

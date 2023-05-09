@@ -8,12 +8,12 @@
              d:DesignHeight="200" d:DesignWidth="750">
 
     <StackPanel>
-        <Grid HorizontalAlignment="Right">
-            <TextBlock Text="Приложение 1 к Договору на изготовление и поставку персонализированной деловой и канцелярской продукции от"
-                       Width="150"
-                       TextWrapping="Wrap"/>
-        </Grid>
-        <DataGrid Height="70">
-        </DataGrid>
+        <Image Height="200"
+               Width="320"
+               Stretch="UniformToFill" Source="/TurbineResource/SGT-100/SGT-100-1.jpg">
+            <Image.Clip>
+                <RectangleGeometry RadiusX="30" RadiusY="30" Rect="0,0,320,170"/>
+            </Image.Clip>
+        </Image>
     </StackPanel>
 </UserControl>

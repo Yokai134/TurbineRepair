@@ -78,6 +78,7 @@ namespace TurbineRepair.ViewModel
             BoolBackgroundProject = true;
             BoolBackgroundNotification = false;
             BoolBackgroundEmployee = false;
+            BoolBackgroundTurbine = false;
         }
         #endregion
 
@@ -93,6 +94,7 @@ namespace TurbineRepair.ViewModel
             BoolBackgroundProject = false;
             BoolBackgroundNotification = true;
             BoolBackgroundEmployee = false;
+            BoolBackgroundTurbine = false;
         }
         #endregion
 
@@ -108,6 +110,7 @@ namespace TurbineRepair.ViewModel
             BoolBackgroundProject = false;
             BoolBackgroundNotification = false;
             BoolBackgroundEmployee = false;
+            BoolBackgroundTurbine = false;
         }
         #endregion
 
@@ -144,6 +147,7 @@ namespace TurbineRepair.ViewModel
             BoolBackgroundProject = false;
             BoolBackgroundNotification = false;
             BoolBackgroundEmployee = false;
+            BoolBackgroundTurbine = false;
         }
         #endregion
 
@@ -158,6 +162,22 @@ namespace TurbineRepair.ViewModel
             BoolBackgroundProject = false;
             BoolBackgroundNotification = false;
             BoolBackgroundEmployee = true;
+            BoolBackgroundTurbine = false;
+        }
+        #endregion
+
+        #region OpenTurbineControl
+        public ICommand OpenTurbineControl { get; }
+        private bool CanOpenTurbineControlExecute(object parameter) => true;
+        private void OnOpenTurbineControlExecute(object parameter)
+        {
+            MainCurrentControl = new TurbineVM();
+            BoolBackgroundProfile = false;
+            BoolBackgroundChat = false;
+            BoolBackgroundProject = false;
+            BoolBackgroundNotification = false;
+            BoolBackgroundEmployee = false;
+            BoolBackgroundTurbine = true;
         }
         #endregion
 
@@ -227,6 +247,24 @@ namespace TurbineRepair.ViewModel
         }
         #endregion
 
+        #region BoolBackgroundTurbine
+        private bool _boolBackgroundTurbine = false;
+        public bool BoolBackgroundTurbine
+        {
+            get => _boolBackgroundTurbine;
+            set => Set(ref _boolBackgroundTurbine, value);
+        }
+        #endregion
+
+        #region CurrentUser
+        private UserDatum _currentUser = MainWindowViewModel.main.CurrentUser;
+        public UserDatum CurrentUser
+        {
+            get => _currentUser;
+            set => Set(ref _currentUser, value);
+        }
+        #endregion
+
 
         /* ------------------------------------------ Property --------------------------------------------------*/
         #endregion
@@ -238,6 +276,7 @@ namespace TurbineRepair.ViewModel
         public MainVM() 
         {
             MainCurrentControl = new MyProfileVM();
+            BoolBackgroundProfile = true;
             mainVM = this;
 
             #region Command
@@ -279,6 +318,10 @@ namespace TurbineRepair.ViewModel
 
             #region OpenEmployeeControl
             OpenEmployeeControl = new LambdaCommand(OnOpenEmployeeControlExecute, CanOpenEmployeeControlExecute);
+            #endregion
+
+            #region OpenTurbineControl
+            OpenTurbineControl = new LambdaCommand(OnOpenTurbineControlExecute, CanOpenTurbineControlExecute);
             #endregion
 
             #endregion
