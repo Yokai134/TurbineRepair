@@ -1,8 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:cmd ="clr-namespace:TurbineRepair.ViewModel">
+                    xmlns:cmd ="clr-namespace:TurbineRepair.ViewModel"
+                    xmlns:converter="clr-namespace:TurbineRepair.ResourceApp">
 
-
+    <converter:ConverterString x:Key="dataConverter"/>
 
     <Style TargetType="ListViewItem" x:Key="ProjectCard">
 
@@ -83,16 +84,17 @@
                                        FontWeight="SemiBold"
                                        Foreground="Gray"
                                        FontSize="20"/>
-                                <Label Content="{Binding ProjectDataStart}"
+                                <Label Content="{Binding ProjectDataStart, Converter={StaticResource dataConverter}}"
                                        FontSize="20"
                                        Foreground="Gray"
-                                       FontWeight="SemiBold"/>
+                                       FontWeight="SemiBold">
+                                </Label>
                                 <Label Content="Дата окончания: "
                                        FontWeight="SemiBold"
                                        Foreground="Gray"
                                        FontSize="20"
                                        Margin="50,0,0,0"/>
-                                <Label Content="{Binding ProjectDataEnd}"
+                                <Label Content="{Binding ProjectDataEnd, Converter={StaticResource dataConverter}}"
                                        FontSize="20"
                                        Foreground="Gray"
                                        FontWeight="SemiBold"/>

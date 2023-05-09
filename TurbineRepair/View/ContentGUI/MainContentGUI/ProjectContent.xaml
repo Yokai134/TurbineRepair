@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TurbineRepair.View.ContentGUI.MainContentGUI"
+             xmlns:converter="clr-namespace:TurbineRepair.ResourceApp"
              xmlns:viewModel="clr-namespace:TurbineRepair.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="520" d:DesignWidth="750">
@@ -12,9 +13,169 @@
         <viewModel:ProjectContentVM/>
     </UserControl.DataContext>
 
+    <UserControl.Resources>
+        <converter:ConverterString x:Key="dataConverter"/>
+    </UserControl.Resources>
+
     <Grid Background="Transparent">
         <TabControl Background="Transparent"
                     BorderBrush="Transparent">
+            
+            <TabItem Style="{StaticResource TabItemStyle}"
+                     Header="Контракт">
+                <ScrollViewer Margin="5">
+                    <StackPanel Margin="10">
+                        <StackPanel HorizontalAlignment="Center"
+                                    VerticalAlignment="Top"
+                                    Orientation="Horizontal">
+                            <Label Content="Договор №"
+                                   FontSize="20"
+                                   Foreground="Gray"/>
+                            <Label Content="{Binding Projects[0].Id}"
+                                   FontSize="20"
+                                   Foreground="Gray"/>
+
+                        </StackPanel>
+                        <StackPanel HorizontalAlignment="Right"
+                                    VerticalAlignment="Top">
+                            <Label Content="{Binding Projects[0].ProjectDataStart, Converter={StaticResource dataConverter}}"
+                                   FontSize="15"
+                                   Foreground="Gray"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="{Binding HeaderContract}"
+                                       FontSize="15"
+                                       Margin="0,10,0,0"
+                                       HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Stretch"
+                                       TextWrapping="Wrap"
+                                       Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type StackPanel}}, Path=ActualWidth  }"
+                                       Foreground="Gray"/>
+                        </StackPanel>
+                        <StackPanel HorizontalAlignment="Center"
+                                    VerticalAlignment="Top"
+                                    Margin="0,10,0,0"
+                                    Orientation="Horizontal">
+                            <Label Content="1. Предмет Договора"
+                                   FontSize="20"
+                                   Foreground="Gray"
+                                   FontWeight="SemiBold"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="{Binding FirstParagraph}"
+                                       FontSize="15"
+                                       Margin="0,10,0,0"
+                                       HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Stretch"
+                                       TextWrapping="Wrap"
+                                       Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type StackPanel}}, Path=ActualWidth  }"
+                                       Foreground="Gray"/>
+                        </StackPanel>
+                        <StackPanel HorizontalAlignment="Center"
+                                    VerticalAlignment="Top"
+                                    Orientation="Horizontal">
+                            <Label Content="2. Цена Работ. Порядок расчетов по Договору"
+                                   FontSize="20"
+                                   Foreground="Gray"
+                                   FontWeight="SemiBold"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="{Binding TwoParagraph}"
+                                       FontSize="15"
+                                       Margin="0,10,0,0"
+                                       HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Stretch"
+                                       TextWrapping="Wrap"
+                                       Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type StackPanel}}, Path=ActualWidth  }"
+                                       Foreground="Gray"/>
+                        </StackPanel>
+                        <StackPanel HorizontalAlignment="Center"
+                                    VerticalAlignment="Top"
+                                    Orientation="Horizontal">
+                            <Label Content="3. Права и обязанности Сторон"
+                                   FontSize="20"
+                                   Foreground="Gray"
+                                   FontWeight="SemiBold"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="{Binding ThreeParagraph}"
+                                       FontSize="15"
+                                       Margin="0,10,0,0"
+                                       HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Stretch"
+                                       TextWrapping="Wrap"
+                                       Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type StackPanel}}, Path=ActualWidth  }"
+                                       Foreground="Gray"/>
+                        </StackPanel>
+                        <StackPanel HorizontalAlignment="Center"
+                                    VerticalAlignment="Top"
+                                    Orientation="Horizontal">
+                            <Label Content="4. Приемка результата Работ"
+                                   FontSize="20"
+                                   Foreground="Gray"
+                                   FontWeight="SemiBold"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="{Binding FourParagraph}"
+                                       FontSize="15"
+                                       Margin="0,10,0,0"
+                                       HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Stretch"
+                                       TextWrapping="Wrap"
+                                       Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type StackPanel}}, Path=ActualWidth  }"
+                                       Foreground="Gray"/>
+                        </StackPanel>
+                        <StackPanel HorizontalAlignment="Center"
+                                    VerticalAlignment="Top"
+                                    Orientation="Horizontal">
+                            <Label Content="5. Ответственность Сторон. Разрешение споров."
+                                   FontSize="20"
+                                   Foreground="Gray"
+                                   FontWeight="SemiBold"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="{Binding FiveParagraph}"
+                                       FontSize="15"
+                                       Margin="0,10,0,0"
+                                       HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Stretch"
+                                       TextWrapping="Wrap"
+                                       Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type StackPanel}}, Path=ActualWidth  }"
+                                       Foreground="Gray"/>
+                        </StackPanel>
+                        <StackPanel HorizontalAlignment="Center"
+                                    VerticalAlignment="Top"
+                                    Orientation="Horizontal">
+                            <Label Content="6. Заключительные положения"
+                                   FontSize="20"
+                                   Foreground="Gray"
+                                   FontWeight="SemiBold"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="{Binding SixParagraph}"
+                                       FontSize="15"
+                                       Margin="0,10,0,0"
+                                       HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Stretch"
+                                       TextWrapping="Wrap"
+                                       Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type StackPanel}}, Path=ActualWidth  }"
+                                       Foreground="Gray"/>
+                        </StackPanel>
+                        <Grid HorizontalAlignment="Right"
+                              Margin="0,0,0,10">
+                            <TextBlock Text="{Binding SevenParagraph}"
+                                       Width="200"
+                                       TextWrapping="Wrap"
+                                       FontSize="15"
+                                       Foreground="Gray"/>
+                        </Grid>
+                        <DataGrid ItemsSource="{Binding Projects}" Background="Transparent" Foreground="Gray"
+                                      FontSize="15">
+
+                        </DataGrid>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
             <TabItem Style="{StaticResource TabItemStyle}" 
                      Header="Изображения">
                 <ListView Margin="10"
@@ -42,7 +203,6 @@
                           ItemContainerStyle="{StaticResource DescriptionCard}"/>
                 </ScrollViewer>
             </TabItem>
-
 
         </TabControl>
 

@@ -27,6 +27,8 @@ public partial class UserDatum
 
     public string? Image { get; set; }
 
+    public bool? DeleteUser { get; set; }
+
     public virtual Post? PostNavigation { get; set; }
 
     public virtual ICollection<ProjectDatum> ProjectData { get; set; } = new List<ProjectDatum>();

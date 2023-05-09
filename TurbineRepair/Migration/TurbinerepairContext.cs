@@ -276,6 +276,7 @@ public partial class TurbinerepairContext : DbContext
             entity.Property(e => e.Pincode).HasMaxLength(6);
             entity.Property(e => e.Surname).HasMaxLength(32);
             entity.Property(e => e.Image).HasMaxLength(255);
+            entity.Property(e => e.DeleteUser);
 
             entity.HasOne(d => d.PostNavigation).WithMany(p => p.UserData)
                 .HasForeignKey(d => d.Post)

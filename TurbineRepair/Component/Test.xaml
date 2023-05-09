@@ -7,54 +7,13 @@
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="750">
 
-    <StackPanel Orientation="Horizontal">
-        <StackPanel HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
-            <Image Width="100"
-                   Height="100" 
-                   Source="{Binding Image}"
-                   Stretch="UniformToFill"
-                   Margin="50,10">
-                <Image.Clip>
-                    <RectangleGeometry RadiusX="30" RadiusY="30" Rect="0,0,100,100"/>
-                </Image.Clip>
-            </Image>
-           
-        </StackPanel>
-        <StackPanel VerticalAlignment="Center">
-            <Label Content="dsadasd"
-                   Margin="10"
-                   Foreground="Gray"
-                   FontSize="20"
-                   FontWeight="SemiBold"/>
-            <Label Content="dsadasd"
-                   Margin="10"
-                   Foreground="Gray"
-                   FontSize="20"
-                   FontWeight="SemiBold"/>
-            <Label Content="dsadasd"
-                   Margin="10"
-                   Foreground="Gray"
-                   FontSize="20"
-                   FontWeight="SemiBold"/>
-        </StackPanel>
-
-        <StackPanel VerticalAlignment="Center">
-            <Label Content="dsadasd"
-                   Margin="10"
-                   Foreground="Gray"
-                   FontSize="20"
-                   FontWeight="SemiBold"/>
-            <Label Content="dsadasd"
-                   Margin="10"
-                   Foreground="Gray"
-                   FontSize="20"
-                   FontWeight="SemiBold"/>
-            <Label Content="dsadasd"
-                   Margin="10"
-                   Foreground="Gray"
-                   FontSize="20"
-                   FontWeight="SemiBold"/>
-        </StackPanel>
+    <StackPanel>
+        <Grid HorizontalAlignment="Right">
+            <TextBlock Text="Приложение 1 к Договору на изготовление и поставку персонализированной деловой и канцелярской продукции от"
+                       Width="150"
+                       TextWrapping="Wrap"/>
+        </Grid>
+        <DataGrid Height="70">
+        </DataGrid>
     </StackPanel>
 </UserControl>

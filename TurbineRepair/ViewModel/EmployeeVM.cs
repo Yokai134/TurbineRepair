@@ -15,6 +15,10 @@ namespace TurbineRepair.ViewModel
     internal class EmployeeVM : Base.ViewModel
     {
 
+        #region Command
+
+        /*-----------------------------------Command-------------------------------------*/
+
         #region UserSearch
         public ICommand UserSearch { get; }
 
@@ -55,6 +59,32 @@ namespace TurbineRepair.ViewModel
             else MessageBox.Show("Не выбран пользователь","Уведомление",MessageBoxButton.OK,MessageBoxImage.Question);
            
         }
+        #endregion
+
+        #region DeleteUser
+
+        public ICommand DeleteUser { get; }
+        private bool CanDeleteUserExecute(object parametr) => true;
+        private async void OnDeleteUserExecute(object parametr)
+        {
+
+            if (UserUpd != null)
+            {
+                UserDatum delUser = UserUpd;
+                delUser.DeleteUser = true;
+                MainWindowViewModel.context.SaveChanges();
+                await MainWindowViewModel.main.UpdateData();
+                UserItem = MainWindowViewModel.main.UsersAll;
+                UserItem = Users.Where(x => x.DeleteUser == false);
+            }
+            else MessageBox.Show("Не выбран пользователь", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Question);
+            
+            
+
+        }
+        #endregion
+
+        /*-----------------------------------Command-------------------------------------*/
 
         #endregion
 
@@ -110,7 +140,7 @@ namespace TurbineRepair.ViewModel
 
             UserSearch = new LambdaCommand(OnUserSearchExecute, CanUserSearchExecute);
             Users = MainWindowViewModel.main.UsersAll;
-            UserItem = Users;
+            UserItem = Users.Where(x => x.DeleteUser == false);
 
             #region Command
 
@@ -124,6 +154,10 @@ namespace TurbineRepair.ViewModel
 
             #region OpenUpdateUser
             OpenUpdateUser = new LambdaCommand(OnOpenUpdateUserExecute, CanOpenUpdateUserExecute);
+            #endregion
+
+            #region DeleteUser
+            DeleteUser = new LambdaCommand(OnDeleteUserExecute, CanDeleteUserExecute);
             #endregion
 
             /*----------------------------------- Command --------------------------------*/

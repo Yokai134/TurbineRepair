@@ -10,7 +10,7 @@
     <UserControl.DataContext>
         <viewModel:ProjectVM/>
     </UserControl.DataContext>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>

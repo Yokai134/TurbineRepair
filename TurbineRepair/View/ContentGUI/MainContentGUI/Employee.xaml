@@ -40,6 +40,11 @@
                    Orientation="Horizontal"
                     HorizontalAlignment="Right">
             <Button Style="{StaticResource ButtonMain}"
+                    Command="{Binding DeleteUser}"
+                    Margin="10"
+                    Width="100"
+                    Content="Удалить"/>
+            <Button Style="{StaticResource ButtonMain}"
                     Command="{Binding OpenUpdateUser}"
                     Margin="10"
                     Width="100"
