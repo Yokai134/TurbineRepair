@@ -13,7 +13,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using TurbineRepair.Infrastructure;
 using TurbineRepair.Migration;
-
+using TurbineRepair.Model;
 
 namespace TurbineRepair.ViewModel
 {
@@ -53,10 +53,16 @@ namespace TurbineRepair.ViewModel
                 Post postCurrent = posts.FirstOrDefault();
                 if (userCurrent != null)
                 {
-                    MainWindowViewModel.main.CurrentControl = new PinCodeVM();
                     MainWindowViewModel.main.CurrentUser = userCurrent;
                     MainWindowViewModel.main.Posts = postCurrent;
                     MainWindowViewModel.main.Deport = deportamentCurrent;
+                    MainWindowViewModel.main.CurrentControl = new MainVM();
+                    Application.Current.MainWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                    Application.Current.MainWindow.SizeToContent = SizeToContent.Manual;
+                    Application.Current.MainWindow.Width = 950;
+                    Application.Current.MainWindow.Height = 550;
+                    Application.Current.MainWindow.MinWidth = 950;
+                    Application.Current.MainWindow.MinHeight = 550;
 
                 }
                 else
@@ -64,7 +70,7 @@ namespace TurbineRepair.ViewModel
                     ErrorMessage = "*Invalid login or password";
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 ErrorMessage = "*Invalid login or password";
             }

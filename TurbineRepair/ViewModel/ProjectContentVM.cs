@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using TurbineRepair.Model;
 
 namespace TurbineRepair.ViewModel
 {
@@ -220,9 +222,9 @@ namespace TurbineRepair.ViewModel
                 ProductName = Projects[0].ProjectTurbineNavigation.TurbineName,
                 Unit = "шт.",
                 ProductCount = Projects.Count,
-                ProductCost = Projects[0].ProjectCost,
-                NDS = Projects[0].ProjectCost * 0.1,
-                ProductCostNDS = Projects[0].ProjectCost + (Projects[0].ProjectCost * 0.1),
+                ProductCost = Convert.ToDouble(Projects[0].ProjectCost),
+                NDS = Convert.ToDouble(Projects[0].ProjectCost) * 0.1,
+                ProductCostNDS = Convert.ToDouble(Projects[0].ProjectCost) + (Convert.ToDouble(Projects[0].ProjectCost) * 0.1),
             }));
 
         }

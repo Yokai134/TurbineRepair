@@ -17,6 +17,7 @@
                 <ResourceDictionary Source="/Style/ScrollStyle.xaml"/>
                 <ResourceDictionary Source="/Style/ComboBoxStyle.xaml"/>
                 <ResourceDictionary Source="/Style/ComboBoxItemStyle.xaml"/>
+                <ResourceDictionary Source="/Style/DatePickerStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate DataType="{x:Type viewModel:AutheticationVM}">
@@ -61,6 +62,10 @@
 
             <DataTemplate DataType="{x:Type viewModel:TurbineVM}">
                 <viewMain:Turbine/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:CreateOrUpdateProjectVM}">
+                <viewMain:CreateOrUpdateProject/>
             </DataTemplate>
             
         </ResourceDictionary>

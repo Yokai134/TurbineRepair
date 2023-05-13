@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TurbineRepair;
+namespace TurbineRepair.Model;
 
 public partial class Role
 {

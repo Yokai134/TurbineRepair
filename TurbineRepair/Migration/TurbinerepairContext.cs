@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using TurbineRepair.Model;
 
 namespace TurbineRepair.Migration;
 
@@ -40,6 +41,8 @@ public partial class TurbinerepairContext : DbContext
     public virtual DbSet<TurbinePgp> TurbinePgps { get; set; }
 
     public virtual DbSet<TurbineScpg> TurbineScpgs { get; set; }
+
+    public virtual DbSet<TypeOfWork> TypeOfWorks { get; set; }
 
     public virtual DbSet<UserDatum> UserData { get; set; }
 
@@ -108,17 +111,20 @@ public partial class TurbinerepairContext : DbContext
             entity.HasKey(e => e.Id).HasName("ProjectData_pkey");
 
             entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.ProjectName).HasMaxLength(255);
-            entity.Property(e => e.DeleteProject);
             entity.Property(e => e.ProjectCost).HasPrecision(15, 4);
+            entity.Property(e => e.ProjectName).HasMaxLength(255);
 
             entity.HasOne(d => d.ProjectCustomerNavigation).WithMany(p => p.ProjectData)
                 .HasForeignKey(d => d.ProjectCustomer)
                 .HasConstraintName("Customer_fk");
 
-            entity.HasOne(d => d.ProjectExecutorNavigation).WithMany(p => p.ProjectData)
+            entity.HasOne(d => d.ProjectExecutorNavigation).WithMany(p => p.ProjectDatumProjectExecutorNavigations)
                 .HasForeignKey(d => d.ProjectExecutor)
                 .HasConstraintName("UserData_Executor_fk");
+
+            entity.HasOne(d => d.ProjectSecondExecutorNavigation).WithMany(p => p.ProjectDatumProjectSecondExecutorNavigations)
+                .HasForeignKey(d => d.ProjectSecondExecutor)
+                .HasConstraintName("SecondExecutor_fk");
 
             entity.HasOne(d => d.ProjectStatusNavigation).WithMany(p => p.ProjectData)
                 .HasForeignKey(d => d.ProjectStatus)
@@ -129,7 +135,10 @@ public partial class TurbinerepairContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Turbine_fk");
 
-           
+            entity.HasOne(d => d.TypeProjectNavigation).WithMany(p => p.ProjectData)
+                .HasForeignKey(d => d.TypeProject)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("TypeOfWork_fk");
         });
 
         modelBuilder.Entity<Role>(entity =>
@@ -164,7 +173,6 @@ public partial class TurbinerepairContext : DbContext
             entity.Property(e => e.TurbineName).HasMaxLength(30);
             entity.Property(e => e.TurbinePgp).HasColumnName("TurbinePGP");
             entity.Property(e => e.TurbineScpg).HasColumnName("TurbineSCPG");
-            entity.Property(e => e.DeleteTurbine);
 
             entity.HasOne(d => d.TurbineImageNavigation).WithMany(p => p.Turbines)
                 .HasForeignKey(d => d.TurbineImage)
@@ -268,11 +276,22 @@ public partial class TurbinerepairContext : DbContext
             entity.Property(e => e.TurbineSpeed).HasMaxLength(32);
         });
 
+        modelBuilder.Entity<TypeOfWork>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("TypeOfWork_pkey");
+
+            entity.ToTable("TypeOfWork");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.NameWork).HasMaxLength(55);
+        });
+
         modelBuilder.Entity<UserDatum>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("UserData_pkey");
 
             entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Image).HasMaxLength(255);
             entity.Property(e => e.Login).HasMaxLength(32);
             entity.Property(e => e.Name).HasMaxLength(32);
             entity.Property(e => e.Password).HasMaxLength(16);
@@ -280,8 +299,6 @@ public partial class TurbinerepairContext : DbContext
             entity.Property(e => e.Phone).HasMaxLength(12);
             entity.Property(e => e.Pincode).HasMaxLength(6);
             entity.Property(e => e.Surname).HasMaxLength(32);
-            entity.Property(e => e.Image).HasMaxLength(255);
-            entity.Property(e => e.DeleteUser);
 
             entity.HasOne(d => d.PostNavigation).WithMany(p => p.UserData)
                 .HasForeignKey(d => d.Post)

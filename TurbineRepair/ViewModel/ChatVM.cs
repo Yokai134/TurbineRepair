@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using TurbineRepair.Infrastructure;
 using TurbineRepair.Migration;
+using TurbineRepair.Model;
 using TurbineRepair.Test;
 
 namespace TurbineRepair.ViewModel

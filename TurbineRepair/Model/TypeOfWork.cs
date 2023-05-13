@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace TurbineRepair.Model;
 
-public partial class StatusProject
+public partial class TypeOfWork
 {
     public int Id { get; set; }
 
-    public string StatusName { get; set; } = null!;
+    public string NameWork { get; set; } = null!;
 
     public virtual ICollection<ProjectDatum> ProjectData { get; set; } = new List<ProjectDatum>();
 }

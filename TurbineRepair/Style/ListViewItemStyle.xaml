@@ -1009,4 +1009,136 @@
         
     </Style>
 
+    <Style TargetType="ListViewItem" x:Key="UserCreateProjectCard">
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="#292b2F"/>
+            </Trigger>
+        </Style.Triggers>
+        <Setter Property="Background" Value="#36393F"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListViewItem">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="#3e4147"
+                            BorderThickness="1"
+                            CornerRadius="25"
+                            Margin="10,5">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{Binding Surname}"
+                                   Foreground="Gray"
+                                   FontSize="20"
+                                   Margin="20,0,0,0"
+                                   FontWeight="SemiBold"/>
+                            <Label Content="{Binding Name}"
+                                   Foreground="Gray"
+                                   FontSize="20"
+                                   FontWeight="SemiBold"/>
+                            <Label Content="{Binding Patronomyc}"
+                                   Foreground="Gray"
+                                   FontSize="20"
+                                   FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="ListViewItem" x:Key="StatusCreateProjectCard">
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="#292b2F"/>
+            </Trigger>
+        </Style.Triggers>
+        <Setter Property="Background" Value="#36393F"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListViewItem">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="#3e4147"
+                            BorderThickness="1"
+                            CornerRadius="25"
+                            Margin="10,5">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{Binding StatusName}"
+                                   Foreground="Gray"
+                                   Margin="20,0,0,0"
+                                   FontSize="20"
+                                   FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="ListViewItem" x:Key="CustomerCreateProjectCard">
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="#292b2F"/>
+            </Trigger>
+        </Style.Triggers>
+        <Setter Property="Background" Value="#36393F"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListViewItem">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="#3e4147"
+                            BorderThickness="1"
+                            CornerRadius="25"
+                            Margin="10,5">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{Binding CustomerSurname}"
+                                   Foreground="Gray"
+                                   FontSize="20"
+                                   Margin="20,0,0,0"
+                                   FontWeight="SemiBold"/>
+                            <Label Content="{Binding CustomerName}"
+                                   Foreground="Gray"
+                                   FontSize="20"
+                                   FontWeight="SemiBold"/>
+                            <Label Content="{Binding CustomerPatronomyc}"
+                                   Foreground="Gray"
+                                   FontSize="20"
+                                   FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="ListViewItem" x:Key="TypeOfWorkCreateProjectCard">
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="#292b2F"/>
+            </Trigger>
+        </Style.Triggers>
+        <Setter Property="Background" Value="#36393F"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListViewItem">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="#3e4147"
+                            BorderThickness="1"
+                            CornerRadius="25"
+                            Margin="10,5">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{Binding NameWork}"
+                                   Foreground="Gray"
+                                   Margin="20,0,0,0"
+                                   FontSize="20"
+                                   FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using TurbineRepair.Infrastructure;
 using TurbineRepair.Migration;
+using TurbineRepair.Model;
 using TurbineRepair.Test;
 
 namespace TurbineRepair.ViewModel
@@ -18,7 +19,9 @@ namespace TurbineRepair.ViewModel
     {
         public static ProjectVM projectVM;
 
+        #region Command
 
+        #region SearchProject
         public ICommand SearchUserProject { get; }
 
         private bool CanSearchUserProjectExecute(object parametr) => true;
@@ -40,16 +43,31 @@ namespace TurbineRepair.ViewModel
 
 
         }
+        #endregion
+
+        #region CreateProject
+
+        public ICommand CreateProject { get; }
+
+        private bool CanCreateProjectExecute(object parametr) => true;
+        private void OnCreateProjectExecute(object parametr)
+        {
+            MainVM.mainVM.MainCurrentControl = new CreateOrUpdateProjectVM();
+        }
+
+        #endregion
+
+        #endregion
 
 
-        #region ProjectItem
+        #region Property
         private object _projectItem;
         public object ProjectItem
         {
             get => _projectItem;
             set => Set(ref _projectItem, value);
         }
-        #endregion
+        
 
         private string _selectUser;
         public string SelectUser
@@ -68,6 +86,8 @@ namespace TurbineRepair.ViewModel
         public List<ProjectDatum> Projects { get; set; }
 
         public List<UserDatum> Users { get; set; }
+
+        #endregion
 
         public ProjectVM()
         {
@@ -89,6 +109,8 @@ namespace TurbineRepair.ViewModel
             projectVM = this;
 
             SearchUserProject = new LambdaCommand(OnSearchUserProjectExecute, CanSearchUserProjectExecute);
+
+            CreateProject = new LambdaCommand(OnCreateProjectExecute, CanCreateProjectExecute);
             
         }
     }

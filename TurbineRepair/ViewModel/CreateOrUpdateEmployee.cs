@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using TurbineRepair.Infrastructure;
+using TurbineRepair.Model;
 using static System.Net.WebRequestMethods;
 
 namespace TurbineRepair.ViewModel
@@ -34,7 +35,14 @@ namespace TurbineRepair.ViewModel
         }
         #endregion
 
-     
+        #region ContentButton
+        private string _contentButton;
+        public string ContentButton
+        {
+            get => _contentButton;
+            set => Set(ref _contentButton, value);
+        }
+        #endregion
 
         #endregion
 
@@ -214,7 +222,9 @@ namespace TurbineRepair.ViewModel
                 Password = MainWindowViewModel.main.UpdateUser.Password;
                 Pin = MainWindowViewModel.main.UpdateUser.Pincode;
                 ImagePath = MainWindowViewModel.main.UpdateUser.Image;
+                ContentButton = "Изменить";
             }
+            else ContentButton = "Добавить";
 
             AddUser = new LambdaCommand(OnAddUserExecute, CanAddUserExecute);
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using TurbineRepair.Infrastructure;
+using TurbineRepair.Model;
 using TurbineRepair.View.ContentGUI.MainContentGUI;
 
 namespace TurbineRepair.ViewModel
@@ -15,8 +16,8 @@ namespace TurbineRepair.ViewModel
 
         #region List
 
-        private List<Turbine> _turbines;
-        public List<Turbine> Turbines
+        private List<Model.Turbine> _turbines;
+        public List<Model.Turbine> Turbines
         {
             get => _turbines;
             set => Set(ref _turbines, value);
@@ -26,8 +27,8 @@ namespace TurbineRepair.ViewModel
 
         #region Property
 
-        private Turbine _selectTurbine;
-        public Turbine SelectTurbine
+        private Model.Turbine _selectTurbine;
+        public Model.Turbine SelectTurbine
         {
             get => _selectTurbine;
             set => Set(ref _selectTurbine, value);

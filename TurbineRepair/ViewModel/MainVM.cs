@@ -10,6 +10,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using TurbineRepair.View.ContentGUI.MainContentGUI;
+using TurbineRepair.Model;
 
 namespace TurbineRepair.ViewModel
 {
@@ -275,8 +276,8 @@ namespace TurbineRepair.ViewModel
         /// </summary>
         public MainVM() 
         {
-            MainCurrentControl = new MyProfileVM();
-            BoolBackgroundProfile = true;
+            MainCurrentControl = new ProjectVM();
+            BoolBackgroundProject = true;
             mainVM = this;
 
             #region Command

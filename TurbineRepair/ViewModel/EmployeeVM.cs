@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using TurbineRepair.Infrastructure;
+using TurbineRepair.Model;
 
 namespace TurbineRepair.ViewModel
 {

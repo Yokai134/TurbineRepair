@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TurbineRepair;
+namespace TurbineRepair.Model;
 
 public partial class UserDatum
 {
@@ -31,7 +31,9 @@ public partial class UserDatum
 
     public virtual Post? PostNavigation { get; set; }
 
-    public virtual ICollection<ProjectDatum> ProjectData { get; set; } = new List<ProjectDatum>();
+    public virtual ICollection<ProjectDatum> ProjectDatumProjectExecutorNavigations { get; set; } = new List<ProjectDatum>();
+
+    public virtual ICollection<ProjectDatum> ProjectDatumProjectSecondExecutorNavigations { get; set; } = new List<ProjectDatum>();
 
     public virtual Role? RoleNavigation { get; set; }
 }

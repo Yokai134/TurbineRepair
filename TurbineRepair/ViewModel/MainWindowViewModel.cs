@@ -12,6 +12,7 @@ using TurbineRepair.ViewModel;
 using TurbineRepair.Migration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using TurbineRepair.Model;
 
 namespace TurbineRepair.ViewModel
 {
@@ -91,6 +92,15 @@ namespace TurbineRepair.ViewModel
         }
         #endregion
 
+        #region UpdateProject
+        private ProjectDatum _updProject;
+        public ProjectDatum UpdProject
+        {
+            get => _updProject;
+            set => Set(ref _updProject, value);
+        }
+        #endregion
+
         #endregion
 
         /* ------------------------------------------- Property ------------------------------------*/
@@ -112,7 +122,7 @@ namespace TurbineRepair.ViewModel
 
         #region Customers
 
-        private List<Customer> _customersAll = context.Customers.ToList();
+        private List<Customer> _customersAll = context.Customers.OrderBy(x => x.CustomerSurname).ToList();
         public List<Customer> CustomersAll
         {
             get=> _customersAll;
@@ -142,7 +152,7 @@ namespace TurbineRepair.ViewModel
         #endregion
 
         #region UserAll
-        private List<UserDatum> _usersAll = context.UserData.ToList();
+        private List<UserDatum> _usersAll = context.UserData.OrderBy(x=>x.Surname).ToList();
         public List<UserDatum> UsersAll
         {
             get => _usersAll;
@@ -228,6 +238,15 @@ namespace TurbineRepair.ViewModel
         }
         #endregion
 
+        #region TypeOfWork
+        private List<TypeOfWork> _typesWork = context.TypeOfWorks.ToList();
+        public List<TypeOfWork> TypesWork
+        {
+            get => _typesWork;
+            set => Set(ref _typesWork, value);
+        }
+        #endregion
+
         #endregion
 
         /* --------------------------------------------- List --------------------------------------*/
@@ -246,16 +265,16 @@ namespace TurbineRepair.ViewModel
         public async Task UpdateData()
         {
             await Task.Run(() => ProjectData = context.ProjectData.ToList());
-            await Task.Run(() => CustomersAll = context.Customers.ToList());
+            await Task.Run(() => CustomersAll = context.Customers.OrderBy(x => x.CustomerSurname).ToList());
             await Task.Run(() => TurbinesAll = context.Turbines.ToList());
             await Task.Run(() => StatusesAll = context.StatusProjects.ToList());
-            await Task.Run(() => UsersAll = context.UserData.ToList());
+            await Task.Run(() => UsersAll = context.UserData.OrderBy(x => x.Surname).ToList());
             await Task.Run(() => TurbineImage = context.TurbineImages.ToList());
             await Task.Run(() => TurbineScpgs = context.TurbineScpgs.ToList());
             await Task.Run(() => TurbineMda = context.TurbineMda.ToList());
             await Task.Run(() => TurbinePgp = context.TurbinePgps.ToList());
             await Task.Run(() => TurbineMdp = context.TurbineMdps.ToList());
-            await Task.Run(() => Oraganizations = context.Oraganizations.ToList());
+            await Task.Run(() => Oraganizations = context.Oraganizations.ToList());            
         }
 
 
