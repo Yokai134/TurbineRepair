@@ -128,7 +128,9 @@ namespace TurbineRepair.ViewModel
                 case MessageBoxResult.OK:
                     MainWindowViewModel.main.CurrentControl = new AutheticationVM();
                     Application.Current.MainWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                    Application.Current.MainWindow.SizeToContent = SizeToContent.WidthAndHeight;
+                    Application.Current.MainWindow.SizeToContent = SizeToContent.Manual;
+                    Application.Current.MainWindow.Height = 500;
+                    Application.Current.MainWindow.Width = 500;
                     break;
                 case MessageBoxResult.Cancel:
                     break;

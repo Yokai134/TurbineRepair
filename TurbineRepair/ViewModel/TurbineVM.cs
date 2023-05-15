@@ -16,8 +16,8 @@ namespace TurbineRepair.ViewModel
 
         #region List
 
-        private List<Model.Turbine> _turbines;
-        public List<Model.Turbine> Turbines
+        private List<Model.Turbine>? _turbines;
+        public List<Model.Turbine>? Turbines
         {
             get => _turbines;
             set => Set(ref _turbines, value);
@@ -27,22 +27,22 @@ namespace TurbineRepair.ViewModel
 
         #region Property
 
-        private Model.Turbine _selectTurbine;
-        public Model.Turbine SelectTurbine
+        private Model.Turbine? _selectTurbine;
+        public Model.Turbine? SelectTurbine
         {
             get => _selectTurbine;
             set => Set(ref _selectTurbine, value);
         }
 
-        private string _searchTurbineName;
-        public string SearchTurbineName
+        private string? _searchTurbineName;
+        public string? SearchTurbineName
         {
             get => _searchTurbineName;
             set => Set(ref _searchTurbineName, value);
         }
 
-        private object _turbineItem;
-        public object TurbineItem
+        private object? _turbineItem;
+        public object? TurbineItem
         {
             get => _turbineItem;
             set => Set(ref _turbineItem, value);
@@ -52,7 +52,7 @@ namespace TurbineRepair.ViewModel
         #region Command
         public ICommand SearchTurbine { get; }
         private bool CanSearchTurbineExecute(object parameter) => true;
-        public void OnSearchTurbineExecute(object parametr)
+        private void OnSearchTurbineExecute(object parametr)
         {
             try
             {
@@ -68,6 +68,30 @@ namespace TurbineRepair.ViewModel
                 MessageBox.Show("Исполнитель не найден", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Question);
             }
         }
+
+
+        public ICommand? UpdateTurbine { get; }
+        private bool CanUpdateTurbineExecute(object parameter) => true;
+        private void OnUpdateTurbineExecute(object parametr)
+        {
+            if (SelectTurbine != null)
+            {
+                MainWindowViewModel.main.UpdTurbine = SelectTurbine;
+                MainVM.mainVM.MainCurrentControl = new CreateOrUpdateTurbineVM();
+            }
+            else MessageBox.Show("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        }
+
+
+        public ICommand? CreateTurbine { get; }
+
+        private bool CanCreateTurbineExecute(object parameter) => true;
+        private void OnCreateTurbineExecute(object parameter)
+        {
+            MainWindowViewModel.main.UpdTurbine = null;
+            MainVM.mainVM.MainCurrentControl = new CreateOrUpdateTurbineVM();
+        }
+
         #endregion
 
         public TurbineVM() 
@@ -76,7 +100,11 @@ namespace TurbineRepair.ViewModel
 
             TurbineItem = Turbines;
 
-            SearchTurbine = new LambdaCommand(OnSearchTurbineExecute,CanSearchTurbineExecute);
+            SearchTurbine = new LambdaCommand(OnSearchTurbineExecute, CanSearchTurbineExecute);
+
+            UpdateTurbine = new LambdaCommand(OnUpdateTurbineExecute, CanUpdateTurbineExecute);
+
+            CreateTurbine = new LambdaCommand(OnCreateTurbineExecute, CanCreateTurbineExecute);
         }
     }
 }

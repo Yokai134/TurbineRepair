@@ -25,7 +25,7 @@ namespace TurbineRepair.ViewModel
         /* ------------------------------------------ UserControl ----------------------------------*/
 
         #region UserControl
-        private AutheticationVM autheticationVM { get; set; }
+        private AutheticationVM? autheticationVM { get; set; }
         #endregion
 
         /* ------------------------------------------ UserControl ----------------------------------*/
@@ -37,9 +37,9 @@ namespace TurbineRepair.ViewModel
         #region Property
 
         #region CurrentControl
-        private object _currentControl;
+        private object? _currentControl;
 
-        public object CurrentControl
+        public object? CurrentControl
         {
             get => _currentControl;
             set => Set(ref _currentControl, value);
@@ -47,8 +47,8 @@ namespace TurbineRepair.ViewModel
         #endregion
 
         #region CurrentUser
-        private UserDatum _currentUser;
-        public UserDatum CurrentUser
+        private UserDatum? _currentUser;
+        public UserDatum? CurrentUser
         {
             get => _currentUser;
             set => Set(ref _currentUser, value);
@@ -56,8 +56,8 @@ namespace TurbineRepair.ViewModel
         #endregion
 
         #region CurrentDeport
-        private Deportament _deport;
-        public Deportament Deport
+        private Deportament? _deport;
+        public Deportament? Deport
         {
             get => _deport;
             set => Set(ref _deport, value);
@@ -65,8 +65,8 @@ namespace TurbineRepair.ViewModel
         #endregion
 
         #region CurrentPost
-        private Post _posts;
-        public Post Posts
+        private Post? _posts;
+        public Post? Posts
         {
             get => _posts;
             set => Set(ref _posts, value);
@@ -74,8 +74,8 @@ namespace TurbineRepair.ViewModel
         #endregion
 
         #region CurrentProject
-        private ProjectDatum _currentProject = null;
-        public ProjectDatum CurrentProject
+        private ProjectDatum? _currentProject = null;
+        public ProjectDatum? CurrentProject
         {
             get => _currentProject;
             set => Set(ref _currentProject, value);
@@ -84,8 +84,8 @@ namespace TurbineRepair.ViewModel
         #endregion
 
         #region UpdateDataUser
-        private UserDatum _updateUser;
-        public UserDatum UpdateUser
+        private UserDatum? _updateUser;
+        public UserDatum? UpdateUser
         {
             get => _updateUser;
             set => Set(ref _updateUser, value);
@@ -93,11 +93,27 @@ namespace TurbineRepair.ViewModel
         #endregion
 
         #region UpdateProject
-        private ProjectDatum _updProject;
-        public ProjectDatum UpdProject
+        private ProjectDatum? _updProject;
+        public ProjectDatum? UpdProject
         {
             get => _updProject;
             set => Set(ref _updProject, value);
+        }
+        #endregion
+
+        #region UpdateTurbine
+        private Turbine? _updTurbine;
+        public Turbine? UpdTurbine
+        {
+            get => _updTurbine;
+            set => Set(ref _updTurbine, value);
+        }
+
+        private Turbine? _createTurbine;
+        public Turbine? CreateTurbine
+        {
+            get => _createTurbine;
+            set => Set(ref _createTurbine, value);
         }
         #endregion
 
@@ -262,6 +278,7 @@ namespace TurbineRepair.ViewModel
         }
 
 
+        #region UpdateDate
         public async Task UpdateData()
         {
             await Task.Run(() => ProjectData = context.ProjectData.ToList());
@@ -276,8 +293,7 @@ namespace TurbineRepair.ViewModel
             await Task.Run(() => TurbineMdp = context.TurbineMdps.ToList());
             await Task.Run(() => Oraganizations = context.Oraganizations.ToList());            
         }
-
-
+        #endregion
 
 
     }

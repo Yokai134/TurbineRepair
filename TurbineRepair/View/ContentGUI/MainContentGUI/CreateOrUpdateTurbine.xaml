@@ -1,32 +1,40 @@
-﻿<UserControl x:Class="TurbineRepair.Component.Test"
+﻿<UserControl x:Class="TurbineRepair.View.ContentGUI.MainContentGUI.CreateOrUpdateTurbine"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:TurbineRepair.Component"
+             xmlns:local="clr-namespace:TurbineRepair.View.ContentGUI.MainContentGUI"
+             xmlns:viewModel="clr-namespace:TurbineRepair.ViewModel"
              mc:Ignorable="d" 
-             d:DesignHeight="2800" d:DesignWidth="750">
-
+             d:DesignHeight="2600" d:DesignWidth="950">
+    <UserControl.DataContext>
+        <viewModel:CreateOrUpdateTurbineVM/>
+    </UserControl.DataContext>
     <Grid>
-        <ScrollViewer>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <ScrollViewer Margin="10">
             <StackPanel Margin="10">
                 <Label Content="Наименование турбины"
-                                   FontSize="15"
-                                   Foreground="Gray"
-                                   FontWeight="SemiBold"/>
+                       FontSize="15"
+                       Foreground="Gray"
+                       FontWeight="SemiBold"/>
                 <TextBox Style="{StaticResource AutheticationTextBox}"
-                                     Height="50"
-                                     Foreground="Gray"
-                                     FontSize="20"
-                                     Text="111"
-                                     Padding="20,13,0,0"/>
+                         Height="50"
+                         Foreground="Gray"
+                         FontSize="20"
+                         Text="{Binding TurbineData.TurbineName, UpdateSourceTrigger=PropertyChanged}"
+                         Padding="20,13,0,0"/>
                 <StackPanel>
                     <!--TurbineScpgNavigation-->
                     <Label Content="Выроботка электроэнергии по простому циклу:"
-                                      FontSize="20"
-                                      HorizontalAlignment="Center"
-                                      Foreground="Gray"
-                                      FontWeight="SemiBold"/>
+                           FontSize="20"
+                           HorizontalAlignment="Center"
+                           Foreground="Gray"
+                           Margin="0,10,0,0"
+                           FontWeight="SemiBold"/>
                     <StackPanel>
                         <StackPanel>
                             <Label Content="Выходная мощность: МВт (эл.)"
@@ -37,7 +45,7 @@
                                      Height="50"
                                      Foreground="Gray"
                                      FontSize="20"
-                                     Text="111"
+                                     Text="{Binding TurbineData.TurbineScpgNavigation.PowerOutput, UpdateSourceTrigger=PropertyChanged}"
                                      Padding="20,13,0,0"/>
                         </StackPanel>
                         <StackPanel>
@@ -49,7 +57,7 @@
                                      Height="50"
                                      Foreground="Gray"
                                      FontSize="20"
-                                     Text="111"
+                                     Text="{Binding TurbineData.TurbineScpgNavigation.Fuel, UpdateSourceTrigger=PropertyChanged}"
                                      Padding="20,13,0,0"/>
                         </StackPanel>
                         <StackPanel>
@@ -61,7 +69,7 @@
                                      Height="50"
                                      Foreground="Gray"
                                      FontSize="20"
-                                     Text="111"
+                                     Text="{Binding TurbineData.TurbineScpgNavigation.Frequency, UpdateSourceTrigger=PropertyChanged}"
                                      Padding="20,13,0,0"/>
                         </StackPanel>
                         <StackPanel>
@@ -73,19 +81,19 @@
                                      Height="50"
                                      Foreground="Gray"
                                      FontSize="20"
-                                     Text="111"
+                                     Text="{Binding TurbineData.TurbineScpgNavigation.GrossEfficiency, UpdateSourceTrigger=PropertyChanged}"
                                      Padding="20,13,0,0"/>
                         </StackPanel>
                         <StackPanel>
                             <Label Content="Скорость нагрева: кДж/кВтч"
-                                              FontSize="15"
-                                              Foreground="Gray"
-                                              FontWeight="SemiBold"/>
+                                   FontSize="15"
+                                   Foreground="Gray"
+                                   FontWeight="SemiBold"/>
                             <TextBox Style="{StaticResource AutheticationTextBox}"
                                      Height="50"
                                      Foreground="Gray"
                                      FontSize="20"
-                                     Text="111"
+                                     Text="{Binding TurbineData.TurbineScpgNavigation.HeatRate, UpdateSourceTrigger=PropertyChanged}"
                                      Padding="20,13,0,0"/>
                         </StackPanel>
                         <StackPanel>
@@ -97,7 +105,7 @@
                                      Height="50"
                                      Foreground="Gray"
                                      FontSize="20"
-                                     Text="111"
+                                     Text="{Binding TurbineData.TurbineScpgNavigation.TurbineSpeed, UpdateSourceTrigger=PropertyChanged}"
                                      Padding="20,13,0,0"/>
                         </StackPanel>
                         <StackPanel>
@@ -109,7 +117,7 @@
                                      Height="50"
                                      Foreground="Gray"
                                      FontSize="20"
-                                     Text="111"
+                                     Text="{Binding TurbineData.TurbineScpgNavigation.PressureRatio, UpdateSourceTrigger=PropertyChanged}"
                                      Padding="20,13,0,0"/>
                         </StackPanel>
                         <StackPanel>
@@ -121,7 +129,7 @@
                                      Height="50"
                                      Foreground="Gray"
                                      FontSize="20"
-                                     Text="111"
+                                     Text="{Binding TurbineData.TurbineScpgNavigation.ExhaustMassFlow, UpdateSourceTrigger=PropertyChanged}"
                                      Padding="20,13,0,0"/>
                         </StackPanel>
                         <StackPanel>
@@ -133,7 +141,7 @@
                                      Height="50"
                                      Foreground="Gray"
                                      FontSize="20"
-                                     Text="111"
+                                     Text="{Binding TurbineData.TurbineScpgNavigation.ExhaustTemperature, UpdateSourceTrigger=PropertyChanged}"
                                      Padding="20,13,0,0"/>
                         </StackPanel>
                         <StackPanel>
@@ -145,16 +153,16 @@
                                      Height="50"
                                      Foreground="Gray"
                                      FontSize="20"
-                                     Text="111"
+                                     Text="{Binding TurbineData.TurbineScpgNavigation.Emissions, UpdateSourceTrigger=PropertyChanged}"
                                      Padding="20,13,0,0"/>
                         </StackPanel>
                         <!-- TurbineMdaNavigation Block-->
                         <Label Content="Характеристики механического привода:"
-                                          FontSize="20"
-                                          HorizontalAlignment="Center"
-                                          Foreground="Gray"
-                                          Margin="0,10,0,0"
-                                          FontWeight="SemiBold"/>
+                               FontSize="20"
+                               HorizontalAlignment="Center"
+                               Foreground="Gray"
+                               Margin="0,10,0,0"
+                               FontWeight="SemiBold"/>
                         <StackPanel>
                             <StackPanel>
                                 <Label Content="Выходная мощность: МВт (эл.)"
@@ -165,7 +173,7 @@
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="111"
+                                         Text="{Binding TurbineData.TurbineMdaNavigation.PowerOutput, UpdateSourceTrigger=PropertyChanged}"
                                          Padding="20,13,0,0"/>
                             </StackPanel>
                             <StackPanel>
@@ -177,7 +185,7 @@
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="111"
+                                         Text="{Binding TurbineData.TurbineMdaNavigation.Fuel, UpdateSourceTrigger=PropertyChanged}"
                                          Padding="20,13,0,0"/>
                             </StackPanel>
                             <StackPanel>
@@ -189,7 +197,7 @@
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="111"
+                                         Text="{Binding TurbineData.TurbineMdaNavigation.Efficiency, UpdateSourceTrigger=PropertyChanged}"
                                          Padding="20,13,0,0"/>
                             </StackPanel>
                             <StackPanel>
@@ -201,7 +209,7 @@
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="111"
+                                         Text="{Binding TurbineData.TurbineMdaNavigation.HeatRate, UpdateSourceTrigger=PropertyChanged}"
                                          Padding="20,13,0,0"/>
                             </StackPanel>
                             <StackPanel>
@@ -213,7 +221,7 @@
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="111"
+                                         Text="{Binding TurbineData.TurbineMdaNavigation.DriveShaftSpeed, UpdateSourceTrigger=PropertyChanged}"
                                          Padding="20,13,0,0"/>
                             </StackPanel>
                             <StackPanel>
@@ -225,7 +233,7 @@
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="111"
+                                         Text="{Binding TurbineData.TurbineMdaNavigation.PressureRatio, UpdateSourceTrigger=PropertyChanged}"
                                          Padding="20,13,0,0"/>
                             </StackPanel>
                             <StackPanel>
@@ -237,7 +245,7 @@
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="111"
+                                         Text="{Binding TurbineData.TurbineMdaNavigation.ExhaustMassFlow, UpdateSourceTrigger=PropertyChanged}"
                                          Padding="20,13,0,0"/>
                             </StackPanel>
                             <StackPanel>
@@ -249,46 +257,46 @@
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="111"
+                                         Text="{Binding TurbineData.TurbineMdaNavigation.ExhaustTemperature, UpdateSourceTrigger=PropertyChanged}"
                                          Padding="20,13,0,0"/>
                             </StackPanel>
                             <StackPanel>
                                 <Label Content="Выбросы: "
-                                              FontSize="15"
-                                              Foreground="Gray"
-                                              FontWeight="SemiBold"/>
+                                       FontSize="15"
+                                       Foreground="Gray"
+                                       FontWeight="SemiBold"/>
                                 <TextBox Style="{StaticResource AutheticationTextBox}"
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="111"
+                                         Text="{Binding TurbineData.TurbineMdaNavigation.Emissions, UpdateSourceTrigger=PropertyChanged}"
                                          Padding="20,13,0,0"/>
                             </StackPanel>
                         </StackPanel>
                         <Label Content="Физические размеры и вес:"
-                                          FontSize="20"
-                                          HorizontalAlignment="Center"
-                                          Foreground="Gray"
-                                          Margin="0,10,0,0"
-                                          FontWeight="SemiBold"/>
+                               FontSize="20"
+                               HorizontalAlignment="Center"
+                               Foreground="Gray"
+                               Margin="0,10,0,0"
+                               FontWeight="SemiBold"/>
                         <!--TurbinePGP-->
                         <Label Content="Пакет выработки электроэнергии:"
-                                          FontSize="18"
-                                          HorizontalAlignment="Center"
-                                          Foreground="Gray"
-                                          Margin="0,10,0,0"
-                                          FontWeight="SemiBold"/>
+                               FontSize="18"
+                               HorizontalAlignment="Center"
+                               Foreground="Gray"
+                               Margin="0,10,0,0"
+                               FontWeight="SemiBold"/>
                         <StackPanel>
                             <StackPanel>
                                 <Label Content="Приблизительный вес: кг"
-                                              FontSize="15"
-                                              Foreground="Gray"
-                                              FontWeight="SemiBold"/>
+                                       FontSize="15"
+                                       Foreground="Gray"
+                                       FontWeight="SemiBold"/>
                                 <TextBox Style="{StaticResource AutheticationTextBox}"
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="111"
+                                         Text="{Binding TurbineData.TurbinePgpNavigation.Weight, UpdateSourceTrigger=PropertyChanged}"
                                          Padding="20,13,0,0"/>
                             </StackPanel>
                             <StackPanel>
@@ -300,7 +308,7 @@
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="111"
+                                         Text="{Binding TurbineData.TurbinePgpNavigation.Lenght, UpdateSourceTrigger=PropertyChanged}"
                                          Padding="20,13,0,0"/>
                             </StackPanel>
                             <StackPanel>
@@ -312,41 +320,41 @@
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="111"
+                                         Text="{Binding TurbineData.TurbinePgpNavigation.Width, UpdateSourceTrigger=PropertyChanged}"
                                          Padding="20,13,0,0"/>
                             </StackPanel>
                             <StackPanel>
                                 <Label Content="Высота: м"
-                                                  FontSize="15"
-                                                  Foreground="Gray"
-                                                  FontWeight="SemiBold"/>
+                                       FontSize="15"
+                                       Foreground="Gray"
+                                       FontWeight="SemiBold"/>
                                 <TextBox Style="{StaticResource AutheticationTextBox}"
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="111"
+                                         Text="{Binding TurbineData.TurbinePgpNavigation.Height, UpdateSourceTrigger=PropertyChanged}"
                                          Padding="20,13,0,0"/>
                             </StackPanel>
                         </StackPanel>
                         <!-- TurbineMdpNavigation -->
                         <Label Content="Пакет механического привода:"
-                                          FontSize="18"
-                                          HorizontalAlignment="Center"
-                                          Foreground="Gray"
-                                          Margin="0,10,0,0"
-                                          FontWeight="SemiBold"/>
+                               FontSize="18"
+                               HorizontalAlignment="Center"
+                               Foreground="Gray"
+                               Margin="0,10,0,0"
+                               FontWeight="SemiBold"/>
 
                         <StackPanel>
                             <StackPanel>
                                 <Label Content="Приблизительный вес: кг"
-                                              FontSize="15"
-                                              Foreground="Gray"
-                                              FontWeight="SemiBold"/>
+                                       FontSize="15"
+                                       Foreground="Gray"
+                                       FontWeight="SemiBold"/>
                                 <TextBox Style="{StaticResource AutheticationTextBox}"
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="111"
+                                         Text="{Binding TurbineData.TurbineMdpNavigation.Weight, UpdateSourceTrigger=PropertyChanged}"
                                          Padding="20,13,0,0"/>
                             </StackPanel>
                             <StackPanel>
@@ -358,7 +366,7 @@
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="111"
+                                         Text="{Binding TurbineData.TurbineMdpNavigation.Lenght, UpdateSourceTrigger=PropertyChanged}"
                                          Padding="20,13,0,0"/>
                             </StackPanel>
                             <StackPanel>
@@ -370,19 +378,19 @@
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="111"
+                                         Text="{Binding TurbineData.TurbineMdpNavigation.Width, UpdateSourceTrigger=PropertyChanged}"
                                          Padding="20,13,0,0"/>
                             </StackPanel>
                             <StackPanel>
                                 <Label Content="Высота: м"
-                                                  FontSize="15"
-                                                  Foreground="Gray"
-                                                  FontWeight="SemiBold"/>
+                                       FontSize="15"
+                                       Foreground="Gray"
+                                       FontWeight="SemiBold"/>
                                 <TextBox Style="{StaticResource AutheticationTextBox}"
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="111"
+                                         Text="{Binding TurbineData.TurbineMdpNavigation.Height, UpdateSourceTrigger=PropertyChanged}"
                                          Padding="20,13,0,0"/>
                             </StackPanel>
                             <StackPanel>
@@ -399,18 +407,18 @@
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="111"
+                                         Text="{}"
                                          Padding="20,13,0,0"/>
                                     <Button Grid.Column="1"
                                             Content="Выбрать"
                                             FontSize="20"
+                                            Command="{Binding OpenImage}"
                                             Style="{StaticResource ButtonMain}"
                                             Margin="10,0"/>
                                 </Grid>
-                               
+
                             </StackPanel>
-                            <Grid Height="350"
-                                  Margin="0,10">
+                            <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
@@ -419,19 +427,41 @@
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                <Image Margin="10"/>
                                 <Image Margin="10"
-                                       Grid.Row="1"/>
-                                <Image Margin="10"
-                                       Grid.Column="1"/>
+                                       Source="{Binding ElementName=ImageSourseOne, Path=Text, UpdateSourceTrigger=PropertyChanged}"
+                                       Width="320"
+                                       Height="200"
+                                       Stretch="UniformToFill"/>
+                                <TextBox Text="{Binding TurbineImage.ImageOne, UpdateSourceTrigger=PropertyChanged}"
+                                         x:Name="ImageSourseOne"
+                                         Height="0"/>
                                 <Image Margin="10"
                                        Grid.Row="1"
-                                       Grid.Column="1"/>
+                                       Source="{Binding TurbineImage.ImageTwo, UpdateSourceTrigger=PropertyChanged}"
+                                       Stretch="UniformToFill"
+                                       Width="320"
+                                       Height="200"/>
+                                <Image Margin="10"
+                                       Grid.Column="1"
+                                       Source="{Binding TurbineImage.ImageThree, UpdateSourceTrigger=PropertyChanged}"
+                                       Width="320"
+                                       Height="200"
+                                       Stretch="UniformToFill"/>
+                                <Image Margin="10"
+                                       Grid.Row="1"
+                                       Grid.Column="1"
+                                       Source="{Binding TurbineImage.ImageFour, UpdateSourceTrigger=PropertyChanged}"
+                                       Width="320"
+                                       Height="200"
+                                       Stretch="UniformToFill"/>
                             </Grid>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
-        </ScrollViewer> 
+        </ScrollViewer>
+        <Button Content="aaa"
+                Grid.Row="1"
+                Command="{Binding CreateOrUpdate}"/>
     </Grid>
 </UserControl>

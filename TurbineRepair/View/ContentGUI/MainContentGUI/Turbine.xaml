@@ -35,5 +35,23 @@
                   BorderThickness="0"
                   ItemContainerStyle="{StaticResource TurbineListCard}">
         </ListView>
+        <StackPanel Grid.Row="2"
+                   Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <Button Style="{StaticResource ButtonMain}"
+                    Margin="10"
+                    Width="100"
+                    Content="Удалить"/>
+            <Button Style="{StaticResource ButtonMain}"
+                    Command="{Binding UpdateTurbine}"
+                    Margin="10"
+                    Width="100"
+                    Content="Изменить"/>
+            <Button Style="{StaticResource ButtonMain}"
+                    Command="{Binding CreateTurbine}"
+                    Margin="10"
+                    Width="100"
+                    Content="Добавить"/>
+        </StackPanel>
     </Grid>
 </UserControl>
