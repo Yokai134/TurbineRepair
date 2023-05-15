@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -49,6 +50,14 @@ namespace TurbineRepair.ViewModel
             get => _turbines;
             set => Set(ref _turbines, value);
         }
+
+        private string _contentButton;
+        public string ContentButton
+        {
+            get => _contentButton;
+            set => Set(ref _contentButton, value);
+        }
+
         #endregion
 
         #region ProjectField
@@ -121,7 +130,26 @@ namespace TurbineRepair.ViewModel
             try {
                 if (MainWindowViewModel.main.UpdProject != null)
                 {
-
+                    if (SelectFirstExecutor != null && SelectSecondExecutor != null && SelectCustomer != null && DateEnd != null && DateStart != null && Convert.ToDateTime(DateEnd) > Convert.ToDateTime(DateStart)
+                        && SelectStatusProject != null
+                        && SelectTurbine != null && SelectCost != null)
+                    {
+                        ProjectDatum updProject = MainWindowViewModel.main.UpdProject;
+                        updProject.ProjectName = "Заказ на изготовление турбины " + SelectTurbine.TurbineName;
+                        updProject.ProjectExecutor = SelectFirstExecutor.Id;
+                        updProject.ProjectSecondExecutor = SelectSecondExecutor.Id;
+                        updProject.ProjectCustomer = SelectCustomer.Id;
+                        updProject.ProjectDataStart = DateOnly.FromDateTime(Convert.ToDateTime(DateStart));
+                        updProject.ProjectDataEnd = DateOnly.FromDateTime(Convert.ToDateTime(DateEnd));
+                        updProject.DeleteProject = false;
+                        updProject.ProjectStatus = SelectStatusProject.Id;
+                        updProject.TypeProject = 1;
+                        updProject.ProjectTurbine = SelectTurbine.Id;
+                        updProject.ProjectCost = Convert.ToDecimal(SelectCost);
+                        MainWindowViewModel.context.SaveChanges();
+                        await MainWindowViewModel.main.UpdateData();
+                        MessageBox.Show("Проект успешно изменён", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
                 }
                 else
                 {
@@ -157,7 +185,7 @@ namespace TurbineRepair.ViewModel
             }
             catch
             {
-                MessageBox.Show("ЫЧА", "ЫЧА");
+                MessageBox.Show("Нет соединения с базой данных", "Ошибка", MessageBoxButton.OK,MessageBoxImage.Error);
             }
         }
         #endregion
@@ -170,6 +198,24 @@ namespace TurbineRepair.ViewModel
             StatusProjects = MainWindowViewModel.main.StatusesAll;
             Customers = MainWindowViewModel.main.CustomersAll;
             Turbines = MainWindowViewModel.main.TurbinesAll;
+            
+
+            if(MainWindowViewModel.main.UpdProject != null)
+            {
+                SelectFirstExecutor = MainWindowViewModel.main.UsersAll.Where(x => x.Id == MainWindowViewModel.main.UpdProject.ProjectExecutorNavigation.Id).FirstOrDefault();
+                SelectSecondExecutor = MainWindowViewModel.main.UsersAll.Where(x => x.Id == MainWindowViewModel.main.UpdProject.ProjectSecondExecutorNavigation.Id).FirstOrDefault();
+                DateStart = MainWindowViewModel.main.UpdProject.ProjectDataStart.ToString();
+                DateEnd = MainWindowViewModel.main.UpdProject.ProjectDataEnd.ToString();
+                SelectCustomer = MainWindowViewModel.main.CustomersAll.Where(x => x.Id == MainWindowViewModel.main.UpdProject.ProjectCustomerNavigation.Id).FirstOrDefault();
+                SelectTurbine = MainWindowViewModel.main.TurbinesAll.Where(x => x.Id == MainWindowViewModel.main.UpdProject.ProjectTurbineNavigation.Id).FirstOrDefault();
+                SelectStatusProject = MainWindowViewModel.main.StatusesAll.Where(x => x.Id == MainWindowViewModel.main.UpdProject.ProjectStatusNavigation.Id).FirstOrDefault();
+                SelectCost = MainWindowViewModel.main.UpdProject.ProjectCost.ToString();
+                ContentButton = "Изменить";
+            }
+            else
+            {
+                ContentButton = "Добавить";
+            }
 
             CreateOrUpdateProject = new LambdaCommand(OnCreateOrUpdateProjectExecute, CanCreateOrUpdateProjectExecute);
         }

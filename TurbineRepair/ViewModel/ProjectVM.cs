@@ -57,6 +57,53 @@ namespace TurbineRepair.ViewModel
 
         #endregion
 
+        #region UpdateProject
+        public ICommand UpdateProject { get; }
+        private bool CanUpdateProjectExecute(object parametr) => true;
+        private void OnUpdateProjectExecute(object parametr)
+        {
+            try
+            {
+                if(SelectedProject != null)
+                {
+                    MainWindowViewModel.main.UpdProject = SelectedProject;
+                    MainVM.mainVM.MainCurrentControl = new CreateOrUpdateProjectVM();
+                }
+                else MessageBox.Show("Не выбран проект", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch
+            {
+                MessageBox.Show("Не выбран проект", "Ошибка",MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        #endregion
+
+        #region DeleteProject
+        public ICommand DeleteProject { get; }
+        private bool CanDeleteProjectExecute(object parametr) => true;
+        private async void OnDeleteProjectExecute(object parametr)
+        {
+            try
+            {
+                if (SelectedProject != null)
+                {
+                    ProjectDatum delProject = SelectedProject;
+                    delProject.DeleteProject = true;
+                    await MainWindowViewModel.main.UpdateData();
+                    ProjectItem = MainWindowViewModel.main.ProjectData.Where(x=>x.DeleteProject == false).ToList();
+                }
+                else MessageBox.Show("Проект удален", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch
+            {
+                MessageBox.Show("Не выбран проект", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        #endregion
+
+
         #endregion
 
 
@@ -87,6 +134,15 @@ namespace TurbineRepair.ViewModel
 
         public List<UserDatum> Users { get; set; }
 
+        public UserDatum CurrentUser = MainWindowViewModel.main.CurrentUser;
+
+        private bool _checkRole;
+        public bool CheckRole
+        {
+            get => _checkRole;
+            set => Set(ref _checkRole, value);
+        }
+
         #endregion
 
         public ProjectVM()
@@ -94,10 +150,12 @@ namespace TurbineRepair.ViewModel
             if (MainWindowViewModel.main.CurrentUser.Role != 1)
             {
                 Projects = MainWindowViewModel.main.ProjectData.Where(x => x.ProjectExecutor == MainWindowViewModel.main.CurrentUser.Id).ToList();
+                CheckRole = false;
             }
             else if(MainWindowViewModel.main.CurrentUser.Role == 1)
             {
                 Projects = MainWindowViewModel.main.ProjectData;
+                CheckRole = true;
             }
 
             Users = MainWindowViewModel.main.UsersAll;
@@ -111,6 +169,8 @@ namespace TurbineRepair.ViewModel
             SearchUserProject = new LambdaCommand(OnSearchUserProjectExecute, CanSearchUserProjectExecute);
 
             CreateProject = new LambdaCommand(OnCreateProjectExecute, CanCreateProjectExecute);
+
+            UpdateProject = new LambdaCommand(OnUpdateProjectExecute, CanUpdateProjectExecute);
             
         }
     }

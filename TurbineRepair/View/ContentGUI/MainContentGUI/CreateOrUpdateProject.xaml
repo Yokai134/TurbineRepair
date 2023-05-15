@@ -117,7 +117,7 @@
         <StackPanel HorizontalAlignment="Right"
                     Margin="10,5"
                     Grid.Row="1">
-            <Button Content="Добавить"
+            <Button Content="{Binding ContentButton}"
                     Width="120"
                     Command="{Binding CreateOrUpdateProject}"
                     Style="{StaticResource ButtonMain}"

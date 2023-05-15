@@ -13,9 +13,31 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="70"/>
+            <RowDefinition>
+                <RowDefinition.Style>
+                    <Style TargetType="RowDefinition">
+                        <Setter Property="Height" Value="70"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=VisibleElement, Path=IsChecked}" Value="false">
+                                <Setter Property="Height" Value="0"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </RowDefinition.Style>
+            </RowDefinition>
             <RowDefinition/>
-            <RowDefinition Height="50"/>
+            <RowDefinition>
+                <RowDefinition.Style>
+                    <Style TargetType="RowDefinition">
+                        <Setter Property="Height" Value="50"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=VisibleElement, Path=IsChecked}" Value="false">
+                                <Setter Property="Height" Value="0"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </RowDefinition.Style>
+            </RowDefinition>
         </Grid.RowDefinitions>
         <TextBox Style="{StaticResource AutheticationTextBox}"
                      Height="50"
@@ -27,6 +49,9 @@
                 <KeyBinding Command="{Binding SearchUserProject}" Key="Return"/>
             </TextBox.InputBindings>
         </TextBox>
+        <CheckBox IsChecked="{Binding CheckRole, UpdateSourceTrigger=PropertyChanged}"
+                  Visibility="Hidden"
+                  x:Name="VisibleElement"/>
         <ListView ItemsSource="{Binding ProjectItem, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedProject}"
                   Background="Transparent"
@@ -42,6 +67,7 @@
                     Width="100"
                     Content="Удалить"/>
             <Button Style="{StaticResource ButtonMain}"
+                    Command="{Binding UpdateProject}"
                     Margin="10"
                     Width="100"
                     Content="Изменить"/>

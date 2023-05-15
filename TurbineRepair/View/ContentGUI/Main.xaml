@@ -95,7 +95,7 @@
             </Grid>
         </Border>
         <Border Grid.Row="1" BorderThickness="0,0,1,0"
-                BorderBrush="Black">
+                BorderBrush="#3e4147">
             <Grid Grid.Row="1">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal"
