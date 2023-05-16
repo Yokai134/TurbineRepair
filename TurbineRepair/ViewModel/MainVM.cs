@@ -128,9 +128,7 @@ namespace TurbineRepair.ViewModel
                 case MessageBoxResult.OK:
                     MainWindowViewModel.main.CurrentControl = new AutheticationVM();
                     Application.Current.MainWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                    Application.Current.MainWindow.SizeToContent = SizeToContent.Manual;
-                    Application.Current.MainWindow.Height = 500;
-                    Application.Current.MainWindow.Width = 500;
+                    Application.Current.MainWindow.SizeToContent = SizeToContent.WidthAndHeight;
                     break;
                 case MessageBoxResult.Cancel:
                     break;
@@ -173,7 +171,7 @@ namespace TurbineRepair.ViewModel
         public ICommand OpenTurbineControl { get; }
         private bool CanOpenTurbineControlExecute(object parameter) => true;
         private void OnOpenTurbineControlExecute(object parameter)
-        {
+        {         
             MainCurrentControl = new TurbineVM();
             BoolBackgroundProfile = false;
             BoolBackgroundChat = false;

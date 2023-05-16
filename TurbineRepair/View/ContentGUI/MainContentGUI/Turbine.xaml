@@ -28,7 +28,7 @@
                 <KeyBinding Command="{Binding SearchTurbine}" Key="Return"/>
             </TextBox.InputBindings>
         </TextBox>
-        <ListView ItemsSource="{Binding TurbineItem, UpdateSourceTrigger=PropertyChanged}"
+        <ListView ItemsSource="{Binding TurbineItem}"
                   SelectedItem="{Binding SelectTurbine}"
                   Background="Transparent"
                   Grid.Row="1"
