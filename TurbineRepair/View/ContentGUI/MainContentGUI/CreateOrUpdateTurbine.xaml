@@ -25,7 +25,7 @@
                          Height="50"
                          Foreground="Gray"
                          FontSize="20"
-                         Text="{Binding TurbineName, UpdateSourceTrigger=PropertyChanged}"
+                         Text="{Binding TurbineNames, UpdateSourceTrigger=PropertyChanged}"
                          Padding="20,13,0,0"/>
                 <Label Content="Описание"
                        FontSize="15"
@@ -35,7 +35,7 @@
                          Height="150"
                          Foreground="Gray"
                          FontSize="20"
-                         Text="{Binding TurbineDescription, UpdateSourceTrigger=PropertyChanged}"
+                         Text="{Binding TurbineDescriptions, UpdateSourceTrigger=PropertyChanged}"
                          Padding="20,13,0,0"/>
                 <StackPanel>
                     <!--TurbineScpgNavigation-->
@@ -507,8 +507,12 @@
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>
-        <Button Content="aaa"
+        <Button Content="{Binding ContentButton}"
                 Grid.Row="1"
+                Style="{StaticResource ButtonMain}"
+                Width="120"
+                HorizontalAlignment="Right"
+                Margin="10"
                 Command="{Binding CreateOrUpdate}"/>
     </Grid>
 </UserControl>

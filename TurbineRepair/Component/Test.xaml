@@ -8,19 +8,6 @@
              d:DesignHeight="200" d:DesignWidth="750">
 
     <Grid>
-        <TextBox Style="{StaticResource AutheticationTextBox}"
-                 Height="50"
-                 Foreground="Gray"
-                 FontSize="20"
-                 Text="{Binding PowerOutputScpg, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
-                 Padding="20,13,0,0"/>
-        <StackPanel Margin="0,75,0,0">
-            <Border CornerRadius="15" 
-                    BorderBrush="Red" 
-                    BorderThickness="1"
-                    Height="50"/>
-            <TextBlock Text="111" Foreground="Red"
-                       Margin="20,0,0,0"/>
-        </StackPanel>
+        <Image Source="/TurbineResource/SGT-300/SGT-300-3.jpg"/>
     </Grid>
 </UserControl>
