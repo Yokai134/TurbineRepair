@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -9,7 +10,18 @@ namespace TurbineRepair.ViewModel
 {
     internal class ProjectContentVM : Base.ViewModel
     {
-        #region Class
+
+
+        private static string pathImage = Path.GetFullPath(Directory.GetCurrentDirectory() + "\\..\\..\\..\\" + @"TurbineResource");
+
+        private string _viewImage;
+        public string ViewImage
+        {
+            get => _viewImage; 
+            set => Set(ref _viewImage, value);
+        }
+
+        #region HelperClass
         public class ImageSource
         {
             public string imageSource { get; set; }
@@ -119,28 +131,29 @@ namespace TurbineRepair.ViewModel
             {
                 if (MainWindowViewModel.main.TurbineImage[i].Id == MainWindowViewModel.main.CurrentProject.ProjectTurbineNavigation.TurbineImage)
                 {
+                    ViewImage = pathImage + MainWindowViewModel.main.TurbineImage[i].ImageOne;
                     ImageSources.Add(new ImageSource(){ 
-                        imageSource = MainWindowViewModel.main.TurbineImage[i].ImageOne 
+                        imageSource = pathImage + MainWindowViewModel.main.TurbineImage[i].ImageOne 
                     });
 
                     ImageSources.Add(new ImageSource()
                     {
-                        imageSource = MainWindowViewModel.main.TurbineImage[i].ImageTwo
+                        imageSource = pathImage + MainWindowViewModel.main.TurbineImage[i].ImageTwo
                     });
 
                     ImageSources.Add(new ImageSource()
                     {
-                        imageSource = MainWindowViewModel.main.TurbineImage[i].ImageThree
+                        imageSource = pathImage + MainWindowViewModel.main.TurbineImage[i].ImageThree
                     });
 
                     ImageSources.Add(new ImageSource()
                     {
-                        imageSource = MainWindowViewModel.main.TurbineImage[i].ImageFour
+                        imageSource = pathImage + MainWindowViewModel.main.TurbineImage[i].ImageFour
                     });
 
                 }
                 
-            }
+            }       
             
         }
 

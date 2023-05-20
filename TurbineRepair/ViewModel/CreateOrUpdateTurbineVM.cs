@@ -137,13 +137,13 @@ namespace TurbineRepair.ViewModel
                 updTurbine.TurbineMdpNavigation.Height = HeightMdp;
                 #endregion
                 #region TurbineImage
-                if(OriginalName != updTurbine.TurbineName)
-                {
-                    string basePath = Path.GetFullPath(pathProject + @"\" + OriginalName);
-                    string movePath = Path.GetFullPath(pathProject + @"\" + updTurbine.TurbineName);
-                    Directory.Move(basePath, movePath);
-                }
-                string imagePath = Path.GetFullPath(pathProject + @"\" + updTurbine.TurbineName);
+                //if(OriginalName != updTurbine.TurbineName)
+                //{
+                //    string basePath = Path.GetFullPath(pathProject + @"\" + OriginalName);
+                //    string movePath = Path.GetFullPath(pathProject + @"\" + updTurbine.TurbineName);
+                //    Directory.Move(basePath, movePath);
+                //}
+                string imagePath = Path.GetFullPath(pathProject + @"\" + OriginalName);
                 string[] imageFile = Directory.GetFiles(imagePath);
                 if (ImageOneUpd)
                 {
@@ -298,10 +298,10 @@ namespace TurbineRepair.ViewModel
                         fileInfo.CopyTo(copyPath, true);
                     }
                 }
-                ImagePathOne = "/TurbineResource/" +TurbineNames + "/" + TurbineNames + "-1.jpg";
-                ImagePathTwo = "/TurbineResource/" + TurbineNames + "/" + TurbineNames + "-2.jpg";
-                ImagePathThree = "/TurbineResource/" + TurbineNames + "/" + TurbineNames + "-3.jpg";
-                ImagePathFour = "/TurbineResource/" + TurbineNames + "/" + TurbineNames + "-4.jpg";
+                ImagePathOne = "\\" +TurbineNames + "\\" + TurbineNames + "-1.jpg";
+                ImagePathTwo = "\\" + TurbineNames + "\\" + TurbineNames + "-2.jpg";
+                ImagePathThree = "\\" + TurbineNames + "\\" + TurbineNames + "-3.jpg";
+                ImagePathFour = "\\" + TurbineNames + "\\" + TurbineNames + "-4.jpg";
                 ImageOneUpd = false;
                 ImageTwoUpd = false;
                 ImageThreeUpd = false;
@@ -492,7 +492,12 @@ namespace TurbineRepair.ViewModel
         public string PowerOutputMda
         {
             get => _powerOutputMda;
-            set => Set(ref _powerOutputMda, value);
+            set 
+            {
+                Set(ref _powerOutputMda, value);
+                ValidateDecimalNumericPowerOutputMda();
+                    
+            }
         }
 
         private string _fuelMda;
@@ -693,13 +698,21 @@ namespace TurbineRepair.ViewModel
                 HeightMdp = MainWindowViewModel.main.UpdTurbine.TurbineMdpNavigation.Height;
                 #endregion
                 #region Update TurbineImage
-                ImagePathOne = MainWindowViewModel.main.UpdTurbine.TurbineImageNavigation.ImageOne;
-                ImagePathTwo = MainWindowViewModel.main.UpdTurbine.TurbineImageNavigation.ImageTwo;
-                ImagePathThree = MainWindowViewModel.main.UpdTurbine.TurbineImageNavigation.ImageThree;
-                ImagePathFour = MainWindowViewModel.main.UpdTurbine.TurbineImageNavigation.ImageFour;
+                ImagePathOne = pathProject + MainWindowViewModel.main.UpdTurbine.TurbineImageNavigation.ImageOne;
+                ImagePathTwo = pathProject + MainWindowViewModel.main.UpdTurbine.TurbineImageNavigation.ImageTwo;
+                ImagePathThree = pathProject + MainWindowViewModel.main.UpdTurbine.TurbineImageNavigation.ImageThree;
+                ImagePathFour = pathProject + MainWindowViewModel.main.UpdTurbine.TurbineImageNavigation.ImageFour;
                 #endregion
             }
-            else ContentButton = "Добавить";
+            else 
+            { 
+                ContentButton = "Добавить";
+                ImagePathOne = "/ResourceApp/Image/picture.png";
+                ImagePathTwo = "/ResourceApp/Image/picture.png";
+                ImagePathThree = "/ResourceApp/Image/picture.png";
+                ImagePathFour = "/ResourceApp/Image/picture.png";
+
+            }
 
             #region Command
             CreateOrUpdate = new LambdaCommand(OnCreateOrUpdateExecute, CanCreateOrUpdateExecute);
@@ -744,6 +757,28 @@ namespace TurbineRepair.ViewModel
             }   
             
                 
+        }
+
+        private void ValidateDecimalNumericPowerOutputMda()
+        {
+            bool stringIsEmpty = false;
+            ClearErrors(nameof(PowerOutputMda));
+            if (string.IsNullOrWhiteSpace(PowerOutputMda))
+            {
+                ClearErrors(nameof(PowerOutputMda));
+                AddError(nameof(PowerOutputMda), "*Поле не может быть пустым.");
+                stringIsEmpty = true;
+            }
+            if (!stringIsEmpty)
+            {
+                if (!Regex.IsMatch(PowerOutputMda, decimalNumber, RegexOptions.IgnoreCase))
+                {
+                    AddError(nameof(PowerOutputMda), "*Ошибка валидации введите число или число с плавающей точкой");
+
+                }
+            }
+
+
         }
 
         private void OnErrorsChanged(string propertyName)

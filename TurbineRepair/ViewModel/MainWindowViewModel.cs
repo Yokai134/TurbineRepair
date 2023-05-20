@@ -115,6 +115,13 @@ namespace TurbineRepair.ViewModel
             get => _createTurbine;
             set => Set(ref _createTurbine, value);
         }
+
+        private Customer? _updCustomer;
+        public  Customer? UpdCustomer
+        {
+            get => _updCustomer;
+            set => Set(ref _updCustomer, value);
+        }
         #endregion
 
         #endregion

@@ -20,7 +20,7 @@
     <Grid Background="Transparent">
         <TabControl Background="Transparent"
                     BorderBrush="Transparent">
-            
+
             <TabItem Style="{StaticResource TabItemStyle}"
                      Header="Контракт">
                 <ScrollViewer Margin="5">
@@ -206,20 +206,29 @@
             <TabItem Style="{StaticResource TabItemStyle}" 
                      Header="Характеристики">
                 <ScrollViewer Margin="10,10,5,10">
-                    <ListView Background="Transparent"
-                              BorderThickness="0"
-                              Margin="10,0,15,0"
-                              ItemsSource="{Binding Projects}"
-                              ItemContainerStyle="{StaticResource TurbineCard}"/>
+                    <StackPanel>
+                        <ListView Background="Transparent"
+                                  BorderThickness="0"
+                                  Margin="10,0,15,0"
+                                  ItemsSource="{Binding Projects}"
+                                  ItemContainerStyle="{StaticResource TurbineCard}"/>
+                    </StackPanel>
                 </ScrollViewer>
             </TabItem>
             <TabItem Style="{StaticResource TabItemStyle}"
                      Header="Описание">
                 <ScrollViewer>
-                    <ListView Background="Transparent"
-                          BorderThickness="0"
-                          ItemsSource="{Binding Projects}"
-                          ItemContainerStyle="{StaticResource DescriptionCard}"/>
+                    <StackPanel>
+                        <TextBox x:Name="ImagePath" Text="{Binding ViewImage, UpdateSourceTrigger=PropertyChanged}" Height="0"/>
+                        <Image Source="{Binding ElementName=ImagePath, Path=Text, UpdateSourceTrigger=PropertyChanged}"
+                               Width="320"
+                               Height="190"
+                               Stretch="UniformToFill"/>
+                        <ListView Background="Transparent"
+                                  BorderThickness="0"
+                                  ItemsSource="{Binding Projects}"
+                                  ItemContainerStyle="{StaticResource DescriptionCard}"/>
+                    </StackPanel>
                 </ScrollViewer>
             </TabItem>
 

@@ -71,6 +71,14 @@
             <DataTemplate DataType="{x:Type viewModel:CreateOrUpdateTurbineVM}">
                 <viewMain:CreateOrUpdateTurbine/>
             </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:CustomerListVM}">
+                <viewMain:CustomersList/>
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type viewModel:CreateOrUpdateCustomerVM}">
+                <viewMain:CreateOrUpdateCustomer/>
+            </DataTemplate>
             
         </ResourceDictionary>
     </Application.Resources>

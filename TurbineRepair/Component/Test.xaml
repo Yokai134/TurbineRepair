@@ -8,6 +8,6 @@
              d:DesignHeight="200" d:DesignWidth="750">
 
     <Grid>
-        <Image Source="/TurbineResource/SGT-300/SGT-300-3.jpg"/>
+        <Image Source="/ResourceApp/Image/picture.png"/>
     </Grid>
 </UserControl>

@@ -80,6 +80,7 @@ namespace TurbineRepair.ViewModel
             BoolBackgroundNotification = false;
             BoolBackgroundEmployee = false;
             BoolBackgroundTurbine = false;
+            BoolBackgroundCustomer = false;
         }
         #endregion
 
@@ -96,6 +97,7 @@ namespace TurbineRepair.ViewModel
             BoolBackgroundNotification = true;
             BoolBackgroundEmployee = false;
             BoolBackgroundTurbine = false;
+            BoolBackgroundCustomer = false;
         }
         #endregion
 
@@ -112,6 +114,7 @@ namespace TurbineRepair.ViewModel
             BoolBackgroundNotification = false;
             BoolBackgroundEmployee = false;
             BoolBackgroundTurbine = false;
+            BoolBackgroundCustomer = false;
         }
         #endregion
 
@@ -149,6 +152,7 @@ namespace TurbineRepair.ViewModel
             BoolBackgroundNotification = false;
             BoolBackgroundEmployee = false;
             BoolBackgroundTurbine = false;
+            BoolBackgroundCustomer = false;
         }
         #endregion
 
@@ -164,6 +168,7 @@ namespace TurbineRepair.ViewModel
             BoolBackgroundNotification = false;
             BoolBackgroundEmployee = true;
             BoolBackgroundTurbine = false;
+            BoolBackgroundCustomer = false;
         }
         #endregion
 
@@ -179,6 +184,23 @@ namespace TurbineRepair.ViewModel
             BoolBackgroundNotification = false;
             BoolBackgroundEmployee = false;
             BoolBackgroundTurbine = true;
+            BoolBackgroundCustomer = false;
+        }
+        #endregion
+
+        #region OpenCustomerControl
+        public ICommand OpenCustomerControl { get; }
+        private bool CanOpenCustomerControlExecute(object parameter) => true;
+        private void OnOpenCustomerControlExecute(object parameter)
+        {
+            MainCurrentControl = new CustomerListVM();
+            BoolBackgroundProfile = false;
+            BoolBackgroundChat = false;
+            BoolBackgroundProject = false;
+            BoolBackgroundNotification = false;
+            BoolBackgroundEmployee = false;
+            BoolBackgroundTurbine = false;
+            BoolBackgroundCustomer = true;
         }
         #endregion
 
@@ -257,6 +279,15 @@ namespace TurbineRepair.ViewModel
         }
         #endregion
 
+        #region BoolBackgroundCustomer
+        private bool _boolBackgroundCustomer = false;
+        public bool BoolBackgroundCustomer
+        {
+            get => _boolBackgroundCustomer;
+            set => Set(ref _boolBackgroundCustomer, value);
+        }
+        #endregion
+
         #region CurrentUser
         private UserDatum _currentUser = MainWindowViewModel.main.CurrentUser;
         public UserDatum CurrentUser
@@ -325,6 +356,9 @@ namespace TurbineRepair.ViewModel
             OpenTurbineControl = new LambdaCommand(OnOpenTurbineControlExecute, CanOpenTurbineControlExecute);
             #endregion
 
+            #region OpenCustomerControl
+            OpenCustomerControl = new LambdaCommand(OnOpenCustomerControlExecute,CanOpenCustomerControlExecute);
+            #endregion
             #endregion
 
             /*------------------------------------------- Command ---------------------------------------------------*/
