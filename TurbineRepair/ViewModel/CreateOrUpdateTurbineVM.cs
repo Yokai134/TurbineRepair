@@ -137,12 +137,11 @@ namespace TurbineRepair.ViewModel
                 updTurbine.TurbineMdpNavigation.Height = HeightMdp;
                 #endregion
                 #region TurbineImage
-                //if(OriginalName != updTurbine.TurbineName)
-                //{
-                //    string basePath = Path.GetFullPath(pathProject + @"\" + OriginalName);
-                //    string movePath = Path.GetFullPath(pathProject + @"\" + updTurbine.TurbineName);
-                //    Directory.Move(basePath, movePath);
-                //}
+                if (OriginalName != updTurbine.TurbineName)
+                {
+                    string basePath = Path.GetFullPath(pathProject + @"\" + OriginalName);
+                    string movePath = Path.GetFullPath(pathProject + @"\" + updTurbine.TurbineName);
+                }
                 string imagePath = Path.GetFullPath(pathProject + @"\" + OriginalName);
                 string[] imageFile = Directory.GetFiles(imagePath);
                 if (ImageOneUpd)

@@ -85,6 +85,13 @@ namespace TurbineRepair.ViewModel
             get => _noSelectedOrganization;
             set => Set(ref _noSelectedOrganization, value);
         }
+
+        private decimal _foregroundFailedMessage;
+        public decimal ForegroundFailedMessage
+        {
+            get => _foregroundFailedMessage;
+            set => Set(ref _foregroundFailedMessage, value);
+        }
         #endregion
 
         #region Command
@@ -130,6 +137,7 @@ namespace TurbineRepair.ViewModel
         private bool CanCreateCustomerExecute(object parameter) => true;
         private void OnCreateCustomerExecute(object parametr)
         {
+            MainWindowViewModel.main.UpdCustomer = null;
             MainVM.mainVM.MainCurrentControl = new CreateOrUpdateCustomerVM();
         }
 
@@ -143,7 +151,12 @@ namespace TurbineRepair.ViewModel
                 MainVM.mainVM.MainCurrentControl = new CreateOrUpdateCustomerVM();
                 NoSelectionCustomer = "";
             }
-            else NoSelectionCustomer = "*Не выбран заказчик";
+            else 
+            { 
+                NoSelectionCustomer = "*Не выбран заказчик";
+                ForegroundFailedMessage = -1;
+            }
+           
 
         }
 
@@ -157,10 +170,18 @@ namespace TurbineRepair.ViewModel
                 delCustomer.DeleteCustomer = true;
                 MainWindowViewModel.context.SaveChanges();
                 await MainWindowViewModel.main.UpdateData();
-                NoSelectionCustomer = "";
+                ForegroundFailedMessage = 1;
+                CustomerList = MainWindowViewModel.main.CustomersAll.Where(x => x.DeleteCustomer == false).ToList();
+                CustomerItem = CustomerList;
+                NoSelectionCustomer = "Готово";
+                SelectCustomer = null;
 
             }
-            else NoSelectionCustomer = "*Не выбран заказчик";
+            else
+            {
+                NoSelectionCustomer = "*Не выбран заказчик";
+                ForegroundFailedMessage = -1;
+            }
         }
 
 
@@ -168,6 +189,7 @@ namespace TurbineRepair.ViewModel
         private bool CanCreateOrganizationExecute(object parameter) => true;
         private void OnCreateOrganizationExecute(object parametr)
         {
+            MainWindowViewModel.main.UpdOraganization = null;
             MainVM.mainVM.MainCurrentControl = new CreateOrUpdateOraganization();
         }
 
@@ -181,7 +203,11 @@ namespace TurbineRepair.ViewModel
                 MainVM.mainVM.MainCurrentControl = new CreateOrUpdateOraganization();
                 NoSelectedOrganization = "";
             }
-            else NoSelectedOrganization = "*Не выбрана организация";
+            else
+            {
+                ForegroundFailedMessage = -1;
+                NoSelectedOrganization = "*Не выбрана организация";
+            }
         }
 
         public ICommand DeleteOrganization { get; }
@@ -194,9 +220,17 @@ namespace TurbineRepair.ViewModel
                 delOrganization.DeleteOrganization = true;
                 MainWindowViewModel.context.SaveChanges();
                 await MainWindowViewModel.main.UpdateData();
-                NoSelectedOrganization = "";
+                ForegroundFailedMessage = 1;
+                OrganizationList = MainWindowViewModel.main.Oraganizations.Where(x => x.DeleteOrganization == false).ToList();
+                OrganizationItem = OrganizationList;
+                NoSelectedOrganization = "Готово";
+                SelectedOrganization = null;
             }
-            else NoSelectedOrganization = "*Не выбрана организация";
+            else
+            {
+                ForegroundFailedMessage = -1;
+                NoSelectedOrganization = "*Не выбрана организация";
+            }
 
         }
         #endregion

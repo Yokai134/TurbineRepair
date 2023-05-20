@@ -4,9 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TurbineRepair.View.ContentGUI.MainContentGUI"
+             xmlns:converter="clr-namespace:TurbineRepair.ResourceApp"
              xmlns:viewModel="clr-namespace:TurbineRepair.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converter:ConvertColor x:Key="colorConverter"/>
+    </UserControl.Resources>
     <UserControl.DataContext>
         <viewModel:CustomerListVM/>
     </UserControl.DataContext>
@@ -44,7 +48,7 @@
                         <Label Content="{Binding NoSelectionCustomer, UpdateSourceTrigger=PropertyChanged}"
                                VerticalAlignment="Center"
                                FontSize="15"
-                               Foreground="Red"/>
+                               Foreground="{Binding ForegroundFailedMessage, Converter={StaticResource colorConverter}}"/>
                         <Button Style="{StaticResource ButtonMain}"
                                 Command="{Binding DeleteCustomer}"
                                 Margin="10"
@@ -95,7 +99,7 @@
                         <Label Content="{Binding NoSelectedOrganization, UpdateSourceTrigger=PropertyChanged}"
                                VerticalAlignment="Center"
                                FontSize="15"
-                               Foreground="Red"/>
+                               Foreground="{Binding ForegroundFailedMessage, Converter={StaticResource colorConverter}}"/>
                         <Button Style="{StaticResource ButtonMain}"
                                 Margin="10"
                                 Command="{Binding DeleteOrganization}"

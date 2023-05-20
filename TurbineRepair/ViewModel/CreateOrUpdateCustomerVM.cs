@@ -17,6 +17,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using TurbineRepair.Infrastructure;
 using TurbineRepair.Model;
 
@@ -94,6 +95,13 @@ namespace TurbineRepair.ViewModel
             set => Set(ref _failedAddOrUpdateContent, value);
         }
 
+        private decimal _foregroundFailedMessage;
+        public decimal ForegroundFailedMessage
+        {
+            get => _foregroundFailedMessage;
+            set => Set(ref _foregroundFailedMessage, value);
+        }
+
         #region BoolValidate
         private bool _checkSurname = false;
         public bool CheckSurname
@@ -144,10 +152,19 @@ namespace TurbineRepair.ViewModel
                     updCustomer.CustomerOrganization = SelectOrganization.Id;
                     MainWindowViewModel.context.SaveChanges();
                     await MainWindowViewModel.main.UpdateData();
+                    FailedAddOrUpdateContent = "Данные обновлены";
+                    ForegroundFailedMessage = 1;
+                    timer.Interval = TimeSpan.FromSeconds(1);
+                    timer.Tick += OpenCustomerList;
+                    timer.Start();
                 }
                 else
                 {
                     FailedAddOrUpdateContent = "*Не удалось обновить данные";
+                    ForegroundFailedMessage = -1;
+                    timer.Interval = TimeSpan.FromSeconds(1);
+                    timer.Tick += RefreshValidator;
+                    timer.Start();
                 }
             }
             else
@@ -170,12 +187,28 @@ namespace TurbineRepair.ViewModel
                     MainWindowViewModel.context.Customers.Add(newCustomer);
                     MainWindowViewModel.context.SaveChanges();
                     await MainWindowViewModel.main.UpdateData();
+                    FailedAddOrUpdateContent = "Добавлен новый заказчик";
+                    ForegroundFailedMessage = 1;
+                    timer.Interval = TimeSpan.FromSeconds(1);
+                    timer.Tick += RefreshContent;
+                    timer.Start();
                 }
                 else
                 {
                     FailedAddOrUpdateContent = "*Не удалось добавить данные";
+                    ForegroundFailedMessage = -1;
+                    timer.Interval = TimeSpan.FromSeconds(1);
+                    timer.Tick += RefreshValidator;
+                    timer.Start();
                 }
             }
+        }
+
+        public ICommand BackCustomerList { get; }
+        private bool CanBackCustomerListExecute(object parametr) => true;
+        private void OnBackCustomerListExecute(object parametr)
+        {
+            MainVM.mainVM.MainCurrentControl = new CustomerListVM();
         }
 
         #endregion
@@ -196,6 +229,7 @@ namespace TurbineRepair.ViewModel
             }
 
             CreateOrUpdateCustomer = new LambdaCommand(OnCreateOrUpdateCustomerExecute, CanCreateOrUpdateCustomerExecute);
+            BackCustomerList = new LambdaCommand(OnBackCustomerListExecute, CanBackCustomerListExecute);
         }
 
         #region Validation
@@ -301,6 +335,38 @@ namespace TurbineRepair.ViewModel
             }
         }
 
+        #endregion
+
+        #region DispatherTimer
+        DispatcherTimer timer = new DispatcherTimer();
+        private void RefreshValidator(object e, object sender)
+        {
+            ForegroundFailedMessage = 0;
+            FailedAddOrUpdateContent = "";
+            ClearErrors(nameof(CustomerSurname));
+            ClearErrors(nameof(CustomerName));
+            ClearErrors(nameof(CustomerPatronomyc));
+            ClearErrors(nameof(SelectOrganization));
+            timer.Stop();
+        }
+        private void RefreshContent(object e, object sender)
+        {
+            CheckName = false;
+            CheckOrganization = false;
+            CheckSurname = false;
+            CheckPatronomyc = false;
+            CustomerSurname = "";
+            CustomerName = "";
+            CustomerPatronomyc = "";
+            SelectOrganization = null;
+            FailedAddOrUpdateContent = string.Empty;
+            timer.Stop();
+        }
+        private void OpenCustomerList(object sender, object e)
+        {
+            MainVM.mainVM.MainCurrentControl = new CustomerListVM();
+            timer.Stop();
+        }
         #endregion
     }
 }

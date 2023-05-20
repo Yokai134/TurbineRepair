@@ -8,8 +8,10 @@ using System.IO.Packaging;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Threading;
 using TurbineRepair.Infrastructure;
 using TurbineRepair.Model;
 
@@ -133,13 +135,20 @@ namespace TurbineRepair.ViewModel
                     updOraganization.OraganizationAdres = "г. " + OrganizationTown + ", ул. " + OrganizationStreet + ", д. " + OrganizationBuilder;
                     MainWindowViewModel.context.SaveChanges();
                     await MainWindowViewModel.main.UpdateData();
-                    FailedAddOrUpdate = "*Данные организации обновлены";
-                    ForegroundFailedMessage = 1; 
+                    FailedAddOrUpdate = "Данные организации обновлены";
+                    ForegroundFailedMessage = 1;
+                    timer.Interval = TimeSpan.FromSeconds(1);
+                    timer.Tick += OpenCustomerList;
+                    timer.Start();
                 }
                 else
                 {
                     FailedAddOrUpdate = "Не удалось обновить данные, провертe правильность ввода";
                     ForegroundFailedMessage = -1;
+                    timer.Interval = TimeSpan.FromSeconds(1);
+                    timer.Tick += RefreshValidator;
+                    timer.Start();
+                   
                 }
             }
             else
@@ -160,15 +169,28 @@ namespace TurbineRepair.ViewModel
                     MainWindowViewModel.context.Oraganizations.Add(newOraganization);
                     MainWindowViewModel.context.SaveChanges();
                     await MainWindowViewModel.main.UpdateData();
-                    FailedAddOrUpdate = "*Организация добавлена";
+                    FailedAddOrUpdate = "Организация добавлена";
                     ForegroundFailedMessage = 1;
+                    timer.Interval = TimeSpan.FromSeconds(1);
+                    timer.Tick += RefreshContent;
+                    timer.Start();
                 }
                 else
                 {
                     FailedAddOrUpdate = "Не удалось добавить данные, провертe правильность ввода";
                     ForegroundFailedMessage = -1;
+                    timer.Interval = TimeSpan.FromSeconds(1);
+                    timer.Tick += RefreshValidator;
+                    timer.Start();
                 }
             }
+        }
+
+        public ICommand BackCustomerList { get; }
+        private bool CanBackCustomerListExecute(object parametr) => true;
+        private void OnBackCustomerListExecute(object parametr)
+        {
+            MainVM.mainVM.MainCurrentControl = new CustomerListVM();
         }
         #endregion
 
@@ -193,6 +215,7 @@ namespace TurbineRepair.ViewModel
 
             #region Command
             CreateOrUpdateOraganizations = new LambdaCommand(OnCreateOrUpdateOraganizationsExecution, CanCreateOrUpdateOraganizationsExecution);
+            BackCustomerList = new LambdaCommand(OnBackCustomerListExecute, CanBackCustomerListExecute);
             #endregion
         }
 
@@ -222,6 +245,7 @@ namespace TurbineRepair.ViewModel
             }
             else
             {
+
                 CheckOrganizationTown = true;
             }
 
@@ -238,6 +262,7 @@ namespace TurbineRepair.ViewModel
             }
             else
             {
+
                 CheckOrganizationNames = true;
             }
 
@@ -254,6 +279,7 @@ namespace TurbineRepair.ViewModel
             }
             else
             {
+
                 CheckOrganizationStreet = true;
             }
 
@@ -301,6 +327,38 @@ namespace TurbineRepair.ViewModel
             }
         }
 
+        #endregion
+
+        #region DispatherTimer
+        DispatcherTimer timer = new DispatcherTimer();
+        private void RefreshValidator(object e, object sender)
+        {
+            ForegroundFailedMessage = 0;
+            FailedAddOrUpdate = "";
+            ClearErrors(nameof(OrganizationNames));
+            ClearErrors(nameof(OrganizationTown));
+            ClearErrors(nameof(OrganizationStreet));
+            ClearErrors(nameof(OrganizationBuilder));
+            timer.Stop();
+        }
+        private void RefreshContent(object e, object sender) 
+        {
+            CheckOrganizationNames = false; 
+            CheckOrganizationTown = false;
+            CheckOrganizationStreet = false;
+            CheckOrganizationBuilder = false;
+            OrganizationNames = "";
+            OrganizationTown = "";
+            OrganizationBuilder = "";
+            OrganizationStreet = "";
+            FailedAddOrUpdate = string.Empty;
+            timer.Stop();
+        }
+        private void OpenCustomerList(object sender, object e)
+        {
+            MainVM.mainVM.MainCurrentControl = new CustomerListVM();
+            timer.Stop();
+        }
         #endregion
     }
 
