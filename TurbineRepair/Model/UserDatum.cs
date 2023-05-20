@@ -29,6 +29,10 @@ public partial class UserDatum
 
     public bool? DeleteUser { get; set; }
 
+    public virtual ICollection<MessageList> MessageListMessageReceiptNavigations { get; set; } = new List<MessageList>();
+
+    public virtual ICollection<MessageList> MessageListMessageSenderNavigations { get; set; } = new List<MessageList>();
+
     public virtual Post? PostNavigation { get; set; }
 
     public virtual ICollection<ProjectDatum> ProjectDatumProjectExecutorNavigations { get; set; } = new List<ProjectDatum>();

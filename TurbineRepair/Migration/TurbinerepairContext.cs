@@ -20,6 +20,8 @@ public partial class TurbinerepairContext : DbContext
 
     public virtual DbSet<Deportament> Deportaments { get; set; }
 
+    public virtual DbSet<MessageList> MessageLists { get; set; }
+
     public virtual DbSet<Oraganization> Oraganizations { get; set; }
 
     public virtual DbSet<Post> Posts { get; set; }
@@ -62,7 +64,6 @@ public partial class TurbinerepairContext : DbContext
             entity.Property(e => e.CustomerName).HasMaxLength(32);
             entity.Property(e => e.CustomerPatronomyc).HasMaxLength(32);
             entity.Property(e => e.CustomerSurname).HasMaxLength(32);
-            entity.Property(e => e.DeleteCustomer);
 
             entity.HasOne(d => d.CustomerOrganizationNavigation).WithMany(p => p.Customers)
                 .HasForeignKey(d => d.CustomerOrganization)
@@ -80,6 +81,26 @@ public partial class TurbinerepairContext : DbContext
             entity.Property(e => e.DeportamentName).HasColumnType("character varying");
         });
 
+        modelBuilder.Entity<MessageList>(entity =>
+        {
+            entity.HasKey(e => e.MessageListId).HasName("MessageList_pkey");
+
+            entity.ToTable("MessageList");
+
+            entity.Property(e => e.MessageListId).HasColumnName("MessageListID");
+            entity.Property(e => e.MessgeTime).HasColumnType("timestamp without time zone");
+
+            entity.HasOne(d => d.MessageReceiptNavigation).WithMany(p => p.MessageListMessageReceiptNavigations)
+                .HasForeignKey(d => d.MessageReceipt)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("ReceiptUser_fk");
+
+            entity.HasOne(d => d.MessageSenderNavigation).WithMany(p => p.MessageListMessageSenderNavigations)
+                .HasForeignKey(d => d.MessageSender)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("SenderUser_fk");
+        });
+
         modelBuilder.Entity<Oraganization>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("Oraganization_pkey");
@@ -89,7 +110,6 @@ public partial class TurbinerepairContext : DbContext
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.OraganizationAdres).HasMaxLength(55);
             entity.Property(e => e.OraganizationName).HasMaxLength(55);
-            entity.Property(e => e.DeleteOrganization);
         });
 
         modelBuilder.Entity<Post>(entity =>

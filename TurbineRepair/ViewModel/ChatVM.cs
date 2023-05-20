@@ -11,22 +11,13 @@ using System.Windows.Threading;
 using TurbineRepair.Infrastructure;
 using TurbineRepair.Migration;
 using TurbineRepair.Model;
+using TurbineRepair.Model.ChatModel;
 using TurbineRepair.Test;
 
 namespace TurbineRepair.ViewModel
 {
     internal class ChatVM : Base.ViewModel
     {
-        TurbinerepairContext context = new TurbinerepairContext();
-
-        private UserDatum _currentUser = MainWindowViewModel.main.CurrentUser;
-        public UserDatum CurrentUser
-        {
-            get=>_currentUser;
-            set => Set(ref _currentUser, value);
-        }
-
-        /*--------------------------------------------------- Command -------------------------------------------*/
 
         #region Command
 
@@ -38,32 +29,72 @@ namespace TurbineRepair.ViewModel
         {
             if (SearchUser != null)
             {
-                ContactItem = Contact.Where(x => x.contactName.StartsWith(SearchUser));
+               
             }
-            else ContactItem = Contact;
         }
-        #endregion      
+        #endregion
+
+        #region SendMessage
+        public ICommand SendMessage { get; }
+        private bool CanSendMessageExecute(object parametr) => true;
+        private async void OnSendMessageExecute(object parametr)
+        {
+            if(Message != null) 
+            { 
+                Model.MessageList newMessage = new MessageList() 
+                { 
+                    MessageSender = CurrentUser.Id,
+                    MessageReceipt = SelectedContact.ReceiptId,
+                    MessageText = Message,
+                    MessgeTime = DateTime.Now
+                };
+                MessageObs.Add(new MessageModel()
+                {
+                    message = Message,                   
+                });
+                MainWindowViewModel.context.MessageLists.Add(newMessage);
+                MainWindowViewModel.context.SaveChanges();
+                await MainWindowViewModel.main.UpdateData();
+                LoadContact(ContactList, MessageList);
+            }
+        }
+        #endregion
 
         #endregion
 
-        /*--------------------------------------------------- Command -------------------------------------------*/
+        #region Property
 
-        /*--------------------------------------------------- Property ------------------------------------------*/
+        #region List
+        private List<UserDatum> _contactList;
+        public List<UserDatum> ContactList
+        {
+            get => _contactList;
+            set => Set(ref _contactList, value);
+        }
+
+        private List<MessageList> _messageList;
+        public List<MessageList> MessageList
+        {
+            get => _messageList;
+            set => Set(ref _messageList, value);
+        }
+        #endregion
+
+        #region ChatLists
+        private List<ContactModel> _contactModels;
+        public List<ContactModel> ContactModels
+        {
+            get => _contactModels;
+            set => Set(ref _contactModels, value);
+        }
 
         #region ObsCollection
-        public ObservableCollection<ContractInfo> Contact { get; set; }
-        public ObservableCollection<MessageInfo> Messages { get; set; }
+        public ObservableCollection<ContactModel> ContactObs { get; set; }
 
-        public List<UserDatum> User { get; set; }
+        public ObservableCollection<MessageModel> MessageObs { get; set; }
+
         #endregion
 
-        #region ContactItem
-        private object _contactItem;
-        public object ContactItem
-        {
-            get => _contactItem;
-            set => Set(ref _contactItem, value);
-        }
         #endregion
 
         #region SearchUser
@@ -85,91 +116,101 @@ namespace TurbineRepair.ViewModel
         #endregion
 
         #region SelectedContact
-        private ContractInfo _selectedContact;
-        public ContractInfo SelectedContact
+        private ContactModel _selectedContact;
+        public ContactModel SelectedContact
         {
             get => _selectedContact;
             set => Set(ref _selectedContact, value);
         }
         #endregion
 
+        private UserDatum? _currentUser = MainWindowViewModel.main.CurrentUser;
+        public UserDatum? CurrentUser
+        {
+            get => _currentUser;
+            set => Set(ref _currentUser, value);
+        }
+        #endregion
 
-        /*--------------------------------------------------- Property ------------------------------------------*/
 
 
         /// <summary>
-        /// 
+        /// Логика взаимодействия с Chat.xaml
         /// </summary>
         public ChatVM()
         {
-            /*--------------------------------------------------- Command -------------------------------------------*/
+
+            ContactList = MainWindowViewModel.main.UsersAll.ToList();
+
+
+            MessageList = MainWindowViewModel.main.MessageLists.ToList();
+
+
+            LoadContact(ContactList, MessageList);
 
             #region Command
 
             #region ContactSearch
             ContactSearch = new LambdaCommand(OnContactSearchExecute, CanContactSearchExecute);
+            SendMessage = new LambdaCommand(OnSendMessageExecute, CanSendMessageExecute);
             #endregion
 
             #endregion
+       
 
-            /*--------------------------------------------------- Command -------------------------------------------*/
-            Contact = new ObservableCollection<ContractInfo>();
-            Messages = new ObservableCollection<MessageInfo>();
-            User = MainWindowViewModel.main.UsersAll;
+        }
 
+        private void LoadContact(List<UserDatum> usersList , List<MessageList> messageLists) 
+        {
 
-            Messages.Add(new MessageInfo()
+            ContactObs = new ObservableCollection<ContactModel>();
+            foreach (var user in usersList)
             {
-                contactName = "test",
-                contactColor = "#FFFF00",
-                imageSource = "https://i.imgur.com/xI3Imav.jpeg",
-                message = "testMessage",
-                time = DateTime.Now,
-                isNativeOrigin = false,
-                firstMessage = true
-            });
-
-
-            for (int i = 0; i < 4; i++)
-            {
-                Messages.Add(new MessageInfo()
+                if(user.Id != CurrentUser.Id)
                 {
-                    contactName = "test",
-                    contactColor = "#FFFF00",
-                    imageSource = "https://i.imgur.com/xI3Imav.jpeg",
-                    message = "testMessage",
-                    time = DateTime.Now,
-                    isNativeOrigin = true,
-                });
-            }
+                    
+                    MessageObs = new ObservableCollection<MessageModel>();
 
-            Messages.Add(new MessageInfo()
-            {
-                contactName = "me",
-                contactColor = "#FFFF00",
-                imageSource = "https://i.imgur.com/xI3Imav.jpeg",
-                message = "testMessage",
-                time = DateTime.Now,
-                isNativeOrigin = true,
-            });
-
-
-            for (int i = 0; i < User.Count; i++)
-            {
-                if (User[i].Id != CurrentUser.Id)
-                {
-                    Contact.Add(new ContractInfo()
+                    var messages = messageLists.Where(x => x.MessageSender == CurrentUser.Id && x.MessageReceipt == user.Id).ToList();
+                    foreach (var messageItems in messages)
                     {
-                        contactName = User[i].Name,
-                        imageSource = User[i].Image,
-                        messages = Messages
-                    });
-                }
 
+                        MessageObs.Add(new MessageModel
+                        {
+                            contactName = user.Name,
+                            imageSource = user.Image,
+                            message = messageItems.MessageText,
+                            time = messageItems.MessgeTime
+                        });
+                    }
+
+                    if(MessageObs.Count > 0) 
+                    {
+                        ContactObs.Add(new ContactModel()
+                        {
+                            ReceiptId = user.Id,
+                            contactName = user.Name,
+                            imageSource = user.Image,
+                            messages = MessageObs,
+
+                        });
+                    }
+                    else
+                    {
+                        ContactObs.Add(new ContactModel()
+                        {
+                            ReceiptId = user.Id,
+                            contactName = user.Name,
+                            imageSource = user.Image,
+                            messages = null,
+
+                        });
+                    }
+
+
+                }
             }
 
-
-            ContactItem = Contact;
         }
 
     }

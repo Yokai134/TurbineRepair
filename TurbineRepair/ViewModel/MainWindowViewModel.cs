@@ -277,6 +277,15 @@ namespace TurbineRepair.ViewModel
         }
         #endregion
 
+        #region MessageLists
+        private List<MessageList> _messageLists = context.MessageLists.ToList();
+        public List<MessageList> MessageLists
+        {
+            get => _messageLists;
+            set => Set(ref _messageLists, value);
+        }
+        #endregion
+
         #endregion
 
         /* --------------------------------------------- List --------------------------------------*/
@@ -305,7 +314,8 @@ namespace TurbineRepair.ViewModel
             await Task.Run(() => TurbineMda = context.TurbineMda.ToList());
             await Task.Run(() => TurbinePgp = context.TurbinePgps.ToList());
             await Task.Run(() => TurbineMdp = context.TurbineMdps.ToList());
-            await Task.Run(() => Oraganizations = context.Oraganizations.ToList());            
+            await Task.Run(() => Oraganizations = context.Oraganizations.ToList());     
+            await Task.Run(() => MessageLists = context.MessageLists.ToList());
         }
         #endregion
 

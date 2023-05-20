@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TurbineRepair.View.ContentGUI.MainContentGUI"
+             xmlns:fa6="http://schemas.fontawesome.com/icons/svg"
+             xmlns:fa6p="http://schemas.fontawesome.com/icons/svg/properties"
              xmlns:viewModel="clr-namespace:TurbineRepair.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="520" d:DesignWidth="700">
@@ -47,11 +49,12 @@
 
             <StackPanel>
                 <Label Content="Контакты"
-                   FontSize="20"
-                   FontWeight="SemiBold"
+                       FontSize="20"
+                       Foreground="Gray"
+                       FontWeight="SemiBold"
                        Margin="10,0"/>
 
-                <ListView ItemsSource="{Binding ContactItem, UpdateSourceTrigger=PropertyChanged}"
+                <ListView ItemsSource="{Binding ContactObs, UpdateSourceTrigger=PropertyChanged}"
                           SelectedItem="{Binding SelectedContact}"
                           Background="Transparent"
                           BorderThickness="0"
@@ -71,11 +74,16 @@
                     </Image.Clip>
                     
                 </Image>
-                <Label Content="{Binding CurrentUser.Name, UpdateSourceTrigger=PropertyChanged}"
-                       VerticalAlignment="Center"
-                       FontSize="20"
-                       FontWeight="SemiBold"
-                       Foreground="Gray"/>
+                <StackPanel VerticalAlignment="Center">
+                    <Label Content="{Binding CurrentUser.Name, UpdateSourceTrigger=PropertyChanged}"
+                           FontSize="20"
+                           FontWeight="SemiBold"
+                           Foreground="Gray"/>
+                    <Label Content="В сети"
+                           FontSize="15"
+                           Foreground="Green"/>
+
+                </StackPanel>
             </StackPanel>
 
           
@@ -83,6 +91,7 @@
         </Grid>
         <Label Content="{Binding SelectedContact.contactName}"
                FontSize="20"
+               Foreground="Gray"
                Margin="10,5"
                FontWeight="SemiBold"
                Grid.Column="1"/>
@@ -95,11 +104,38 @@
                 <RowDefinition Height="70"/>
             </Grid.RowDefinitions>
 
-            <ListView ItemsSource="{Binding SelectedContact.messages}"
+            <ListView ItemsSource="{Binding SelectedContact.messages, UpdateSourceTrigger=PropertyChanged}"
                       BorderThickness="0"
                       Background="Transparent"
                       Margin="8,0,0,0"
                       ItemContainerStyle="{StaticResource ChatCard}"/>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.ColumnSpan="2"
+                         Margin="10"
+                         Foreground="Gray"
+                         Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}"
+                         FontSize="20"
+                         Padding="10,11,0,0"
+                         Style="{StaticResource AutheticationTextBox}">
+                    <TextBox.InputBindings>
+                        <KeyBinding Command="{Binding SendMessage}" Key="Return"/>
+                    </TextBox.InputBindings>
+                </TextBox>
+                <Button Grid.Column="1" 
+                        Width="30" 
+                        fa6p:FontAwesome.Icon="Solid_Plus"
+                        fa6p:FontAwesome.PrimaryColor="#3e4147"
+                        Command="{Binding SendMessage}"
+                        Style="{StaticResource ButtonMain}"
+                        Margin="0,0,-50,0"
+                        Height="30"/>
+            </Grid>
+
 
         </Grid>
     </Grid>

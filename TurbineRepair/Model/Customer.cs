@@ -15,7 +15,7 @@ public partial class Customer
 
     public int CustomerOrganization { get; set; }
 
-    public bool DeleteCustomer { get; set; }
+    public bool? DeleteCustomer { get; set; }
 
     public virtual Oraganization CustomerOrganizationNavigation { get; set; } = null!;
 

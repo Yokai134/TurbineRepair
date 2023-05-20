@@ -163,14 +163,17 @@
 
         <Style.Triggers>
             <Trigger Property="IsSelected" Value="True">
-                <Setter Property="Background" Value="Red"/>
+                <Setter Property="Background" Value="#292b2F"/>
             </Trigger>
         </Style.Triggers>
-        
+
+        <Setter Property="Background" Value="#36393F"/>
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListViewItem">
-                    <Border BorderBrush="{TemplateBinding Background}"
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="#3e4147"
                             BorderThickness="1"
                             CornerRadius="15"
                             Height="50"
@@ -224,17 +227,17 @@
                         <StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="{Binding contactName}"
-                                   Foreground="{Binding contactColor}"
-                                   FontSize="20"
-                                   FontWeight="SemiBold"
-                                   VerticalAlignment="Center"
-                                   Margin="0,0,-5,0"/>
+                                       Foreground="Gray"
+                                       FontSize="20"
+                                       FontWeight="SemiBold"
+                                       VerticalAlignment="Center"
+                                       Margin="0,0,-5,0"/>
 
                                 <Label Content="{Binding time}"
-                                   Foreground="Gray"
-                                   FontSize="8"
-                                   FontWeight="SemiBold"
-                                   VerticalAlignment="Center"/>
+                                       Foreground="Gray"
+                                       FontSize="8"
+                                       FontWeight="SemiBold"
+                                       VerticalAlignment="Center"/>
                             </StackPanel>
 
                             <Label Content="{Binding message}"
@@ -248,23 +251,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-
-
-        <Style.Resources>
-            <ControlTemplate x:Key="CustomRow">
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="{Binding message}"
-                           Foreground="Black"
-                           Margin="40,-2,0,-2"/>
-                </StackPanel>
-            </ControlTemplate>
-        </Style.Resources>
-
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding firstMessage}" Value="False">
-                <Setter Property="Template" Value="{DynamicResource CustomRow}"/>
-            </DataTrigger>
-        </Style.Triggers>
+      
            
     </Style>
 
