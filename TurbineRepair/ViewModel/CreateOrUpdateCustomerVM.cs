@@ -163,7 +163,9 @@ namespace TurbineRepair.ViewModel
                         CustomerSurname = CustomerSurname,
                         CustomerName = CustomerName,
                         CustomerPatronomyc = CustomerPatronomyc,
-                        CustomerOrganization = SelectOrganization.Id
+                        CustomerOrganization = SelectOrganization.Id,
+                        DeleteCustomer = false
+                        
                     };
                     MainWindowViewModel.context.Customers.Add(newCustomer);
                     MainWindowViewModel.context.SaveChanges();

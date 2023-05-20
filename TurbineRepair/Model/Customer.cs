@@ -15,6 +15,8 @@ public partial class Customer
 
     public int CustomerOrganization { get; set; }
 
+    public bool DeleteCustomer { get; set; }
+
     public virtual Oraganization CustomerOrganizationNavigation { get; set; } = null!;
 
     public virtual ICollection<ProjectDatum> ProjectData { get; set; } = new List<ProjectDatum>();

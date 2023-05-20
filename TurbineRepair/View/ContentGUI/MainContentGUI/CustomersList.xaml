@@ -41,7 +41,12 @@
                     <StackPanel Grid.Row="2"
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Right">
+                        <Label Content="{Binding NoSelectionCustomer, UpdateSourceTrigger=PropertyChanged}"
+                               VerticalAlignment="Center"
+                               FontSize="15"
+                               Foreground="Red"/>
                         <Button Style="{StaticResource ButtonMain}"
+                                Command="{Binding DeleteCustomer}"
                                 Margin="10"
                                 Width="100"
                                 Content="Удалить"/>
@@ -81,13 +86,19 @@
                               Grid.Row="1"
                               Background="Transparent"
                               BorderThickness="0"
+                              SelectedItem="{Binding SelectedOrganization, UpdateSourceTrigger=PropertyChanged}"
                               ItemContainerStyle="{StaticResource OrganizationCard}"
                               ItemsSource="{Binding OrganizationItem}"/>
                     <StackPanel Grid.Row="2"
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Right">
+                        <Label Content="{Binding NoSelectedOrganization, UpdateSourceTrigger=PropertyChanged}"
+                               VerticalAlignment="Center"
+                               FontSize="15"
+                               Foreground="Red"/>
                         <Button Style="{StaticResource ButtonMain}"
                                 Margin="10"
+                                Command="{Binding DeleteOrganization}"
                                 Width="100"
                                 Content="Удалить"/>
                         <Button Style="{StaticResource ButtonMain}"

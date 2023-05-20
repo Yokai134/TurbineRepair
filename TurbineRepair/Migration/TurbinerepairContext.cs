@@ -62,6 +62,7 @@ public partial class TurbinerepairContext : DbContext
             entity.Property(e => e.CustomerName).HasMaxLength(32);
             entity.Property(e => e.CustomerPatronomyc).HasMaxLength(32);
             entity.Property(e => e.CustomerSurname).HasMaxLength(32);
+            entity.Property(e => e.DeleteCustomer);
 
             entity.HasOne(d => d.CustomerOrganizationNavigation).WithMany(p => p.Customers)
                 .HasForeignKey(d => d.CustomerOrganization)
@@ -88,6 +89,7 @@ public partial class TurbinerepairContext : DbContext
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.OraganizationAdres).HasMaxLength(55);
             entity.Property(e => e.OraganizationName).HasMaxLength(55);
+            entity.Property(e => e.DeleteOrganization);
         });
 
         modelBuilder.Entity<Post>(entity =>

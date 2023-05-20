@@ -122,6 +122,13 @@ namespace TurbineRepair.ViewModel
             get => _updCustomer;
             set => Set(ref _updCustomer, value);
         }
+
+        private Oraganization? _updOraganization;
+        public Oraganization? UpdOraganization
+        {
+            get => _updOraganization;
+            set => Set(ref _updOraganization, value);
+        }
         #endregion
 
         #endregion

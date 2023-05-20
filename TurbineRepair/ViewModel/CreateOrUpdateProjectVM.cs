@@ -196,7 +196,7 @@ namespace TurbineRepair.ViewModel
             FirstExercutor = MainWindowViewModel.main.UsersAll.Where(x=>x.Role == 2).ToList();
             SecondExercutor = MainWindowViewModel.main.UsersAll.Where(x=>x.Role == 2).ToList();
             StatusProjects = MainWindowViewModel.main.StatusesAll;
-            Customers = MainWindowViewModel.main.CustomersAll;
+            Customers = MainWindowViewModel.main.CustomersAll.Where(x=>x.DeleteCustomer == false).ToList();
             Turbines = MainWindowViewModel.main.TurbinesAll;
             
 

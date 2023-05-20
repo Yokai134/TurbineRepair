@@ -11,5 +11,7 @@ public partial class Oraganization
 
     public string OraganizationAdres { get; set; } = null!;
 
+    public bool DeleteOrganization { get; set; }
+
     public virtual ICollection<Customer> Customers { get; set; } = new List<Customer>();
 }

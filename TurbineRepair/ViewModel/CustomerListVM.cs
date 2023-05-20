@@ -65,6 +65,26 @@ namespace TurbineRepair.ViewModel
             get => _selectCustomer;
             set => Set(ref _selectCustomer, value);
         }
+
+        private string _noSelectionCustomer;
+        public string NoSelectionCustomer
+        {
+            get => _noSelectionCustomer;
+            set => Set(ref _noSelectionCustomer, value);
+        }
+
+        private Oraganization _selectedOrganization;
+        public Oraganization SelectedOrganization
+        {
+            get => _selectedOrganization;
+            set => Set(ref _selectedOrganization, value); 
+        }
+        private string _noSelectedOrganization;
+        public string NoSelectedOrganization
+        {
+            get => _noSelectedOrganization;
+            set => Set(ref _noSelectedOrganization, value);
+        }
         #endregion
 
         #region Command
@@ -77,7 +97,7 @@ namespace TurbineRepair.ViewModel
 
                 if (SearchCustomer != null)
                 {
-                    CustomerItem = CustomerList.Where(x => x.CustomerSurname.StartsWith(SearchCustomer)).ToList();
+                    CustomerItem = CustomerList.Where(x => x.CustomerSurname.StartsWith(SearchCustomer) && x.DeleteCustomer == false).ToList();
                 }
                 else if (SearchCustomer == "") CustomerItem = CustomerList;
             }
@@ -96,7 +116,7 @@ namespace TurbineRepair.ViewModel
 
                 if (SearchOrganization != null)
                 {
-                    OrganizationItem = OrganizationList.Where(x => x.OraganizationName.StartsWith(SearchOrganization)).ToList();
+                    OrganizationItem = OrganizationList.Where(x => x.OraganizationName.StartsWith(SearchOrganization) && x.DeleteOrganization == false).ToList();
                 }
                 else if (SearchOrganization == "") OrganizationItem = OrganizationList;
             }
@@ -117,23 +137,89 @@ namespace TurbineRepair.ViewModel
         private bool CanUpdateCustomerExecute(object parameter) => true;
         private void OnUpdateCustomerExecute(object parametr)
         {
-            MainWindowViewModel.main.UpdCustomer = SelectCustomer;
-            MainVM.mainVM.MainCurrentControl = new CreateOrUpdateCustomerVM();
+            if (SelectCustomer != null)
+            {
+                MainWindowViewModel.main.UpdCustomer = SelectCustomer;
+                MainVM.mainVM.MainCurrentControl = new CreateOrUpdateCustomerVM();
+                NoSelectionCustomer = "";
+            }
+            else NoSelectionCustomer = "*Не выбран заказчик";
+
+        }
+
+        public ICommand DeleteCustomer { get; }
+        private bool CanDeleteCustomerExecute(object parameter) => true; 
+        private async void OnDeleteCustomerExecute(object parametr)
+        {
+            if (SelectCustomer != null)
+            {
+                Customer delCustomer = SelectCustomer;
+                delCustomer.DeleteCustomer = true;
+                MainWindowViewModel.context.SaveChanges();
+                await MainWindowViewModel.main.UpdateData();
+                NoSelectionCustomer = "";
+
+            }
+            else NoSelectionCustomer = "*Не выбран заказчик";
+        }
+
+
+        public ICommand CreateOrganization { get; }
+        private bool CanCreateOrganizationExecute(object parameter) => true;
+        private void OnCreateOrganizationExecute(object parametr)
+        {
+            MainVM.mainVM.MainCurrentControl = new CreateOrUpdateOraganization();
+        }
+
+        public ICommand UpdateOrganization { get; }
+        private bool CanUpdateOrganizationExecute(object parametr) => true;
+        private void OnUpdateOrganizationExecute(object parametr)
+        {
+            if (SelectedOrganization != null)
+            {
+                MainWindowViewModel.main.UpdOraganization = SelectedOrganization;
+                MainVM.mainVM.MainCurrentControl = new CreateOrUpdateOraganization();
+                NoSelectedOrganization = "";
+            }
+            else NoSelectedOrganization = "*Не выбрана организация";
+        }
+
+        public ICommand DeleteOrganization { get; }
+        private bool CanDeleteOrganizationExecute(object parametr) => true;
+        private async void OnDeleteOrganizationExecute(object parametr)
+        {
+            if (SelectedOrganization != null)
+            {
+                Oraganization delOrganization = SelectedOrganization;
+                delOrganization.DeleteOrganization = true;
+                MainWindowViewModel.context.SaveChanges();
+                await MainWindowViewModel.main.UpdateData();
+                NoSelectedOrganization = "";
+            }
+            else NoSelectedOrganization = "*Не выбрана организация";
+
         }
         #endregion
 
+
         public CustomerListVM() 
         { 
-            CustomerList = MainWindowViewModel.main.CustomersAll.ToList();
+            CustomerList = MainWindowViewModel.main.CustomersAll.Where(x=>x.DeleteCustomer == false).ToList();
             CustomerItem = CustomerList;
 
-            OrganizationList = MainWindowViewModel.main.Oraganizations.ToList();
+            OrganizationList = MainWindowViewModel.main.Oraganizations.Where(x => x.DeleteOrganization == false).ToList();
             OrganizationItem = OrganizationList;
 
+            #region Command
             SearchCustomerCommand = new LambdaCommand(OnSearchCustomerCommandExecute, CanSearchCustomerCommandExecute);
             SearchOrganizationCommand = new LambdaCommand(OnSearchOrganizationCommandExecute, CanSearchOrganizationCommandExecute);
             CreateCustomer = new LambdaCommand(OnCreateCustomerExecute, CanCreateCustomerExecute);
             UpdateCustomer = new LambdaCommand(OnUpdateCustomerExecute, CanUpdateCustomerExecute);
+            DeleteCustomer = new LambdaCommand(OnDeleteCustomerExecute, CanDeleteCustomerExecute);
+            CreateOrganization = new LambdaCommand(OnCreateOrganizationExecute, CanCreateOrganizationExecute);
+            UpdateOrganization = new LambdaCommand(OnUpdateOrganizationExecute, CanUpdateOrganizationExecute);
+            DeleteOrganization = new LambdaCommand(OnDeleteOrganizationExecute, CanDeleteOrganizationExecute);
+            #endregion
         }
     }
 }

@@ -79,6 +79,10 @@
             <DataTemplate DataType="{x:Type viewModel:CreateOrUpdateCustomerVM}">
                 <viewMain:CreateOrUpdateCustomer/>
             </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:CreateOrUpdateOraganization}">
+                <viewMain:CreateOrUpdateOraganization/>
+            </DataTemplate>
             
         </ResourceDictionary>
     </Application.Resources>
