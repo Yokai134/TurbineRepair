@@ -25,7 +25,7 @@ namespace TurbineRepair.ViewModel
 {
     internal class CreateOrUpdateCustomerVM : Base.ViewModel, INotifyDataErrorInfo
     {
-        private string patternRegex = "^[0-9]";
+        private string patternRegex = "^[a-zA-Zа-яА-Я]+$";
 
         #region Property
         private List<Oraganization> _oraganizations = MainWindowViewModel.main.Oraganizations;
@@ -249,7 +249,7 @@ namespace TurbineRepair.ViewModel
         private void ValidateSurname()
         {
             ClearErrors(nameof(CustomerSurname));
-            if (string.IsNullOrWhiteSpace(CustomerSurname) || Regex.IsMatch(CustomerSurname, patternRegex, RegexOptions.IgnoreCase))
+            if (string.IsNullOrWhiteSpace(CustomerSurname) || !Regex.IsMatch(CustomerSurname, patternRegex, RegexOptions.IgnoreCase))
             {
                 ClearErrors(nameof(CustomerSurname));
                 AddError(nameof(CustomerSurname), "*Поле не может быть пустым, или в поле не допустимые смволы.");
@@ -264,7 +264,7 @@ namespace TurbineRepair.ViewModel
         private void ValidateName()
         {
             ClearErrors(nameof(CustomerName));
-            if (string.IsNullOrWhiteSpace(CustomerName) || Regex.IsMatch(CustomerName, patternRegex, RegexOptions.IgnoreCase))
+            if (string.IsNullOrWhiteSpace(CustomerName) || !Regex.IsMatch(CustomerName, patternRegex, RegexOptions.IgnoreCase))
             {
                 ClearErrors(nameof(CustomerName));
                 AddError(nameof(CustomerName), "*Поле не может быть пустым, или в поле не допустимые смволы.");
@@ -280,7 +280,7 @@ namespace TurbineRepair.ViewModel
         private void ValidatePatronomyc()
         {
             ClearErrors(nameof(CustomerPatronomyc));
-            if (string.IsNullOrWhiteSpace(CustomerPatronomyc) || Regex.IsMatch(CustomerPatronomyc, patternRegex, RegexOptions.IgnoreCase))
+            if (string.IsNullOrWhiteSpace(CustomerPatronomyc) || !Regex.IsMatch(CustomerPatronomyc, patternRegex, RegexOptions.IgnoreCase))
             {
                 ClearErrors(nameof(CustomerPatronomyc));
                 AddError(nameof(CustomerPatronomyc), "*Поле не может быть пустым, или в поле не допустимые смволы.");

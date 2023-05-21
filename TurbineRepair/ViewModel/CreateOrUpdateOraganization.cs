@@ -19,7 +19,8 @@ namespace TurbineRepair.ViewModel
 {
     internal class CreateOrUpdateOraganization : Base.ViewModel, INotifyDataErrorInfo
     {
-        private static string patternRegex = "^[0-9]";
+        private static string patternRegex = "^[a-zA-Zа-яА-Я]+$";
+        private static string numPattern = "^[0-9]+$";
 
         #region Property
 
@@ -237,7 +238,7 @@ namespace TurbineRepair.ViewModel
         private void ValidateTown()
         {
             ClearErrors(nameof(OrganizationTown));
-            if (string.IsNullOrWhiteSpace(OrganizationTown) || Regex.IsMatch(OrganizationTown, patternRegex, RegexOptions.IgnoreCase))
+            if (string.IsNullOrWhiteSpace(OrganizationTown) || !Regex.IsMatch(OrganizationTown, patternRegex, RegexOptions.IgnoreCase))
             {
                 ClearErrors(nameof(OrganizationTown));
                 AddError(nameof(OrganizationTown), "*Поле не может быть пустым, или в поле не допустимые смволы.");
@@ -253,7 +254,7 @@ namespace TurbineRepair.ViewModel
         private void ValidateName()
         {
             ClearErrors(nameof(OrganizationNames));
-            if (string.IsNullOrWhiteSpace(OrganizationNames) || Regex.IsMatch(OrganizationNames, patternRegex, RegexOptions.IgnoreCase))
+            if (string.IsNullOrWhiteSpace(OrganizationNames) || !Regex.IsMatch(OrganizationNames, patternRegex, RegexOptions.IgnoreCase))
             {
                 ClearErrors(nameof(OrganizationNames));
                 AddError(nameof(OrganizationNames), "*Поле не может быть пустым, или в поле не допустимые смволы.");
@@ -270,7 +271,7 @@ namespace TurbineRepair.ViewModel
         private void ValidateStreet()
         {
             ClearErrors(nameof(OrganizationStreet));
-            if (string.IsNullOrWhiteSpace(OrganizationStreet) || Regex.IsMatch(OrganizationStreet, patternRegex, RegexOptions.IgnoreCase))
+            if (string.IsNullOrWhiteSpace(OrganizationStreet) || !Regex.IsMatch(OrganizationStreet, patternRegex, RegexOptions.IgnoreCase))
             {
                 ClearErrors(nameof(OrganizationStreet));
                 AddError(nameof(OrganizationStreet), "*Поле не может быть пустым, или в поле не допустимые смволы.");
@@ -287,7 +288,7 @@ namespace TurbineRepair.ViewModel
         private void ValidateBuilder()
         {
             ClearErrors(nameof(OrganizationBuilder));
-            if (string.IsNullOrWhiteSpace(OrganizationBuilder) || !Regex.IsMatch(OrganizationBuilder, patternRegex, RegexOptions.IgnoreCase))
+            if (string.IsNullOrWhiteSpace(OrganizationBuilder) || !Regex.IsMatch(OrganizationBuilder, numPattern, RegexOptions.IgnoreCase))
             {
                 ClearErrors(nameof(OrganizationBuilder));
                 AddError(nameof(OrganizationBuilder), "*Поле не может быть пустым, или в поле не допустимые смволы.");

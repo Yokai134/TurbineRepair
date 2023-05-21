@@ -26,49 +26,5 @@ namespace TurbineRepair.View.ContentGUI.MainContentGUI
             InitializeComponent();
         }
 
-        public class InputRegex
-        {
-            Regex regex = new Regex("^[0-9]");
-
-            Regex regexPhone = new Regex("^(\\(?\\+?[0-9]*\\)?)?[0-9_\\- \\(\\)]*$");
-
-            public bool NumberInput(string value)
-            {
-                return !regex.IsMatch(value);
-            }
-
-            public bool LetterInput(string value)
-            {
-                return regex.IsMatch(value);
-            }
-
-            public bool PhoneInput(string value)
-            {
-                return !regexPhone.IsMatch(value);
-            }
-
-
-        }
-
-        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            InputRegex input = new InputRegex();
-            if (input.LetterInput(e.Text))
-                e.Handled = true;
-        }
-
-        private void TextBox_PreviewTextInputNumber(object sender, TextCompositionEventArgs e)
-        {
-            InputRegex input = new InputRegex();
-            if (input.NumberInput(e.Text))
-                e.Handled = true;
-        }
-
-        private void TextBox_PreviewTextInputPhone(object sender, TextCompositionEventArgs e)
-        {
-            InputRegex input = new InputRegex();
-            if (input.PhoneInput(e.Text))
-                e.Handled = true;
-        }
     }
 }

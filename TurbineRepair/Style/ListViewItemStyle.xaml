@@ -195,12 +195,20 @@
                                 <StackPanel Orientation="Horizontal">
                                     <Label Content="{Binding Surname}"
                                            FontSize="15"
+                                           Foreground="Gray"
                                            FontWeight="SemiBold"/>
                                     <Label Content="{Binding Name}"
                                            FontSize="15"
+                                           Foreground="Gray"
                                            Margin="-5,0,0,0"
                                            FontWeight="SemiBold"/>
                                 </StackPanel>
+                                <TextBlock Text="В сети"
+                                           TextTrimming="CharacterEllipsis"
+                                           FontSize="10"
+                                           Foreground="Green"
+                                           Margin="5,-5,0,0"
+                                           Visibility="{Binding IsOnline}"/>
                                 <TextBlock Text="{Binding PostNavigation.PostName}"
                                            TextTrimming="CharacterEllipsis"
                                            FontSize="10"

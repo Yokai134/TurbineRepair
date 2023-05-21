@@ -23,7 +23,7 @@ public partial class UserDatum
 
     public string Password { get; set; } = null!;
 
-    public string Pincode { get; set; } = null!;
+    public bool? IsOnline { get; set; }
 
     public string? Image { get; set; }
 
