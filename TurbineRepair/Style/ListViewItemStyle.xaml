@@ -182,7 +182,7 @@
                         <StackPanel Orientation="Horizontal"
                                     Margin="10,0,0,0">
 
-                            <Image Source="{Binding imageSource}"
+                            <Image Source="{Binding Image}"
                                    Height="30"
                                    Width="30"
                                    Stretch="UniformToFill">
@@ -191,15 +191,21 @@
                                 </Image.Clip>
                             </Image>
 
-                            <StackPanel>
-                                <Label Content="{Binding contactName}"
-                                       FontSize="15"
-                                       FontWeight="SemiBold"/>
-                                <TextBlock Text="{Binding lastMessage}"
+                            <StackPanel Margin="0,5,0,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="{Binding Surname}"
+                                           FontSize="15"
+                                           FontWeight="SemiBold"/>
+                                    <Label Content="{Binding Name}"
+                                           FontSize="15"
+                                           Margin="-5,0,0,0"
+                                           FontWeight="SemiBold"/>
+                                </StackPanel>
+                                <TextBlock Text="{Binding PostNavigation.PostName}"
                                            TextTrimming="CharacterEllipsis"
                                            FontSize="10"
                                            Foreground="Gray"
-                                           Margin="5,0,0,0"/>
+                                           Margin="5,-5,0,0"/>
                             </StackPanel>
                         </StackPanel>
                     </Border>
@@ -209,50 +215,119 @@
     </Style>
 
     <Style TargetType="ListViewItem" x:Key="ChatCard">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ListViewItem">
-                    <StackPanel Orientation="Horizontal">
-                                                                      
-                        
-                        <Image Source="{Binding imageSource}"
-                               Width="50"
-                               Height="50"
-                               Stretch="UniformToFill">
-                            <Image.Clip>
-                                <RectangleGeometry RadiusX="50" RadiusY="50" Rect="0,0,50,50"/>
-                            </Image.Clip>
-                        </Image>
 
-                        <StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="{Binding contactName}"
+        <Style.Resources>
+            <ControlTemplate x:Key="SenderRow">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10,0">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" 
+                                    HorizontalAlignment="Right"
+                                    Margin="0,0,10,0">
+                            <Label Content="{Binding MessageSenderName}"
                                        Foreground="Gray"
                                        FontSize="20"
                                        FontWeight="SemiBold"
                                        VerticalAlignment="Center"
                                        Margin="0,0,-5,0"/>
 
-                                <Label Content="{Binding time}"
+                            <Label Content="{Binding MessgeTime}"
                                        Foreground="Gray"
                                        FontSize="8"
                                        FontWeight="SemiBold"
                                        VerticalAlignment="Center"/>
-                            </StackPanel>
-
-                            <Label Content="{Binding message}"
-                                   Foreground="Gray"
-                                   FontSize="15"
-                                   FontWeight="SemiBold"
-                                   VerticalAlignment="Center"/>
                         </StackPanel>
-                            
+
+                        <Border CornerRadius="15" 
+                                Background="#292b2F" 
+                                BorderThickness="1" 
+                                Margin="0,0,10,0"
+                                BorderBrush="#292b2F">
+                            <TextBlock Text="{Binding MessageText}"
+                                       Foreground="Gray"
+                                       Margin="10"
+                                       TextWrapping="Wrap"
+                                       Width="250"
+                                       FontSize="15"
+                                       FontWeight="SemiBold"
+                                       VerticalAlignment="Center"/>
+
+                        </Border>
+
                     </StackPanel>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-      
+                    <Image Source="{Binding MessageSenderImage}"
+                               Width="50"
+                               Height="50"
+                               Stretch="UniformToFill">
+                        <Image.Clip>
+                            <RectangleGeometry RadiusX="50" RadiusY="50" Rect="0,0,50,50"/>
+                        </Image.Clip>
+                    </Image>
+
+                  
+                </StackPanel>
+            </ControlTemplate>
+            <ControlTemplate x:Key="ReceiptRow">
+                <StackPanel Orientation="Horizontal" Margin="10,0">
+                    <Image Source="{Binding MessageReceiptImage}"
+                               Width="50"
+                               Height="50"
+                               Stretch="UniformToFill">
+                        <Image.Clip>
+                            <RectangleGeometry RadiusX="50" RadiusY="50" Rect="0,0,50,50"/>
+                        </Image.Clip>
+                    </Image>
+
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="10,0,0,0">
+                            <Label Content="{Binding MessageReceiptName}"
+                                       Foreground="Gray"
+                                       FontSize="20"
+                                       FontWeight="SemiBold"
+                                       VerticalAlignment="Center"
+                                       Margin="0,0,-5,0"/>
+
+                            <Label Content="{Binding MessgeTime}"
+                                       Foreground="Gray"
+                                       FontSize="8"
+                                       FontWeight="SemiBold"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                       <Border CornerRadius="15" 
+                               Background="#292b2F" 
+                               BorderThickness="1" 
+                               Margin="10,0,0,0"
+                               BorderBrush="#292b2F">
+                            <TextBlock Text="{Binding MessageText}"
+                                       Foreground="Gray"
+                                       Margin="10"
+                                       TextWrapping="Wrap"
+                                       Width="250"
+                                       FontSize="15"
+                                       FontWeight="SemiBold"
+                                       VerticalAlignment="Center"/>
+
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+            </ControlTemplate>
+        </Style.Resources>
+            
+            
+            
+
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsNative}" Value="false">
+                <Setter Property="Template" Value="{StaticResource ReceiptRow}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsNative}" Value="true">
+                <Setter Property="Template" Value="{StaticResource SenderRow}"/>
+            </DataTrigger>
+        </Style.Triggers>
            
+            
+            
     </Style>
 
     <Style TargetType="ListViewItem" x:Key="ImageCard">

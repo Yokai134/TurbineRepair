@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Bson;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
@@ -18,6 +19,9 @@ namespace TurbineRepair.ViewModel
 {
     internal class ChatVM : Base.ViewModel
     {
+
+        DispatcherTimer timer = new DispatcherTimer();
+        TurbinerepairContext context = new TurbinerepairContext();
 
         #region Command
 
@@ -40,22 +44,18 @@ namespace TurbineRepair.ViewModel
         private async void OnSendMessageExecute(object parametr)
         {
             if(Message != null) 
-            { 
-                Model.MessageList newMessage = new MessageList() 
-                { 
+            {
+                Model.MessageList newMessage = new MessageList()
+                {
                     MessageSender = CurrentUser.Id,
-                    MessageReceipt = SelectedContact.ReceiptId,
+                    MessageReceipt = SelectContact.Id,
                     MessageText = Message,
                     MessgeTime = DateTime.Now
+
                 };
-                MessageObs.Add(new MessageModel()
-                {
-                    message = Message,                   
-                });
                 MainWindowViewModel.context.MessageLists.Add(newMessage);
                 MainWindowViewModel.context.SaveChanges();
-                await MainWindowViewModel.main.UpdateData();
-                LoadContact(ContactList, MessageList);
+                Message = "";
             }
         }
         #endregion
@@ -78,24 +78,9 @@ namespace TurbineRepair.ViewModel
             get => _messageList;
             set => Set(ref _messageList, value);
         }
-        #endregion
-
-        #region ChatLists
-        private List<ContactModel> _contactModels;
-        public List<ContactModel> ContactModels
-        {
-            get => _contactModels;
-            set => Set(ref _contactModels, value);
-        }
-
-        #region ObsCollection
-        public ObservableCollection<ContactModel> ContactObs { get; set; }
-
-        public ObservableCollection<MessageModel> MessageObs { get; set; }
 
         #endregion
 
-        #endregion
 
         #region SearchUser
         private string _searchUser;
@@ -115,14 +100,24 @@ namespace TurbineRepair.ViewModel
         }
         #endregion
 
-        #region SelectedContact
-        private ContactModel _selectedContact;
-        public ContactModel SelectedContact
+        private UserDatum? _selectContact;
+        public UserDatum? SelectContact
         {
-            get => _selectedContact;
-            set => Set(ref _selectedContact, value);
+            get => _selectContact;
+            set 
+            {
+                Set(ref _selectContact, value);
+                LoadMessage(_selectContact);
+            }
+
         }
-        #endregion
+
+        private ObservableCollection<MessageItem> _messageItems;
+        public ObservableCollection<MessageItem> MessageItems
+        {
+            get => _messageItems;
+            set => Set(ref _messageItems, value);
+        }
 
         private UserDatum? _currentUser = MainWindowViewModel.main.CurrentUser;
         public UserDatum? CurrentUser
@@ -134,20 +129,17 @@ namespace TurbineRepair.ViewModel
 
 
 
+
         /// <summary>
         /// Логика взаимодействия с Chat.xaml
         /// </summary>
         public ChatVM()
         {
 
-            ContactList = MainWindowViewModel.main.UsersAll.ToList();
-
-
-            MessageList = MainWindowViewModel.main.MessageLists.ToList();
-
-
-            LoadContact(ContactList, MessageList);
-
+            ContactList = MainWindowViewModel.main.UsersAll.Where(x=>x.Id != CurrentUser.Id).ToList();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += RefreshMessage;
+            timer.Start();
             #region Command
 
             #region ContactSearch
@@ -160,53 +152,95 @@ namespace TurbineRepair.ViewModel
 
         }
 
-        private void LoadContact(List<UserDatum> usersList , List<MessageList> messageLists) 
+        private async void LoadMessage(UserDatum receiptUser) 
         {
-
-            ContactObs = new ObservableCollection<ContactModel>();
-            foreach (var user in usersList)
+            timer.Stop();
+            MessageList = context.MessageLists.ToList();
+            MessageItems = new ObservableCollection<MessageItem>();
+            var messageLists = MessageList.Where(x=>x.MessageSender == CurrentUser.Id && x.MessageReceipt == receiptUser.Id 
+            || x.MessageReceipt == CurrentUser.Id && x.MessageSender == receiptUser.Id).OrderBy(x=>x.MessgeTime).ToList();
+            foreach (var item in messageLists)
             {
-                if(user.Id != CurrentUser.Id)
+                if(item.MessageSender == CurrentUser.Id) 
                 {
-                    
-                    MessageObs = new ObservableCollection<MessageModel>();
-
-                    var messages = messageLists.Where(x => x.MessageSender == CurrentUser.Id && x.MessageReceipt == user.Id).ToList();
-                    foreach (var messageItems in messages)
+                    MessageItems.Add(new MessageItem(){
+                        MessageListId = item.MessageListId,
+                        MessageSender = item.MessageSender,
+                        MessageReceipt = item.MessageReceipt,
+                        MessageText = item.MessageText,
+                        MessgeTime = Convert.ToDateTime(item.MessgeTime.ToString("dd/MM/yyyy HH:mm")),
+                        MessageReceiptName = receiptUser.Name,
+                        MessageSenderName = CurrentUser.Name,
+                        MessageReceiptImage = receiptUser.Image,
+                        MessageSenderImage = CurrentUser.Image,
+                        IsNative = true
+                    });
+                }
+                if (item.MessageSender != CurrentUser.Id)
+                {
+                    MessageItems.Add(new MessageItem()
                     {
+                        MessageListId = item.MessageListId,
+                        MessageSender = item.MessageSender,
+                        MessageReceipt = item.MessageReceipt,
+                        MessageText = item.MessageText,
+                        MessgeTime = Convert.ToDateTime(item.MessgeTime.ToString("dd/MM/yyyy HH:mm")),
+                        MessageReceiptName = receiptUser.Name,
+                        MessageSenderName = CurrentUser.Name,
+                        MessageReceiptImage = receiptUser.Image,
+                        MessageSenderImage = CurrentUser.Image,
+                        IsNative = false
+                    });
+                }
 
-                        MessageObs.Add(new MessageModel
+            }
+            timer.Start();
+
+        }
+
+        private async void RefreshMessage(object sender, object e)
+        {
+            if (SelectContact != null)
+            {
+                MessageItems.Clear();
+                MessageList = context.MessageLists.ToList();
+                MessageItems = new ObservableCollection<MessageItem>();
+                var messageLists = MessageList.Where(x => x.MessageSender == CurrentUser.Id && x.MessageReceipt == SelectContact.Id
+                || x.MessageReceipt == CurrentUser.Id && x.MessageSender == SelectContact.Id).OrderBy(x => x.MessgeTime).ToList();
+                foreach (var item in messageLists)
+                {
+                    if (item.MessageSender == CurrentUser.Id)
+                    {
+                        MessageItems.Add(new MessageItem()
                         {
-                            contactName = user.Name,
-                            imageSource = user.Image,
-                            message = messageItems.MessageText,
-                            time = messageItems.MessgeTime
+                            MessageListId = item.MessageListId,
+                            MessageSender = item.MessageSender,
+                            MessageReceipt = item.MessageReceipt,
+                            MessageText = item.MessageText,
+                            MessgeTime = item.MessgeTime,
+                            MessageReceiptName = SelectContact.Name,
+                            MessageSenderName = CurrentUser.Name,
+                            MessageReceiptImage = SelectContact.Image,
+                            MessageSenderImage = CurrentUser.Image,
+                            IsNative = true
                         });
                     }
-
-                    if(MessageObs.Count > 0) 
+                    if (item.MessageSender != CurrentUser.Id)
                     {
-                        ContactObs.Add(new ContactModel()
+                        MessageItems.Add(new MessageItem()
                         {
-                            ReceiptId = user.Id,
-                            contactName = user.Name,
-                            imageSource = user.Image,
-                            messages = MessageObs,
-
+                            MessageListId = item.MessageListId,
+                            MessageSender = item.MessageSender,
+                            MessageReceipt = item.MessageReceipt,
+                            MessageText = item.MessageText,
+                            MessgeTime = item.MessgeTime,
+                            MessageReceiptName = SelectContact.Name,
+                            MessageSenderName = CurrentUser.Name,
+                            MessageReceiptImage = SelectContact.Image,
+                            MessageSenderImage = CurrentUser.Image,
+                            IsNative = false
                         });
                     }
-                    else
-                    {
-                        ContactObs.Add(new ContactModel()
-                        {
-                            ReceiptId = user.Id,
-                            contactName = user.Name,
-                            imageSource = user.Image,
-                            messages = null,
-
-                        });
-                    }
-
 
                 }
             }
