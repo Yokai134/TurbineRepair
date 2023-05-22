@@ -5,8 +5,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TurbineRepair.View.ContentGUI.MainContentGUI"
              xmlns:viewModel="clr-namespace:TurbineRepair.ViewModel"
+             xmlns:fa6="http://schemas.fontawesome.com/icons/svg"
+             xmlns:fa6p="http://schemas.fontawesome.com/icons/svg/properties"
+             xmlns:converter="clr-namespace:TurbineRepair.ResourceApp"
              mc:Ignorable="d" 
              d:DesignHeight="2900" d:DesignWidth="950">
+    
+    
+    <UserControl.Resources>
+        <converter:ConvertColor x:Key="colorConverter"/>
+    </UserControl.Resources>
+    
     <UserControl.DataContext>
         <viewModel:CreateOrUpdateTurbineVM/>
     </UserControl.DataContext>
@@ -17,26 +26,76 @@
         </Grid.RowDefinitions>
         <ScrollViewer Margin="10">
             <StackPanel Margin="10">
-                <Label Content="Наименование турбины"
-                       FontSize="15"
-                       Foreground="Gray"
-                       FontWeight="SemiBold"/>
-                <TextBox Style="{StaticResource AutheticationTextBox}"
-                         Height="50"
-                         Foreground="Gray"
-                         FontSize="20"
-                         Text="{Binding TurbineNames, UpdateSourceTrigger=PropertyChanged}"
-                         Padding="20,13,0,0"/>
-                <Label Content="Описание"
-                       FontSize="15"
-                       Foreground="Gray"
-                       FontWeight="SemiBold"/>
-                <TextBox Style="{StaticResource AutheticationTextBox}"
-                         Height="150"
-                         Foreground="Gray"
-                         FontSize="20"
-                         Text="{Binding TurbineDescriptions, UpdateSourceTrigger=PropertyChanged}"
-                         Padding="20,13,0,0"/>
+                <StackPanel>
+                    <StackPanel Margin="0,10">
+                        <Label Content="Наименование турбины"
+                           FontSize="15"
+                           Foreground="Gray"
+                           FontWeight="SemiBold"/>
+                        <TextBox Style="{StaticResource AutheticationTextBox}"
+                             Height="50"
+                             Foreground="Gray"
+                             FontSize="20"
+                             Text="{Binding TurbineNamesValid, UpdateSourceTrigger=PropertyChanged}"
+                             Padding="20,13,0,0">
+                            <Validation.ErrorTemplate>
+                                <ControlTemplate>
+                                    <StackPanel>
+                                        <AdornedElementPlaceholder x:Name="textBox"/>
+                                        <ItemsControl ItemsSource="{Binding}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Margin="0,-50,0,0">
+                                                        <Border CornerRadius="15" 
+                                                                BorderBrush="Red" 
+                                                                BorderThickness="1"
+                                                                Height="50"/>
+                                                        <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                   Margin="20,5,0,0"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+                                </ControlTemplate>
+                            </Validation.ErrorTemplate>
+                        </TextBox>
+                    </StackPanel>
+                    <StackPanel Margin="0,10">
+                        <Label Content="Описание"
+                           FontSize="15"
+                           Foreground="Gray"
+                           FontWeight="SemiBold"/>
+                        <TextBox Style="{StaticResource AutheticationTextBox}"
+                             Height="150"
+                             Foreground="Gray"
+                             FontSize="20"
+                             Text="{Binding TurbineDescriptions, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                             Padding="20,13,0,0">
+                            <Validation.ErrorTemplate>
+                                <ControlTemplate>
+                                    <StackPanel>
+                                        <AdornedElementPlaceholder x:Name="textBox"/>
+                                        <ItemsControl ItemsSource="{Binding}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Margin="0,-150,0,0">
+                                                        <Border CornerRadius="15" 
+                                                            BorderBrush="Red" 
+                                                            BorderThickness="1"
+                                                            Height="150"/>
+                                                        <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                               Margin="20,5,0,0"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+                                </ControlTemplate>
+                            </Validation.ErrorTemplate>
+                        </TextBox>
+                    </StackPanel>
+                </StackPanel>
                 <StackPanel>
                     <!--TurbineScpgNavigation-->
                     <Label Content="Выроботка электроэнергии по простому циклу:"
@@ -46,7 +105,7 @@
                            Margin="0,10,0,0"
                            FontWeight="SemiBold"/>
                     <StackPanel>
-                        <StackPanel>
+                        <StackPanel Margin="0,10">
                             <Label Content="Выходная мощность: МВт (эл.)"
                                    FontSize="15"
                                    Foreground="Gray"
@@ -80,7 +139,7 @@
                                 </Validation.ErrorTemplate>
                             </TextBox>
                         </StackPanel>
-                        <StackPanel Margin="0,15">
+                        <StackPanel Margin="0,10">
                             <Label Content="Топливо: "
                                    FontSize="15"
                                    Foreground="Gray"
@@ -89,10 +148,32 @@
                                      Height="50"
                                      Foreground="Gray"
                                      FontSize="20"
-                                     Text="{Binding FuelScpg, UpdateSourceTrigger=PropertyChanged}"
-                                     Padding="20,13,0,0"/>
+                                     Text="{Binding FuelScpg, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                                     Padding="20,13,0,0">
+                                <Validation.ErrorTemplate>
+                                    <ControlTemplate>
+                                        <StackPanel>
+                                            <AdornedElementPlaceholder x:Name="textBox"/>
+                                            <ItemsControl ItemsSource="{Binding}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Margin="0,-50,0,0">
+                                                            <Border CornerRadius="15" 
+                                                                    BorderBrush="Red" 
+                                                                    BorderThickness="1"
+                                                                    Height="50"/>
+                                                            <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                       Margin="20,5,0,0"/>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                </Validation.ErrorTemplate>
+                            </TextBox>
                         </StackPanel>
-                        <StackPanel>
+                        <StackPanel Margin="0,10">
                             <Label Content="Частота: HZ"
                                    FontSize="15"
                                    Foreground="Gray"
@@ -101,10 +182,32 @@
                                      Height="50"
                                      Foreground="Gray"
                                      FontSize="20"
-                                     Text="{Binding FrequencyScpg, UpdateSourceTrigger=PropertyChanged}"
-                                     Padding="20,13,0,0"/>
+                                     Text="{Binding FrequencyScpg, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, ValidatesOnNotifyDataErrors=True}"
+                                     Padding="20,13,0,0">
+                                <Validation.ErrorTemplate>
+                                    <ControlTemplate>
+                                        <StackPanel>
+                                            <AdornedElementPlaceholder x:Name="textBox"/>
+                                            <ItemsControl ItemsSource="{Binding}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Margin="0,-50,0,0">
+                                                            <Border CornerRadius="15" 
+                                                                    BorderBrush="Red" 
+                                                                    BorderThickness="1"
+                                                                    Height="50"/>
+                                                            <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                       Margin="20,5,0,0"/>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                </Validation.ErrorTemplate>
+                            </TextBox>
                         </StackPanel>
-                        <StackPanel>
+                        <StackPanel Margin="0,10">
                             <Label Content="Общая эффективность: %"
                                    FontSize="15"
                                    Foreground="Gray"
@@ -113,10 +216,32 @@
                                      Height="50"
                                      Foreground="Gray"
                                      FontSize="20"
-                                     Text="{Binding GrossEfficiencyScpg, UpdateSourceTrigger=PropertyChanged}"
-                                     Padding="20,13,0,0"/>
+                                     Text="{Binding GrossEfficiencyScpg, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                                     Padding="20,13,0,0">
+                                <Validation.ErrorTemplate>
+                                    <ControlTemplate>
+                                        <StackPanel>
+                                            <AdornedElementPlaceholder x:Name="textBox"/>
+                                            <ItemsControl ItemsSource="{Binding}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Margin="0,-50,0,0">
+                                                            <Border CornerRadius="15" 
+                                                                    BorderBrush="Red" 
+                                                                    BorderThickness="1"
+                                                                    Height="50"/>
+                                                            <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                       Margin="20,5,0,0"/>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                </Validation.ErrorTemplate>
+                            </TextBox>
                         </StackPanel>
-                        <StackPanel>
+                        <StackPanel Margin="0,10">
                             <Label Content="Скорость нагрева: кДж/кВтч"
                                    FontSize="15"
                                    Foreground="Gray"
@@ -125,10 +250,32 @@
                                      Height="50"
                                      Foreground="Gray"
                                      FontSize="20"
-                                     Text="{Binding HeatRateScpg, UpdateSourceTrigger=PropertyChanged}"
-                                     Padding="20,13,0,0"/>
+                                     Text="{Binding HeatRateScpg, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                                     Padding="20,13,0,0">
+                                <Validation.ErrorTemplate>
+                                    <ControlTemplate>
+                                        <StackPanel>
+                                            <AdornedElementPlaceholder x:Name="textBox"/>
+                                            <ItemsControl ItemsSource="{Binding}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Margin="0,-50,0,0">
+                                                            <Border CornerRadius="15" 
+                                                                    BorderBrush="Red" 
+                                                                    BorderThickness="1"
+                                                                    Height="50"/>
+                                                            <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                       Margin="20,5,0,0"/>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                </Validation.ErrorTemplate>
+                            </TextBox>
                         </StackPanel>
-                        <StackPanel>
+                        <StackPanel Margin="0,10">
                             <Label Content="Скорость турбины: об/мин"
                                    FontSize="15"
                                    Foreground="Gray"
@@ -137,10 +284,32 @@
                                      Height="50"
                                      Foreground="Gray"
                                      FontSize="20"
-                                     Text="{Binding TurbineSpeedScpg, UpdateSourceTrigger=PropertyChanged}"
-                                     Padding="20,13,0,0"/>
+                                     Text="{Binding TurbineSpeedScpg, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                                     Padding="20,13,0,0">
+                                <Validation.ErrorTemplate>
+                                    <ControlTemplate>
+                                        <StackPanel>
+                                            <AdornedElementPlaceholder x:Name="textBox"/>
+                                            <ItemsControl ItemsSource="{Binding}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Margin="0,-50,0,0">
+                                                            <Border CornerRadius="15" 
+                                                                    BorderBrush="Red" 
+                                                                    BorderThickness="1"
+                                                                    Height="50"/>
+                                                            <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                       Margin="20,5,0,0"/>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                </Validation.ErrorTemplate>
+                            </TextBox>
                         </StackPanel>
-                        <StackPanel>
+                        <StackPanel Margin="0,10">
                             <Label Content="Коэффициент давления: "
                                    FontSize="15"
                                    Foreground="Gray"
@@ -149,10 +318,32 @@
                                      Height="50"
                                      Foreground="Gray"
                                      FontSize="20"
-                                     Text="{Binding PressureRatioScpg, UpdateSourceTrigger=PropertyChanged}"
-                                     Padding="20,13,0,0"/>
+                                     Text="{Binding PressureRatioScpg, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                                     Padding="20,13,0,0">
+                                <Validation.ErrorTemplate>
+                                    <ControlTemplate>
+                                        <StackPanel>
+                                            <AdornedElementPlaceholder x:Name="textBox"/>
+                                            <ItemsControl ItemsSource="{Binding}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Margin="0,-50,0,0">
+                                                            <Border CornerRadius="15" 
+                                                                    BorderBrush="Red" 
+                                                                    BorderThickness="1"
+                                                                    Height="50"/>
+                                                            <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                       Margin="20,5,0,0"/>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                </Validation.ErrorTemplate>
+                            </TextBox>
                         </StackPanel>
-                        <StackPanel>
+                        <StackPanel Margin="0,10">
                             <Label Content="Массовый расход выхлопных газов: кг/с"
                                    FontSize="15"
                                    Foreground="Gray"
@@ -161,10 +352,32 @@
                                      Height="50"
                                      Foreground="Gray"
                                      FontSize="20"
-                                     Text="{Binding ExhaustMassFlowScpg, UpdateSourceTrigger=PropertyChanged}"
-                                     Padding="20,13,0,0"/>
+                                     Text="{Binding ExhaustMassFlowScpg, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                                     Padding="20,13,0,0">
+                                <Validation.ErrorTemplate>
+                                    <ControlTemplate>
+                                        <StackPanel>
+                                            <AdornedElementPlaceholder x:Name="textBox"/>
+                                            <ItemsControl ItemsSource="{Binding}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Margin="0,-50,0,0">
+                                                            <Border CornerRadius="15" 
+                                                                    BorderBrush="Red" 
+                                                                    BorderThickness="1"
+                                                                    Height="50"/>
+                                                            <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                       Margin="20,5,0,0"/>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                </Validation.ErrorTemplate>
+                            </TextBox>
                         </StackPanel>
-                        <StackPanel>
+                        <StackPanel Margin="0,10">
                             <Label Content="Температура выхлопа: °C"
                                    FontSize="15"
                                    Foreground="Gray"
@@ -173,10 +386,32 @@
                                      Height="50"
                                      Foreground="Gray"
                                      FontSize="20"
-                                     Text="{Binding ExhaustTemperatureScpg, UpdateSourceTrigger=PropertyChanged}"
-                                     Padding="20,13,0,0"/>
+                                     Text="{Binding ExhaustTemperatureScpg, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                                     Padding="20,13,0,0">
+                                <Validation.ErrorTemplate>
+                                    <ControlTemplate>
+                                        <StackPanel>
+                                            <AdornedElementPlaceholder x:Name="textBox"/>
+                                            <ItemsControl ItemsSource="{Binding}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Margin="0,-50,0,0">
+                                                            <Border CornerRadius="15" 
+                                                                    BorderBrush="Red" 
+                                                                    BorderThickness="1"
+                                                                    Height="50"/>
+                                                            <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                       Margin="20,5,0,0"/>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                </Validation.ErrorTemplate>
+                            </TextBox>
                         </StackPanel>
-                        <StackPanel>
+                        <StackPanel Margin="0,10">
                             <Label Content="Выбросы: "
                                    FontSize="15"
                                    Foreground="Gray"
@@ -185,18 +420,40 @@
                                      Height="50"
                                      Foreground="Gray"
                                      FontSize="20"
-                                     Text="{Binding EmmisionScpg, UpdateSourceTrigger=PropertyChanged}"
-                                     Padding="20,13,0,0"/>
+                                     Text="{Binding EmmisionScpg, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                                     Padding="20,13,0,0">
+                                <Validation.ErrorTemplate>
+                                    <ControlTemplate>
+                                        <StackPanel>
+                                            <AdornedElementPlaceholder x:Name="textBox"/>
+                                            <ItemsControl ItemsSource="{Binding}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Margin="0,-50,0,0">
+                                                            <Border CornerRadius="15" 
+                                                                    BorderBrush="Red" 
+                                                                    BorderThickness="1"
+                                                                    Height="50"/>
+                                                            <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                       Margin="20,5,0,0"/>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                </Validation.ErrorTemplate>
+                            </TextBox>
                         </StackPanel>
-                        <!-- TurbineMdaNavigation Block-->
                         <Label Content="Характеристики механического привода:"
                                FontSize="20"
                                HorizontalAlignment="Center"
                                Foreground="Gray"
                                Margin="0,10,0,0"
                                FontWeight="SemiBold"/>
+                        <!-- TurbineMdaNavigation Block-->
                         <StackPanel>
-                            <StackPanel>
+                            <StackPanel Margin="0,10">
                                 <Label Content="Выходная мощность: МВт (эл.)"
                                        FontSize="15"
                                        Foreground="Gray"
@@ -230,7 +487,7 @@
                                     </Validation.ErrorTemplate>
                                 </TextBox>
                             </StackPanel>
-                            <StackPanel>
+                            <StackPanel Margin="0,10">
                                 <Label Content="Топливо: "
                                        FontSize="15"
                                        Foreground="Gray"
@@ -239,10 +496,32 @@
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="{Binding FuelMda, UpdateSourceTrigger=PropertyChanged}"
-                                         Padding="20,13,0,0"/>
+                                         Text="{Binding FuelMda, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                                         Padding="20,13,0,0">
+                                    <Validation.ErrorTemplate>
+                                        <ControlTemplate>
+                                            <StackPanel>
+                                                <AdornedElementPlaceholder x:Name="textBox"/>
+                                                <ItemsControl ItemsSource="{Binding}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Margin="0,-50,0,0">
+                                                                <Border CornerRadius="15" 
+                                                                    BorderBrush="Red" 
+                                                                    BorderThickness="1"
+                                                                    Height="50"/>
+                                                                <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                       Margin="20,5,0,0"/>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </Validation.ErrorTemplate>
+                                </TextBox>
                             </StackPanel>
-                            <StackPanel>
+                            <StackPanel Margin="0,10">
                                 <Label Content="Эффективность: %"
                                        FontSize="15"
                                        Foreground="Gray"
@@ -251,10 +530,32 @@
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="{Binding EfficiencyMda, UpdateSourceTrigger=PropertyChanged}"
-                                         Padding="20,13,0,0"/>
+                                         Text="{Binding EfficiencyMda, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                                         Padding="20,13,0,0">
+                                    <Validation.ErrorTemplate>
+                                        <ControlTemplate>
+                                            <StackPanel>
+                                                <AdornedElementPlaceholder x:Name="textBox"/>
+                                                <ItemsControl ItemsSource="{Binding}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Margin="0,-50,0,0">
+                                                                <Border CornerRadius="15" 
+                                                                    BorderBrush="Red" 
+                                                                    BorderThickness="1"
+                                                                    Height="50"/>
+                                                                <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                       Margin="20,5,0,0"/>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </Validation.ErrorTemplate>
+                                </TextBox>
                             </StackPanel>
-                            <StackPanel>
+                            <StackPanel Margin="0,10">
                                 <Label Content="Скорость нагрева: кДж/кВтч"
                                        FontSize="15"
                                        Foreground="Gray"
@@ -263,10 +564,32 @@
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="{Binding HeatRateMda, UpdateSourceTrigger=PropertyChanged}"
-                                         Padding="20,13,0,0"/>
+                                         Text="{Binding HeatRateMda, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                                         Padding="20,13,0,0">
+                                    <Validation.ErrorTemplate>
+                                        <ControlTemplate>
+                                            <StackPanel>
+                                                <AdornedElementPlaceholder x:Name="textBox"/>
+                                                <ItemsControl ItemsSource="{Binding}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Margin="0,-50,0,0">
+                                                                <Border CornerRadius="15" 
+                                                                    BorderBrush="Red" 
+                                                                    BorderThickness="1"
+                                                                    Height="50"/>
+                                                                <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                       Margin="20,5,0,0"/>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </Validation.ErrorTemplate>
+                                </TextBox>
                             </StackPanel>
-                            <StackPanel>
+                            <StackPanel Margin="0,10">
                                 <Label Content="Скорость приводного вала: об/мин"
                                        FontSize="15"
                                        Foreground="Gray"
@@ -275,10 +598,32 @@
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="{Binding DriveShaftSpeedMda, UpdateSourceTrigger=PropertyChanged}"
-                                         Padding="20,13,0,0"/>
+                                         Text="{Binding DriveShaftSpeedMda, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                                         Padding="20,13,0,0">
+                                    <Validation.ErrorTemplate>
+                                        <ControlTemplate>
+                                            <StackPanel>
+                                                <AdornedElementPlaceholder x:Name="textBox"/>
+                                                <ItemsControl ItemsSource="{Binding}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Margin="0,-50,0,0">
+                                                                <Border CornerRadius="15" 
+                                                                    BorderBrush="Red" 
+                                                                    BorderThickness="1"
+                                                                    Height="50"/>
+                                                                <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                       Margin="20,5,0,0"/>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </Validation.ErrorTemplate>
+                                </TextBox>
                             </StackPanel>
-                            <StackPanel>
+                            <StackPanel Margin="0,10">
                                 <Label Content="Коэффициент давления: "
                                        FontSize="15"
                                        Foreground="Gray"
@@ -288,9 +633,31 @@
                                          Foreground="Gray"
                                          FontSize="20"
                                          Text="{Binding PressureRatioMda, UpdateSourceTrigger=PropertyChanged}"
-                                         Padding="20,13,0,0"/>
+                                         Padding="20,13,0,0">
+                                    <Validation.ErrorTemplate>
+                                        <ControlTemplate >
+                                            <StackPanel>
+                                                <AdornedElementPlaceholder x:Name="textBox"/>
+                                                <ItemsControl ItemsSource="{Binding}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Margin="0,-50,0,0">
+                                                                <Border CornerRadius="15" 
+                                                                    BorderBrush="Red" 
+                                                                    BorderThickness="1"
+                                                                    Height="50"/>
+                                                                <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                       Margin="20,5,0,0"/>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </Validation.ErrorTemplate>
+                                </TextBox>
                             </StackPanel>
-                            <StackPanel>
+                            <StackPanel Margin="0,10">
                                 <Label Content="Массовый расход выхлопных газов: кг/c"
                                        FontSize="15"
                                        Foreground="Gray"
@@ -299,10 +666,32 @@
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="{Binding ExhaustMassFlowMda, UpdateSourceTrigger=PropertyChanged}"
-                                         Padding="20,13,0,0"/>
+                                         Text="{Binding ExhaustMassFlowMda, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                                         Padding="20,13,0,0">
+                                    <Validation.ErrorTemplate>
+                                        <ControlTemplate>
+                                            <StackPanel>
+                                                <AdornedElementPlaceholder x:Name="textBox"/>
+                                                <ItemsControl ItemsSource="{Binding}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Margin="0,-50,0,0">
+                                                                <Border CornerRadius="15" 
+                                                                    BorderBrush="Red" 
+                                                                    BorderThickness="1"
+                                                                    Height="50"/>
+                                                                <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                       Margin="20,5,0,0"/>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </Validation.ErrorTemplate>
+                                </TextBox>
                             </StackPanel>
-                            <StackPanel>
+                            <StackPanel Margin="0,10">
                                 <Label Content="Температура выхлопа: °C"
                                        FontSize="15"
                                        Foreground="Gray"
@@ -311,10 +700,32 @@
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="{Binding ExhaustTemperatureMda, UpdateSourceTrigger=PropertyChanged}"
-                                         Padding="20,13,0,0"/>
+                                         Text="{Binding ExhaustTemperatureMda, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                                         Padding="20,13,0,0">
+                                    <Validation.ErrorTemplate>
+                                        <ControlTemplate>
+                                            <StackPanel>
+                                                <AdornedElementPlaceholder x:Name="textBox"/>
+                                                <ItemsControl ItemsSource="{Binding}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Margin="0,-50,0,0">
+                                                                <Border CornerRadius="15" 
+                                                                    BorderBrush="Red" 
+                                                                    BorderThickness="1"
+                                                                    Height="50"/>
+                                                                <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                       Margin="20,5,0,0"/>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </Validation.ErrorTemplate>
+                                </TextBox>
                             </StackPanel>
-                            <StackPanel>
+                            <StackPanel Margin="0,10">
                                 <Label Content="Выбросы: "
                                        FontSize="15"
                                        Foreground="Gray"
@@ -323,25 +734,48 @@
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="{Binding EmmisionMda, UpdateSourceTrigger=PropertyChanged}"
-                                         Padding="20,13,0,0"/>
+                                         Text="{Binding EmmisionMda, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                                         Padding="20,13,0,0">
+                                    <Validation.ErrorTemplate>
+                                        <ControlTemplate>
+                                            <StackPanel>
+                                                <AdornedElementPlaceholder x:Name="textBox"/>
+                                                <ItemsControl ItemsSource="{Binding}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Margin="0,-50,0,0">
+                                                                <Border CornerRadius="15" 
+                                                                    BorderBrush="Red" 
+                                                                    BorderThickness="1"
+                                                                    Height="50"/>
+                                                                <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                       Margin="20,5,0,0"/>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </Validation.ErrorTemplate>
+                                </TextBox>
                             </StackPanel>
                         </StackPanel>
+                        <!-- TurbineMdaNavigation Block-->
                         <Label Content="Физические размеры и вес:"
                                FontSize="20"
                                HorizontalAlignment="Center"
                                Foreground="Gray"
                                Margin="0,10,0,0"
                                FontWeight="SemiBold"/>
-                        <!--TurbinePGP-->
                         <Label Content="Пакет выработки электроэнергии:"
                                FontSize="18"
                                HorizontalAlignment="Center"
                                Foreground="Gray"
                                Margin="0,10,0,0"
                                FontWeight="SemiBold"/>
+                        <!--TurbinePGP-->
                         <StackPanel>
-                            <StackPanel>
+                            <StackPanel Margin="0,10">
                                 <Label Content="Приблизительный вес: кг"
                                        FontSize="15"
                                        Foreground="Gray"
@@ -350,10 +784,32 @@
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="{Binding WeightPgp, UpdateSourceTrigger=PropertyChanged}"
-                                         Padding="20,13,0,0"/>
+                                         Text="{Binding WeightPgp, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                                         Padding="20,13,0,0">
+                                    <Validation.ErrorTemplate>
+                                        <ControlTemplate>
+                                            <StackPanel>
+                                                <AdornedElementPlaceholder x:Name="textBox"/>
+                                                <ItemsControl ItemsSource="{Binding}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Margin="0,-50,0,0">
+                                                                <Border CornerRadius="15" 
+                                                                    BorderBrush="Red" 
+                                                                    BorderThickness="1"
+                                                                    Height="50"/>
+                                                                <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                       Margin="20,5,0,0"/>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </Validation.ErrorTemplate>
+                                </TextBox>
                             </StackPanel>
-                            <StackPanel>
+                            <StackPanel Margin="0,10">
                                 <Label Content="Длина: м"
                                        FontSize="15"
                                        Foreground="Gray"
@@ -362,10 +818,32 @@
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="{Binding LenghtPgp, UpdateSourceTrigger=PropertyChanged}"
-                                         Padding="20,13,0,0"/>
+                                         Text="{Binding LenghtPgp, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                                         Padding="20,13,0,0">
+                                    <Validation.ErrorTemplate>
+                                        <ControlTemplate>
+                                            <StackPanel>
+                                                <AdornedElementPlaceholder x:Name="textBox"/>
+                                                <ItemsControl ItemsSource="{Binding}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Margin="0,-50,0,0">
+                                                                <Border CornerRadius="15" 
+                                                                    BorderBrush="Red" 
+                                                                    BorderThickness="1"
+                                                                    Height="50"/>
+                                                                <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                       Margin="20,5,0,0"/>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </Validation.ErrorTemplate>
+                                </TextBox>
                             </StackPanel>
-                            <StackPanel>
+                            <StackPanel Margin="0,10">
                                 <Label Content="Ширина: м"
                                        FontSize="15"
                                        Foreground="Gray"
@@ -374,10 +852,32 @@
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="{Binding WidthPgp, UpdateSourceTrigger=PropertyChanged}"
-                                         Padding="20,13,0,0"/>
+                                         Text="{Binding WidthPgp, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                                         Padding="20,13,0,0">
+                                    <Validation.ErrorTemplate>
+                                        <ControlTemplate>
+                                            <StackPanel>
+                                                <AdornedElementPlaceholder x:Name="textBox"/>
+                                                <ItemsControl ItemsSource="{Binding}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Margin="0,-50,0,0">
+                                                                <Border CornerRadius="15" 
+                                                                    BorderBrush="Red" 
+                                                                    BorderThickness="1"
+                                                                    Height="50"/>
+                                                                <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                       Margin="20,5,0,0"/>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </Validation.ErrorTemplate>
+                                </TextBox>
                             </StackPanel>
-                            <StackPanel>
+                            <StackPanel Margin="0,10">
                                 <Label Content="Высота: м"
                                        FontSize="15"
                                        Foreground="Gray"
@@ -386,20 +886,43 @@
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="{Binding HeightPgp, UpdateSourceTrigger=PropertyChanged}"
-                                         Padding="20,13,0,0"/>
+                                         Text="{Binding HeightPgp, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                                         Padding="20,13,0,0">
+                                    <Validation.ErrorTemplate>
+                                        <ControlTemplate>
+                                            <StackPanel>
+                                                <AdornedElementPlaceholder x:Name="textBox"/>
+                                                <ItemsControl ItemsSource="{Binding}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Margin="0,-50,0,0">
+                                                                <Border CornerRadius="15" 
+                                                                    BorderBrush="Red" 
+                                                                    BorderThickness="1"
+                                                                    Height="50"/>
+                                                                <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                       Margin="20,5,0,0"/>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </Validation.ErrorTemplate>
+                                </TextBox>
                             </StackPanel>
                         </StackPanel>
-                        <!-- TurbineMdpNavigation -->
+                        <!--TurbinePGP-->
+
                         <Label Content="Пакет механического привода:"
                                FontSize="18"
                                HorizontalAlignment="Center"
                                Foreground="Gray"
                                Margin="0,10,0,0"
                                FontWeight="SemiBold"/>
-
+                        <!-- TurbineMdpNavigation -->
                         <StackPanel>
-                            <StackPanel>
+                            <StackPanel Margin="0,10">
                                 <Label Content="Приблизительный вес: кг"
                                        FontSize="15"
                                        Foreground="Gray"
@@ -408,10 +931,32 @@
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="{Binding WeightMdp, UpdateSourceTrigger=PropertyChanged}"
-                                         Padding="20,13,0,0"/>
+                                         Text="{Binding WeightMdp, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                                         Padding="20,13,0,0">
+                                    <Validation.ErrorTemplate>
+                                        <ControlTemplate>
+                                            <StackPanel>
+                                                <AdornedElementPlaceholder x:Name="textBox"/>
+                                                <ItemsControl ItemsSource="{Binding}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Margin="0,-50,0,0">
+                                                                <Border CornerRadius="15" 
+                                                                    BorderBrush="Red" 
+                                                                    BorderThickness="1"
+                                                                    Height="50"/>
+                                                                <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                       Margin="20,5,0,0"/>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </Validation.ErrorTemplate>
+                                </TextBox>
                             </StackPanel>
-                            <StackPanel>
+                            <StackPanel Margin="0,10">
                                 <Label Content="Длина: м"
                                        FontSize="15"
                                        Foreground="Gray"
@@ -420,10 +965,32 @@
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="{Binding LenghtMdp, UpdateSourceTrigger=PropertyChanged}"
-                                         Padding="20,13,0,0"/>
+                                         Text="{Binding LenghtMdp, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                                         Padding="20,13,0,0">
+                                    <Validation.ErrorTemplate>
+                                        <ControlTemplate>
+                                            <StackPanel>
+                                                <AdornedElementPlaceholder x:Name="textBox"/>
+                                                <ItemsControl ItemsSource="{Binding}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Margin="0,-50,0,0">
+                                                                <Border CornerRadius="15" 
+                                                                    BorderBrush="Red" 
+                                                                    BorderThickness="1"
+                                                                    Height="50"/>
+                                                                <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                       Margin="20,5,0,0"/>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </Validation.ErrorTemplate>
+                                </TextBox>
                             </StackPanel>
-                            <StackPanel>
+                            <StackPanel Margin="0,10">
                                 <Label Content="Ширина: м"
                                        FontSize="15"
                                        Foreground="Gray"
@@ -432,10 +999,32 @@
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="{Binding WidthMdp, UpdateSourceTrigger=PropertyChanged}"
-                                         Padding="20,13,0,0"/>
+                                         Text="{Binding WidthMdp, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                                         Padding="20,13,0,0">
+                                    <Validation.ErrorTemplate>
+                                        <ControlTemplate>
+                                            <StackPanel>
+                                                <AdornedElementPlaceholder x:Name="textBox"/>
+                                                <ItemsControl ItemsSource="{Binding}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Margin="0,-50,0,0">
+                                                                <Border CornerRadius="15" 
+                                                                    BorderBrush="Red" 
+                                                                    BorderThickness="1"
+                                                                    Height="50"/>
+                                                                <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                       Margin="20,5,0,0"/>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </Validation.ErrorTemplate>
+                                </TextBox>
                             </StackPanel>
-                            <StackPanel>
+                            <StackPanel Margin="0,10">
                                 <Label Content="Высота: м"
                                        FontSize="15"
                                        Foreground="Gray"
@@ -444,9 +1033,34 @@
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="{Binding HeightMdp, UpdateSourceTrigger=PropertyChanged}"
-                                         Padding="20,13,0,0"/>
+                                         Text="{Binding HeightMdp, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                                         Padding="20,13,0,0">
+                                    <Validation.ErrorTemplate>
+                                        <ControlTemplate>
+                                            <StackPanel>
+                                                <AdornedElementPlaceholder x:Name="textBox"/>
+                                                <ItemsControl ItemsSource="{Binding}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Margin="0,-50,0,0">
+                                                                <Border CornerRadius="15" 
+                                                                    BorderBrush="Red" 
+                                                                    BorderThickness="1"
+                                                                    Height="50"/>
+                                                                <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                       Margin="20,5,0,0"/>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </Validation.ErrorTemplate>
+                                </TextBox>
                             </StackPanel>
+                        </StackPanel>
+                        <!-- TurbineMdpNavigation -->
+                        <StackPanel>
                             <StackPanel>
                                 <Label Content="Изображение"
                                        FontSize="15"
@@ -521,12 +1135,29 @@
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>
-        <Button Content="{Binding ContentButton}"
-                Grid.Row="1"
-                Style="{StaticResource ButtonMain}"
-                Width="120"
-                HorizontalAlignment="Right"
-                Margin="10"
-                Command="{Binding CreateOrUpdate}"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button fa6p:FontAwesome.Icon="Solid_DeleteLeft"
+                    fa6p:FontAwesome.PrimaryColor="LightGray"
+                    Style="{StaticResource ButtonMain}"
+                    Margin="10,5"/>
+            <StackPanel Grid.Column="1" Margin="10,5" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Label Content="{Binding FailedAddOrUpdate,UpdateSourceTrigger=PropertyChanged}" 
+                       Margin="10,5"
+                       FontSize="15"
+                       Foreground="{Binding ForegroundFailedMessage, Converter={StaticResource colorConverter}}"/>
+                <Button Content="{Binding ContentButton}"
+                        Width="120"
+                        Command="{Binding CreateOrUpdate}"
+                        Style="{StaticResource ButtonMain}"
+                        Height="40"
+                        Grid.Row="2"
+                        HorizontalAlignment="Right"
+                        Margin="0,0,10,0"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

@@ -42,7 +42,7 @@ namespace TurbineRepair.ViewModel
         #region SendMessage
         public ICommand SendMessage { get; }
         private bool CanSendMessageExecute(object parametr) => true;
-        private async void OnSendMessageExecute(object parametr)
+        private void OnSendMessageExecute(object parametr)
         {
             if(Message != null) 
             {
@@ -173,7 +173,7 @@ namespace TurbineRepair.ViewModel
 
         }
 
-        private async void LoadMessage(UserDatum receiptUser) 
+        private void LoadMessage(UserDatum receiptUser) 
         {
             timer.Stop();
             MessageList = context.MessageLists.ToList();
@@ -219,7 +219,7 @@ namespace TurbineRepair.ViewModel
 
         }
 
-        private async void RefreshMessage(object sender, object e)
+        private void RefreshMessage(object sender, object e)
         {
             if (SelectContact != null)
             {

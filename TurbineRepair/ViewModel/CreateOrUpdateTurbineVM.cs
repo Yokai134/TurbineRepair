@@ -1,6 +1,7 @@
 ﻿using Accessibility;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Win32;
+using ScottPlot;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -26,11 +27,30 @@ namespace TurbineRepair.ViewModel
     {
         private string pathProject = Path.GetFullPath(Directory.GetCurrentDirectory() + "\\..\\..\\..\\" + @"TurbineResource");
         #region Regex
-        string decimalNumber = @"^\d+([.,]\d+?)?$";
+        string decimalNumber = @"^\d+([,]\d+?)?$";
+        string freqencyNumber = @"^\d+([\/]\d+?)?$";
+        string pressureRation = @"\d+([,]\d+?)+([:]?\d+)?$";
+        string driveshaftPattern = @"\d+([-]\d+?)+?$";
+        string patternLetter = @"^[а-яА-Я,.0-9]+$";
+        string patternNames = @"^[a-zA-Z-0-9]+$";
         #endregion
 
 
         #region Property
+
+        private string _failedAddOrUpdate;
+        public string FailedAddOrUpdate
+        {
+            get => _failedAddOrUpdate;
+            set => Set(ref _failedAddOrUpdate, value);
+        }
+
+        private decimal _foregroundFailedMessage;
+        public decimal ForegroundFailedMessage
+        {
+            get => _foregroundFailedMessage;
+            set => Set(ref _foregroundFailedMessage, value);
+        }
 
         private int _countImage = 0;
         public int CountImage
@@ -87,6 +107,457 @@ namespace TurbineRepair.ViewModel
             get => _contentButton;
             set => Set(ref _contentButton, value);
         }
+
+        #region Turbine Field
+
+        #region Turbine Main
+
+        private string _turbineNameValid;
+        public string TurbineNamesValid
+        {
+            get => _turbineNameValid;
+            set
+            {
+                Set(ref _turbineNameValid, value);
+                ValidateTurbineName();
+            }
+        }
+
+        private string _turbineDescriptions;
+        public string TurbineDescriptions
+        {
+            get => _turbineDescriptions;
+            set
+            {
+                Set(ref _turbineDescriptions, value);
+                ValidateDescription();
+            }
+        }
+
+        private bool _deleteTurbine;
+        public bool DeleteTurbine
+        {
+            get => _deleteTurbine;
+            set => Set(ref _deleteTurbine, value);
+        }
+        #endregion
+
+        #region TurbineScpg
+
+        private string _powerOutputScpg;
+        public string PowerOutputScpg
+        {
+            get => _powerOutputScpg;
+            set
+            {
+                Set(ref _powerOutputScpg, value);
+                ValidateDecimalNumericPowerOutputSCPG();
+            }
+        }
+
+        private string _fuelScpg;
+        public string FuelScpg
+        {
+            get => _fuelScpg;
+            set
+            {
+                Set(ref _fuelScpg, value);
+                ValidateFuelSCPG();
+            }
+        }
+
+        private string _frequencyScpg;
+        public string FrequencyScpg
+        {
+            get => _frequencyScpg;
+            set
+            {
+                Set(ref _frequencyScpg, value);
+                ValidateFreqency();
+            }
+        }
+
+        private string _grossEfficiencyScpg;
+        public string GrossEfficiencyScpg
+        {
+            get => _grossEfficiencyScpg;
+            set
+            {
+                Set(ref _grossEfficiencyScpg, value);
+                ValidateGrossEfficiency();
+            }
+        }
+
+        private string _heatRateScpg;
+        public string HeatRateScpg
+        {
+            get => _heatRateScpg;
+            set
+            {
+                Set(ref _heatRateScpg, value);
+                ValidateHeatRateSCPG();
+            }
+        }
+
+        private string _turbineSpeedScpg;
+        public string TurbineSpeedScpg
+        {
+            get => _turbineSpeedScpg;
+            set
+            {
+                Set(ref _turbineSpeedScpg, value);
+                ValidateTurbineSpeed();
+            }
+        }
+
+        private string _pressureRatioScpg;
+        public string PressureRatioScpg
+        {
+            get => _pressureRatioScpg;
+            set
+            {
+                Set(ref _pressureRatioScpg, value);
+                ValidatePressureRationSCPG();
+            }
+
+        }
+
+        private string _exhaustMassFlowScpg;
+        public string ExhaustMassFlowScpg
+        {
+            get => _exhaustMassFlowScpg;
+            set
+            {
+                Set(ref _exhaustMassFlowScpg, value);
+                ValidateExhaustMassFlowSCPG();
+            }
+        }
+
+        private string _exhaustTemperatureScpg;
+        public string ExhaustTemperatureScpg
+        {
+            get => _exhaustTemperatureScpg;
+            set
+            {
+                Set(ref _exhaustTemperatureScpg, value);
+                ValidateExhaustTempSCPG();
+            }
+        }
+
+        private string _emmisionScpg;
+        public string EmmisionScpg
+        {
+            get => _emmisionScpg;
+            set
+            {
+                Set(ref _emmisionScpg, value);
+                ValidateEmissionsSCPG();
+            }
+        }
+
+        #endregion
+
+        #region TurbineMda
+
+        private string _powerOutputMda;
+        public string PowerOutputMda
+        {
+            get => _powerOutputMda;
+            set
+            {
+                Set(ref _powerOutputMda, value);
+                ValidateDecimalNumericPowerOutputMDA();
+
+            }
+        }
+
+        private string _fuelMda;
+        public string FuelMda
+        {
+            get => _fuelMda;
+            set
+            {
+                Set(ref _fuelMda, value);
+                ValidateFuelMDA();
+            }
+        }
+
+        private string _efficiencyMda;
+        public string EfficiencyMda
+        {
+            get => _efficiencyMda;
+            set
+            {
+                Set(ref _efficiencyMda, value);
+                ValidateEfficiencyMDA();
+            }
+        }
+
+        private string _heatRateMda;
+        public string HeatRateMda
+        {
+            get => _heatRateMda;
+            set
+            {
+                Set(ref _heatRateMda, value);
+                ValidateHeatRateMDA();
+            }
+        }
+
+        private string _driveShaftSpeedMda;
+        public string DriveShaftSpeedMda
+        {
+            get => _driveShaftSpeedMda;
+            set
+            {
+                Set(ref _driveShaftSpeedMda, value);
+                ValidateDriveShaftSpeedMDA();
+            }
+        }
+
+        private string _pressureRatioMda;
+        public string PressureRatioMda
+        {
+            get => _pressureRatioMda;
+            set
+            {
+                Set(ref _pressureRatioMda, value);
+                ValidatePressureRationMDA();
+            }
+        }
+
+        private string _exhaustMassFlowMda;
+        public string ExhaustMassFlowMda
+        {
+            get => _exhaustMassFlowMda;
+            set
+            {
+                Set(ref _exhaustMassFlowMda, value);
+                ValidateExhaustMassFlowMDA();
+            }
+        }
+
+        private string _exhaustTemperatureMda;
+        public string ExhaustTemperatureMda
+        {
+            get => _exhaustTemperatureMda;
+            set
+            {
+                Set(ref _exhaustTemperatureMda, value);
+                ValidateExhaustTempMDA();
+            }
+        }
+
+        private string _emmisionMda;
+        public string EmmisionMda
+        {
+            get => _emmisionMda;
+            set
+            {
+                Set(ref _emmisionMda, value);
+                ValidateEmissionsMDA();
+            }
+        }
+
+        #endregion
+
+        #region TurbinePgp
+
+        private string _weightPgp;
+        public string WeightPgp
+        {
+            get => _weightPgp;
+            set
+            {
+                Set(ref _weightPgp, value);
+                ValidateWeightPGP();
+            }
+        }
+
+        private string _lenghtPgp;
+        public string LenghtPgp
+        {
+            get => _lenghtPgp;
+            set
+            {
+                Set(ref _lenghtPgp, value);
+                ValidateLenghtPGP();
+            }
+        }
+
+        private string _widthPgp;
+        public string WidthPgp
+        {
+            get => _widthPgp;
+            set
+            {
+                Set(ref _widthPgp, value);
+                ValidateWidthPGP();
+            }
+        }
+
+        private string _heightPgp;
+        public string HeightPgp
+        {
+            get => _heightPgp;
+            set
+            {
+                Set(ref _heightPgp, value);
+                ValidateHeightPGP();
+            }
+        }
+        #endregion
+
+        #region TurbineMdp
+
+        private string _weightMdp;
+        public string WeightMdp
+        {
+            get => _weightMdp;
+            set
+            {
+                Set(ref _weightMdp, value);
+                ValidateWeightMDP();
+            }
+        }
+
+        private string _lenghtMdp;
+        public string LenghtMdp
+        {
+            get => _lenghtMdp;
+            set
+            {
+                Set(ref _lenghtMdp, value);
+                ValidateLenghtMDP();
+            }
+        }
+
+        private string _widthMdp;
+        public string WidthMdp
+        {
+            get => _widthMdp;
+            set
+            {
+                Set(ref _widthMdp, value);
+                ValidateWidthMDP();
+            }
+        }
+
+        private string _heightMdp;
+        public string HeightMdp
+        {
+            get => _heightMdp;
+            set
+            {
+                Set(ref _heightMdp, value);
+                ValidateHeightMDP();
+            }
+        }
+        #endregion
+
+        #region TurbineImage
+        private string _imagePathOne;
+        public string ImagePathOne
+        {
+            get => _imagePathOne;
+            set => Set(ref _imagePathOne, value);
+        }
+
+        private string _imagePathTwo;
+        public string ImagePathTwo
+        {
+            get => _imagePathTwo;
+            set => Set(ref _imagePathTwo, value);
+        }
+
+        private string _imagePathThree;
+        public string ImagePathThree
+        {
+            get => _imagePathThree;
+            set => Set(ref _imagePathThree, value);
+        }
+
+        private string _imagePathFour;
+
+        public string ImagePathFour
+        {
+            get => _imagePathFour;
+            set => Set(ref _imagePathFour, value);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region BoolValidate
+
+        #region BoolTurbineMain
+        private bool _checkTurbineName;
+
+        private bool _checkTurbineDescription;
+
+        #endregion
+
+        #region BoolTurbineSCPG
+        private bool _checkPowerOutputScpg;
+
+        private bool _checkFuelScpg;
+  
+        private bool _checkFrequency;
+ 
+        private bool _checkGrossEfficiency;
+
+        private bool _checkHeatRateScpg;
+
+        private bool _checkTurbineSpeedScpg;
+
+        private bool _checkExhaustTemperatureScpg;
+ 
+        private bool _checkPressureRatioScpg;
+ 
+        private bool _checkExhaustMassFlowScpg;
+
+        private bool _checkEmissionScpg;
+
+        #endregion
+
+        #region BoolTurbineMDA
+        private bool _checkPowerOutputMda;
+
+        private bool _checkFuelMda;
+
+        private bool _checkEfficiency;
+
+        private bool _checkHeatRateMda;
+
+        private bool _checkDriveShaftSpeed;
+
+        private bool _checkExhaustTemperatureMda;
+
+        private bool _checkPressureRatioMda;
+
+        private bool _checkExhaustMassFlowMda;
+
+        private bool _checkEmissionMda;
+
+        #endregion
+
+        #region BoolTurbinePGP
+        private bool _checkWeightPgp;
+        private bool _checkLenghtPgp;
+        private bool _checkWidthPgp;
+        private bool _checkHeightPgp;
+        #endregion
+
+        #region BoolTurbineMDP
+        private bool _checkWeightMdp;
+        private bool _checkLenghtMdp;
+        private bool _checkWidthMdp;
+        private bool _checkHeightMdp;
+        #endregion
+
+        #endregion
+
         #endregion
 
         #region Command
@@ -96,248 +567,274 @@ namespace TurbineRepair.ViewModel
         private bool CanCreateOrUpdateExecute(object parameter) => true;
         private async void OnCreateOrUpdateExecute(object parameter)
         {
-            if (MainWindowViewModel.main.UpdTurbine != null)
+            if (CheckName(TurbineNamesValid))
             {
-                Turbine updTurbine = MainWindowViewModel.main.UpdTurbine;
-                updTurbine.TurbineName = TurbineNames;
-                updTurbine.TurbineDescription = TurbineDescriptions;
-                #region TurbineScpg
-                updTurbine.TurbineScpgNavigation.PowerOutput = PowerOutputScpg;
-                updTurbine.TurbineScpgNavigation.Fuel = FuelScpg;
-                updTurbine.TurbineScpgNavigation.Frequency = FrequencyScpg;
-                updTurbine.TurbineScpgNavigation.GrossEfficiency = GrossEfficiencyScpg;
-                updTurbine.TurbineScpgNavigation.HeatRate = HeatRateScpg;
-                updTurbine.TurbineScpgNavigation.TurbineSpeed = TurbineSpeedScpg;
-                updTurbine.TurbineScpgNavigation.PressureRatio = PressureRatioScpg;
-                updTurbine.TurbineScpgNavigation.ExhaustMassFlow = ExhaustMassFlowScpg;
-                updTurbine.TurbineScpgNavigation.ExhaustTemperature = ExhaustTemperatureScpg;
-                updTurbine.TurbineScpgNavigation.Emissions = EmmisionScpg;
-                #endregion
-                #region TurbineMda
-                updTurbine.TurbineMdaNavigation.PowerOutput = PowerOutputMda;
-                updTurbine.TurbineMdaNavigation.Fuel = FuelMda;
-                updTurbine.TurbineMdaNavigation.Efficiency = EfficiencyMda;
-                updTurbine.TurbineMdaNavigation.HeatRate = HeatRateMda;
-                updTurbine.TurbineMdaNavigation.DriveShaftSpeed = DriveShaftSpeedMda;
-                updTurbine.TurbineMdaNavigation.PressureRatio = PressureRatioMda;
-                updTurbine.TurbineMdaNavigation.ExhaustMassFlow = ExhaustMassFlowMda;
-                updTurbine.TurbineMdaNavigation.ExhaustTemperature = ExhaustTemperatureMda;
-                updTurbine.TurbineMdaNavigation.Emissions = EmmisionMda;
-                #endregion
-                #region TurbinePgp    
-                updTurbine.TurbinePgpNavigation.Weight = WeightPgp;
-                updTurbine.TurbinePgpNavigation.Lenght = LenghtPgp;
-                updTurbine.TurbinePgpNavigation.Width = WidthPgp;
-                updTurbine.TurbinePgpNavigation.Height = HeightPgp;
-                #endregion
-                #region TurbineMdp
-                updTurbine.TurbineMdpNavigation.Weight = WeightMdp;
-                updTurbine.TurbineMdpNavigation.Lenght = LenghtMdp;
-                updTurbine.TurbineMdpNavigation.Width = WidthMdp;
-                updTurbine.TurbineMdpNavigation.Height = HeightMdp;
-                #endregion
-                #region TurbineImage
-                if (OriginalName != updTurbine.TurbineName)
+                if (_checkPowerOutputScpg && _checkFuelScpg && _checkFrequency && _checkHeatRateScpg && _checkGrossEfficiency && _checkTurbineSpeedScpg
+                     && _checkPressureRatioScpg && _checkExhaustMassFlowScpg && _checkExhaustTemperatureScpg && _checkEmissionScpg &&
+                     _checkPowerOutputMda && _checkFuelMda && _checkHeatRateMda && _checkEfficiency && _checkDriveShaftSpeed
+                     && _checkPressureRatioMda && _checkExhaustMassFlowMda && _checkExhaustTemperatureMda && _checkEmissionMda &&
+                     _checkWeightPgp && _checkLenghtPgp && _checkWidthPgp && _checkHeightPgp && _checkWeightMdp && _checkLenghtMdp && _checkWidthMdp && _checkHeightMdp)
                 {
-                    string basePath = Path.GetFullPath(pathProject + @"\" + OriginalName);
-                    string movePath = Path.GetFullPath(pathProject + @"\" + updTurbine.TurbineName);
+                    FailedAddOrUpdate = "*Данные обновлены";
+                    ForegroundFailedMessage = 1;
                 }
-                string imagePath = Path.GetFullPath(pathProject + @"\" + OriginalName);
-                string[] imageFile = Directory.GetFiles(imagePath);
-                if (ImageOneUpd)
+                else
                 {
-                    string copyPath = imageFile[0];
-                    FileInfo fileInfo = new FileInfo(ImagePathOne);
-                    if (fileInfo.Exists)
-                    {
-                        fileInfo.CopyTo(copyPath, true);
-                    }
+                    FailedAddOrUpdate = "*Данные не удалось обновить";
+                    ForegroundFailedMessage = -1;
                 }
-                if (ImageTwoUpd)
-                {
-
-                    string copyPath = imageFile[1];
-                    FileInfo fileInfo = new FileInfo(ImagePathTwo);
-                    if (fileInfo.Exists)
-                    {
-                        fileInfo.CopyTo(copyPath, true);
-                    }
-                }
-                if (ImageThreeUpd)
-                {
-
-                    string copyPath = imageFile[2];
-                    FileInfo fileInfo = new FileInfo(ImagePathThree);
-                    if (fileInfo.Exists)
-                    {
-                        fileInfo.CopyTo(copyPath, true);
-                    }
-                }
-                if (ImageFourUpd)
-                {
-
-                    string copyPath = imageFile[3];
-                    FileInfo fileInfo = new FileInfo(ImagePathFour);
-                    if (fileInfo.Exists)
-                    {
-                        fileInfo.CopyTo(copyPath, true);
-                    }
-                }
-
-                ImageOneUpd = false;
-                ImageTwoUpd = false;
-                ImageThreeUpd = false;
-                ImageFourUpd = false;
-                #endregion
-                MainWindowViewModel.context.SaveChanges();
-                await MainWindowViewModel.main.UpdateData();
-
             }
-            else
+            else 
             {
-                #region Create TurbineScpg
-                TurbineScpg newTurbineScpg = new TurbineScpg()
-                {
-                    PowerOutput = PowerOutputScpg,
-                    Fuel = FuelScpg,
-                    Frequency = FrequencyScpg,
-                    GrossEfficiency = GrossEfficiencyScpg,
-                    HeatRate = HeatRateScpg,
-                    TurbineSpeed = TurbineSpeedScpg,
-                    PressureRatio = PressureRatioScpg,
-                    ExhaustMassFlow = ExhaustMassFlowScpg,
-                    ExhaustTemperature = ExhaustTemperatureScpg,
-                    Emissions = EmmisionScpg
-
-                };
-                #endregion
-                #region Create TurbineMda
-                TurbineMdum newTurbineMda = new TurbineMdum()
-                {
-                    PowerOutput = PowerOutputMda,
-                    Fuel = FuelMda,
-                    Efficiency = EmmisionMda,
-                    HeatRate = HeatRateMda,
-                    DriveShaftSpeed = DriveShaftSpeedMda,
-                    PressureRatio = PressureRatioMda,
-                    ExhaustMassFlow = ExhaustMassFlowMda,
-                    ExhaustTemperature = ExhaustTemperatureMda,
-                    Emissions = EmmisionMda
-                };
-                #endregion
-                #region Create TurbinePgp
-                TurbinePgp newTurbinePgp = new TurbinePgp()
-                {
-                    Weight = WeightPgp,
-                    Lenght = LenghtPgp,
-                    Width = WidthPgp,
-                    Height = HeightPgp,
-                };
-                #endregion
-                #region Create TurbineMdp
-                TurbineMdp newTurbineMdp = new TurbineMdp()
-                {
-                    Weight = WidthMdp,
-                    Lenght = WidthMdp,
-                    Width = WidthMdp,
-                    Height = HeightMdp,
-                };
-                #endregion
-                #region Create TurbineImage
-                Directory.CreateDirectory(pathProject + @"\" + TurbineNames);
-                for(int i = 0; i < 4; i++)
-                {
-                    var jpg = new Bitmap(256, 256);
-                    using (var g = Graphics.FromImage(jpg))
-                    {
-                        g.Clear(Color.White);
-                    }
-                    jpg.Save(pathProject + @"\" + TurbineNames + @"\" + TurbineNames + "-" + (i + 1) + ".jpg");
-
-                }
-
-                string imagePath = Path.GetFullPath(pathProject + @"\" + TurbineNames);
-                string[] imageFile = Directory.GetFiles(imagePath);
-                if (ImageOneUpd)
-                {
-                    string copyPath = imageFile[0];
-                    FileInfo fileInfo = new FileInfo(ImagePathOne);
-                    if (fileInfo.Exists)
-                    {
-                        fileInfo.CopyTo(copyPath, true);
-                    }
-                }
-                if (ImageTwoUpd)
-                {
-
-                    string copyPath = imageFile[1];
-                    FileInfo fileInfo = new FileInfo(ImagePathTwo);
-                    if (fileInfo.Exists)
-                    {
-                        fileInfo.CopyTo(copyPath, true);
-                    }
-                }
-                if (ImageThreeUpd)
-                {
-
-                    string copyPath = imageFile[2];
-                    FileInfo fileInfo = new FileInfo(ImagePathThree);
-                    if (fileInfo.Exists)
-                    {
-                        fileInfo.CopyTo(copyPath, true);
-                    }
-                }
-                if (ImageFourUpd)
-                {
-
-                    string copyPath = imageFile[3];
-                    FileInfo fileInfo = new FileInfo(ImagePathFour);
-                    if (fileInfo.Exists)
-                    {
-                        fileInfo.CopyTo(copyPath, true);
-                    }
-                }
-                ImagePathOne = "\\" +TurbineNames + "\\" + TurbineNames + "-1.jpg";
-                ImagePathTwo = "\\" + TurbineNames + "\\" + TurbineNames + "-2.jpg";
-                ImagePathThree = "\\" + TurbineNames + "\\" + TurbineNames + "-3.jpg";
-                ImagePathFour = "\\" + TurbineNames + "\\" + TurbineNames + "-4.jpg";
-                ImageOneUpd = false;
-                ImageTwoUpd = false;
-                ImageThreeUpd = false;
-                ImageFourUpd = false;
-                TurbineImage newTurbineImage = new TurbineImage() 
-                { 
-                    ImageOne = ImagePathOne, 
-                    ImageTwo = ImagePathTwo,
-                    ImageThree = ImagePathThree,
-                    ImageFour = ImagePathFour,
-                };
-                #endregion
-                MainWindowViewModel.context.TurbineScpgs.Add(newTurbineScpg);
-                MainWindowViewModel.context.TurbineMda.Add(newTurbineMda);
-                MainWindowViewModel.context.TurbinePgps.Add(newTurbinePgp);
-                MainWindowViewModel.context.TurbineMdps.Add(newTurbineMdp);
-                MainWindowViewModel.context.TurbineImages.Add(newTurbineImage);
-                MainWindowViewModel.context.SaveChanges();
-                #region Create Turbine
-                Turbine newTurbine = new Turbine()
-                {
-                    TurbineName = TurbineNames,
-                    TurbineScpg = MainWindowViewModel.context.TurbineScpgs.Count(),
-                    TurbineMda = MainWindowViewModel.context.TurbineMda.Count(),
-                    TurbineDescription = TurbineDescriptions,
-                    DeleteTurbine = false,
-                    TurbinePgp = MainWindowViewModel.context.TurbinePgps.Count(),
-                    TurbineMdp = MainWindowViewModel.context.TurbineMdps.Count(),
-                    TurbineImage = MainWindowViewModel.context.TurbineImages.Count()
-
-                };
-                #endregion
-                MainWindowViewModel.context.Turbines.Add(newTurbine);
-                MainWindowViewModel.context.SaveChanges();
-                await MainWindowViewModel.main.UpdateData();
-                
+                FailedAddOrUpdate = "*Данное наименование уже используется";
+                ForegroundFailedMessage = -1;
             }
+
+
+            #region Comment
+            //if (MainWindowViewModel.main.UpdTurbine != null)
+            //{
+            //    Turbine updTurbine = MainWindowViewModel.main.UpdTurbine;
+            //    updTurbine.TurbineName = TurbineNames;
+            //    updTurbine.TurbineDescription = TurbineDescriptions;
+            //    #region TurbineScpg
+            //    updTurbine.TurbineScpgNavigation.PowerOutput = PowerOutputScpg;
+            //    updTurbine.TurbineScpgNavigation.Fuel = FuelScpg;
+            //    updTurbine.TurbineScpgNavigation.Frequency = FrequencyScpg;
+            //    updTurbine.TurbineScpgNavigation.GrossEfficiency = GrossEfficiencyScpg;
+            //    updTurbine.TurbineScpgNavigation.HeatRate = HeatRateScpg;
+            //    updTurbine.TurbineScpgNavigation.TurbineSpeed = TurbineSpeedScpg;
+            //    updTurbine.TurbineScpgNavigation.PressureRatio = PressureRatioScpg;
+            //    updTurbine.TurbineScpgNavigation.ExhaustMassFlow = ExhaustMassFlowScpg;
+            //    updTurbine.TurbineScpgNavigation.ExhaustTemperature = ExhaustTemperatureScpg;
+            //    updTurbine.TurbineScpgNavigation.Emissions = EmmisionScpg;
+            //    #endregion
+            //    #region TurbineMda
+            //    updTurbine.TurbineMdaNavigation.PowerOutput = PowerOutputMda;
+            //    updTurbine.TurbineMdaNavigation.Fuel = FuelMda;
+            //    updTurbine.TurbineMdaNavigation.Efficiency = EfficiencyMda;
+            //    updTurbine.TurbineMdaNavigation.HeatRate = HeatRateMda;
+            //    updTurbine.TurbineMdaNavigation.DriveShaftSpeed = DriveShaftSpeedMda;
+            //    updTurbine.TurbineMdaNavigation.PressureRatio = PressureRatioMda;
+            //    updTurbine.TurbineMdaNavigation.ExhaustMassFlow = ExhaustMassFlowMda;
+            //    updTurbine.TurbineMdaNavigation.ExhaustTemperature = ExhaustTemperatureMda;
+            //    updTurbine.TurbineMdaNavigation.Emissions = EmmisionMda;
+            //    #endregion
+            //    #region TurbinePgp    
+            //    updTurbine.TurbinePgpNavigation.Weight = WeightPgp;
+            //    updTurbine.TurbinePgpNavigation.Lenght = LenghtPgp;
+            //    updTurbine.TurbinePgpNavigation.Width = WidthPgp;
+            //    updTurbine.TurbinePgpNavigation.Height = HeightPgp;
+            //    #endregion
+            //    #region TurbineMdp
+            //    updTurbine.TurbineMdpNavigation.Weight = WeightMdp;
+            //    updTurbine.TurbineMdpNavigation.Lenght = LenghtMdp;
+            //    updTurbine.TurbineMdpNavigation.Width = WidthMdp;
+            //    updTurbine.TurbineMdpNavigation.Height = HeightMdp;
+            //    #endregion
+            //    #region TurbineImage
+            //    if (OriginalName != updTurbine.TurbineName)
+            //    {
+            //        string basePath = Path.GetFullPath(pathProject + @"\" + OriginalName);
+            //        string movePath = Path.GetFullPath(pathProject + @"\" + updTurbine.TurbineName);
+            //    }
+            //    string imagePath = Path.GetFullPath(pathProject + @"\" + OriginalName);
+            //    string[] imageFile = Directory.GetFiles(imagePath);
+            //    if (ImageOneUpd)
+            //    {
+            //        string copyPath = imageFile[0];
+            //        FileInfo fileInfo = new FileInfo(ImagePathOne);
+            //        if (fileInfo.Exists)
+            //        {
+            //            fileInfo.CopyTo(copyPath, true);
+            //        }
+            //    }
+            //    if (ImageTwoUpd)
+            //    {
+
+            //        string copyPath = imageFile[1];
+            //        FileInfo fileInfo = new FileInfo(ImagePathTwo);
+            //        if (fileInfo.Exists)
+            //        {
+            //            fileInfo.CopyTo(copyPath, true);
+            //        }
+            //    }
+            //    if (ImageThreeUpd)
+            //    {
+
+            //        string copyPath = imageFile[2];
+            //        FileInfo fileInfo = new FileInfo(ImagePathThree);
+            //        if (fileInfo.Exists)
+            //        {
+            //            fileInfo.CopyTo(copyPath, true);
+            //        }
+            //    }
+            //    if (ImageFourUpd)
+            //    {
+
+            //        string copyPath = imageFile[3];
+            //        FileInfo fileInfo = new FileInfo(ImagePathFour);
+            //        if (fileInfo.Exists)
+            //        {
+            //            fileInfo.CopyTo(copyPath, true);
+            //        }
+            //    }
+
+            //    ImageOneUpd = false;
+            //    ImageTwoUpd = false;
+            //    ImageThreeUpd = false;
+            //    ImageFourUpd = false;
+            //    #endregion
+            //    MainWindowViewModel.context.SaveChanges();
+            //    await MainWindowViewModel.main.UpdateData();
+
+            //}
+            //else
+            //{
+            //    #region Create TurbineScpg
+            //    TurbineScpg newTurbineScpg = new TurbineScpg()
+            //    {
+            //        PowerOutput = PowerOutputScpg,
+            //        Fuel = FuelScpg,
+            //        Frequency = FrequencyScpg,
+            //        GrossEfficiency = GrossEfficiencyScpg,
+            //        HeatRate = HeatRateScpg,
+            //        TurbineSpeed = TurbineSpeedScpg,
+            //        PressureRatio = PressureRatioScpg,
+            //        ExhaustMassFlow = ExhaustMassFlowScpg,
+            //        ExhaustTemperature = ExhaustTemperatureScpg,
+            //        Emissions = EmmisionScpg
+
+            //    };
+            //    #endregion
+            //    #region Create TurbineMda
+            //    TurbineMdum newTurbineMda = new TurbineMdum()
+            //    {
+            //        PowerOutput = PowerOutputMda,
+            //        Fuel = FuelMda,
+            //        Efficiency = EmmisionMda,
+            //        HeatRate = HeatRateMda,
+            //        DriveShaftSpeed = DriveShaftSpeedMda,
+            //        PressureRatio = PressureRatioMda,
+            //        ExhaustMassFlow = ExhaustMassFlowMda,
+            //        ExhaustTemperature = ExhaustTemperatureMda,
+            //        Emissions = EmmisionMda
+            //    };
+            //    #endregion
+            //    #region Create TurbinePgp
+            //    TurbinePgp newTurbinePgp = new TurbinePgp()
+            //    {
+            //        Weight = WeightPgp,
+            //        Lenght = LenghtPgp,
+            //        Width = WidthPgp,
+            //        Height = HeightPgp,
+            //    };
+            //    #endregion
+            //    #region Create TurbineMdp
+            //    TurbineMdp newTurbineMdp = new TurbineMdp()
+            //    {
+            //        Weight = WidthMdp,
+            //        Lenght = WidthMdp,
+            //        Width = WidthMdp,
+            //        Height = HeightMdp,
+            //    };
+            //    #endregion
+            //    #region Create TurbineImage
+            //    Directory.CreateDirectory(pathProject + @"\" + TurbineNames);
+            //    for(int i = 0; i < 4; i++)
+            //    {
+            //        var jpg = new Bitmap(256, 256);
+            //        using (var g = Graphics.FromImage(jpg))
+            //        {
+            //            g.Clear(Color.White);
+            //        }
+            //        jpg.Save(pathProject + @"\" + TurbineNames + @"\" + TurbineNames + "-" + (i + 1) + ".jpg");
+
+            //    }
+
+            //    string imagePath = Path.GetFullPath(pathProject + @"\" + TurbineNames);
+            //    string[] imageFile = Directory.GetFiles(imagePath);
+            //    if (ImageOneUpd)
+            //    {
+            //        string copyPath = imageFile[0];
+            //        FileInfo fileInfo = new FileInfo(ImagePathOne);
+            //        if (fileInfo.Exists)
+            //        {
+            //            fileInfo.CopyTo(copyPath, true);
+            //        }
+            //    }
+            //    if (ImageTwoUpd)
+            //    {
+
+            //        string copyPath = imageFile[1];
+            //        FileInfo fileInfo = new FileInfo(ImagePathTwo);
+            //        if (fileInfo.Exists)
+            //        {
+            //            fileInfo.CopyTo(copyPath, true);
+            //        }
+            //    }
+            //    if (ImageThreeUpd)
+            //    {
+
+            //        string copyPath = imageFile[2];
+            //        FileInfo fileInfo = new FileInfo(ImagePathThree);
+            //        if (fileInfo.Exists)
+            //        {
+            //            fileInfo.CopyTo(copyPath, true);
+            //        }
+            //    }
+            //    if (ImageFourUpd)
+            //    {
+
+            //        string copyPath = imageFile[3];
+            //        FileInfo fileInfo = new FileInfo(ImagePathFour);
+            //        if (fileInfo.Exists)
+            //        {
+            //            fileInfo.CopyTo(copyPath, true);
+            //        }
+            //    }
+            //    ImagePathOne = "\\" +TurbineNames + "\\" + TurbineNames + "-1.jpg";
+            //    ImagePathTwo = "\\" + TurbineNames + "\\" + TurbineNames + "-2.jpg";
+            //    ImagePathThree = "\\" + TurbineNames + "\\" + TurbineNames + "-3.jpg";
+            //    ImagePathFour = "\\" + TurbineNames + "\\" + TurbineNames + "-4.jpg";
+            //    ImageOneUpd = false;
+            //    ImageTwoUpd = false;
+            //    ImageThreeUpd = false;
+            //    ImageFourUpd = false;
+            //    TurbineImage newTurbineImage = new TurbineImage() 
+            //    { 
+            //        ImageOne = ImagePathOne, 
+            //        ImageTwo = ImagePathTwo,
+            //        ImageThree = ImagePathThree,
+            //        ImageFour = ImagePathFour,
+            //    };
+            //    #endregion
+            //    MainWindowViewModel.context.TurbineScpgs.Add(newTurbineScpg);
+            //    MainWindowViewModel.context.TurbineMda.Add(newTurbineMda);
+            //    MainWindowViewModel.context.TurbinePgps.Add(newTurbinePgp);
+            //    MainWindowViewModel.context.TurbineMdps.Add(newTurbineMdp);
+            //    MainWindowViewModel.context.TurbineImages.Add(newTurbineImage);
+            //    MainWindowViewModel.context.SaveChanges();
+            //    #region Create Turbine
+            //    Turbine newTurbine = new Turbine()
+            //    {
+            //        TurbineName = TurbineNames,
+            //        TurbineScpg = MainWindowViewModel.context.TurbineScpgs.Count(),
+            //        TurbineMda = MainWindowViewModel.context.TurbineMda.Count(),
+            //        TurbineDescription = TurbineDescriptions,
+            //        DeleteTurbine = false,
+            //        TurbinePgp = MainWindowViewModel.context.TurbinePgps.Count(),
+            //        TurbineMdp = MainWindowViewModel.context.TurbineMdps.Count(),
+            //        TurbineImage = MainWindowViewModel.context.TurbineImages.Count()
+
+            //    };
+            //    #endregion
+            //    MainWindowViewModel.context.Turbines.Add(newTurbine);
+            //    MainWindowViewModel.context.SaveChanges();
+            //    await MainWindowViewModel.main.UpdateData();
+
+            //}
+            #endregion
         }
 
 
@@ -376,282 +873,10 @@ namespace TurbineRepair.ViewModel
             }
                                                  
         }
+  
+        #endregion
 
     
-
-        #endregion
-
-        #region Turbine Field
-
-        #region Turbine Main
-
-        private string _turbineNames;
-        public string TurbineNames
-        {
-            get => _turbineNames; 
-            set => Set(ref _turbineNames, value);
-        }
-
-        private string _turbineDescriptions;
-        public string TurbineDescriptions
-        {
-            get => _turbineDescriptions;
-            set => Set(ref _turbineDescriptions, value);
-        }
-
-        private bool _deleteTurbine;
-        public bool DeleteTurbine
-        {
-            get => _deleteTurbine;
-            set => Set(ref _deleteTurbine, value);
-        }
-        #endregion
-
-        #region TurbineScpg
-
-        private string _powerOutputScpg;
-        public string PowerOutputScpg
-        {
-            get => _powerOutputScpg;
-            set
-            {
-                Set(ref _powerOutputScpg, value);
-                ValidateDecimalNumericPowerOutput();
-            }
-        }
-
-        private string _fuelScpg;
-        public string FuelScpg
-        {
-            get => _fuelScpg;
-            set => Set(ref _fuelScpg, value);
-        }
-
-        private string _frequencyScpg;
-        public string FrequencyScpg
-        {
-            get => _frequencyScpg;
-            set => Set(ref _frequencyScpg, value);
-        }
-
-        private string _grossEfficiencyScpg;
-        public string GrossEfficiencyScpg
-        {
-            get => _grossEfficiencyScpg;
-            set => Set(ref _grossEfficiencyScpg, value);
-        }
-
-        private string _heatRateScpg;
-        public string HeatRateScpg
-        {
-            get => _heatRateScpg;
-            set => Set(ref _heatRateScpg, value);
-        }
-
-        private string _turbineSpeedScpg;
-        public string TurbineSpeedScpg
-        {
-            get => _turbineSpeedScpg;
-            set => Set(ref _turbineSpeedScpg, value);
-        }
-
-        private string _pressureRatioScpg;
-        public string PressureRatioScpg
-        {
-            get => _pressureRatioScpg;
-            set => Set(ref _pressureRatioScpg, value);
-        }
-
-        private string _exhaustMassFlowScpg;
-        public string ExhaustMassFlowScpg
-        {
-            get => _exhaustMassFlowScpg;
-            set => Set(ref _exhaustMassFlowScpg, value);
-        }
-
-        private string _exhaustTemperatureScpg;
-        public string ExhaustTemperatureScpg
-        {
-            get => _exhaustTemperatureScpg;
-            set => Set(ref _exhaustTemperatureScpg, value);
-        }
-
-        private string _emmisionScpg;
-        public string EmmisionScpg
-        {
-            get => _emmisionScpg;
-            set => Set(ref _emmisionScpg, value);
-        }
-
-        #endregion
-
-        #region TurbineMda
-
-        private string _powerOutputMda;
-        public string PowerOutputMda
-        {
-            get => _powerOutputMda;
-            set 
-            {
-                Set(ref _powerOutputMda, value);
-                ValidateDecimalNumericPowerOutputMda();
-                    
-            }
-        }
-
-        private string _fuelMda;
-        public string FuelMda
-        {
-            get => _fuelMda;
-            set => Set(ref _fuelMda, value);
-        }
-
-        private string _efficiencyMda;
-        public string EfficiencyMda
-        {
-            get => _efficiencyMda;
-            set => Set(ref _efficiencyMda, value);
-        }
-
-        private string _heatRateMda;
-        public string HeatRateMda
-        {
-            get => _heatRateMda;
-            set => Set(ref _heatRateMda, value);
-        }
-
-        private string _driveShaftSpeedMda;
-        public string DriveShaftSpeedMda
-        {
-            get => _driveShaftSpeedMda;
-            set => Set(ref _driveShaftSpeedMda, value);
-        }
-
-        private string _pressureRatioMda;
-        public string PressureRatioMda
-        {
-            get => _pressureRatioMda;
-            set => Set(ref _pressureRatioMda, value);
-        }
-
-        private string _exhaustMassFlowMda;
-        public string ExhaustMassFlowMda
-        {
-            get => _exhaustMassFlowMda;
-            set => Set(ref _exhaustMassFlowMda, value);
-        }
-
-        private string _exhaustTemperatureMda;
-        public string ExhaustTemperatureMda
-        {
-            get => _exhaustTemperatureMda;
-            set => Set(ref _exhaustTemperatureMda, value);
-        }
-
-        private string _emmisionMda;
-        public string EmmisionMda
-        {
-            get => _emmisionMda;
-            set => Set(ref _emmisionMda, value);
-        }
-
-        #endregion
-
-        #region TurbinePgp
-
-        private string _weightPgp;
-        public string WeightPgp
-        {
-            get => _weightPgp;
-            set => Set(ref _weightPgp, value);
-        }
-
-        private string _lenghtPgp;
-        public string LenghtPgp
-        {
-            get => _lenghtPgp;
-            set => Set(ref _lenghtPgp, value);
-        }
-
-        private string _widthPgp;
-        public string WidthPgp
-        {
-            get => _widthPgp;
-            set => Set(ref _widthPgp, value);
-        }
-
-        private string _heightPgp;
-        public string HeightPgp
-        {
-            get => _heightPgp; 
-            set => Set(ref _heightPgp, value);
-        }
-        #endregion
-
-        #region TurbineMdp
-
-        private string _weightMdp;
-        public string WeightMdp
-        {
-            get => _weightMdp;
-            set => Set(ref _weightMdp, value);
-        }
-
-        private string _lenghtMdp;
-        public string LenghtMdp
-        {
-            get => _lenghtMdp;
-            set => Set(ref _lenghtMdp, value);
-        }
-
-        private string _widthMdp;
-        public string WidthMdp
-        {
-            get => _widthMdp;
-            set => Set(ref _widthMdp, value);
-        }
-
-        private string _heightMdp;
-        public string HeightMdp
-        {
-            get => _heightMdp;
-            set => Set(ref _heightMdp, value);
-        }
-        #endregion
-
-        #region TurbineImage
-        private string _imagePathOne;
-        public string ImagePathOne
-        {
-            get => _imagePathOne;
-            set => Set(ref _imagePathOne, value);
-        }
-
-        private string _imagePathTwo;
-        public string ImagePathTwo
-        {
-            get => _imagePathTwo;
-            set => Set(ref _imagePathTwo, value);
-        }
-
-        private string _imagePathThree;
-        public string ImagePathThree
-        {
-            get => _imagePathThree;
-            set => Set(ref _imagePathThree, value);
-        }
-
-        private string _imagePathFour;
-    
-        public string ImagePathFour
-        {
-            get => _imagePathFour;
-            set => Set(ref _imagePathFour, value);
-        }
-     
-        #endregion
-
-        #endregion
 
         public CreateOrUpdateTurbineVM() 
         {
@@ -659,7 +884,7 @@ namespace TurbineRepair.ViewModel
             {
                 ContentButton = "Изменить";
                 OriginalName = MainWindowViewModel.main.UpdTurbine.TurbineName;
-                TurbineNames = MainWindowViewModel.main.UpdTurbine.TurbineName;
+                TurbineNamesValid = MainWindowViewModel.main.UpdTurbine.TurbineName;
                 TurbineDescriptions = MainWindowViewModel.main.UpdTurbine.TurbineDescription;
                 #region Update TurbineScpg
                 PowerOutputScpg = MainWindowViewModel.main.UpdTurbine.TurbineScpgNavigation.PowerOutput;
@@ -735,50 +960,605 @@ namespace TurbineRepair.ViewModel
             return _errorsByPropertyName.ContainsKey(propertyName) ? _errorsByPropertyName[propertyName] : null;
         }
 
-
-        private void ValidateDecimalNumericPowerOutput()
+        private void ValidateDescription()
         {
-            bool stringIsEmpty = false;
+            ClearErrors(nameof(TurbineDescriptions));
+            if (string.IsNullOrWhiteSpace(TurbineDescriptions) || !Regex.IsMatch(TurbineDescriptions, patternLetter, RegexOptions.IgnoreCase))
+            {
+                ClearErrors(nameof(TurbineDescriptions));
+                AddError(nameof(TurbineDescriptions), "*Поле не может быть пустым, или в поле не допустимые смволы.");
+                _checkTurbineDescription = false;
+            }
+            else
+            {
+                _checkTurbineDescription = true;
+            }
+        }
+
+        private void ValidateTurbineName()
+        {
+            ClearErrors(nameof(TurbineNamesValid));
+            if (string.IsNullOrWhiteSpace(TurbineNamesValid))
+            {
+                ClearErrors(nameof(TurbineNamesValid));
+                AddError(nameof(TurbineNamesValid), "*Поле не может быть пустым.");
+                _checkTurbineName = false;
+
+            }
+            else
+            {
+                if (!Regex.IsMatch(TurbineNamesValid, patternNames, RegexOptions.IgnoreCase))
+                {
+                    AddError(nameof(TurbineNamesValid), "*Недопустимые символы");
+                    _checkTurbineName = false;
+                }
+                else _checkTurbineName = true;                           
+            }
+        }
+
+        #region Validate SCPG
+        private void ValidateDecimalNumericPowerOutputSCPG()
+        {
+
             ClearErrors(nameof(PowerOutputScpg));
             if (string.IsNullOrWhiteSpace(PowerOutputScpg))
             {
                 ClearErrors(nameof(PowerOutputScpg));
                 AddError(nameof(PowerOutputScpg), "*Поле не может быть пустым.");
-                stringIsEmpty = true;
+                _checkPowerOutputScpg = false;
+
             }
-            if (!stringIsEmpty)
+            else
             {
                 if (!Regex.IsMatch(PowerOutputScpg, decimalNumber, RegexOptions.IgnoreCase))
                 {
-                    AddError(nameof(PowerOutputScpg), "*Ошибка валидации введите число или число с плавающей точкой");
-                    
+                    AddError(nameof(PowerOutputScpg), "*Введите число или число с плавающей точкой");
+                    _checkPowerOutputScpg = false;
                 }
-            }   
-            
-                
+                else _checkPowerOutputScpg = true;
+            }
+                           
         }
 
-        private void ValidateDecimalNumericPowerOutputMda()
+        private void ValidateFuelSCPG()
         {
-            bool stringIsEmpty = false;
+            ClearErrors(nameof(FuelScpg));
+            if (string.IsNullOrWhiteSpace(FuelScpg) || !Regex.IsMatch(FuelScpg, patternLetter, RegexOptions.IgnoreCase))
+            {
+                ClearErrors(nameof(FuelScpg));
+                AddError(nameof(FuelScpg), "*Поле не может быть пустым.");
+                _checkFuelScpg = false;
+            }
+            else _checkFuelScpg = true;
+        }
+
+        private void ValidateFreqency()
+        {
+            ClearErrors(nameof(FrequencyScpg));
+            if (string.IsNullOrWhiteSpace(FrequencyScpg))
+            {
+                ClearErrors(nameof(FrequencyScpg));
+                AddError(nameof(FrequencyScpg), "*Поле не может быть пустым.");
+                _checkFrequency = false;
+            }
+            else
+            {
+
+                if (!Regex.IsMatch(FrequencyScpg, freqencyNumber, RegexOptions.IgnoreCase))
+                {
+                    AddError(nameof(FrequencyScpg), "*Введите число (можно испоьзовать символ / )");
+                    _checkFrequency = false;
+                }
+                else _checkFrequency = true;
+            }
+        }
+
+        private void ValidateGrossEfficiency()
+        {
+
+            ClearErrors(nameof(GrossEfficiencyScpg));
+            if (string.IsNullOrWhiteSpace(GrossEfficiencyScpg))
+            {
+                ClearErrors(nameof(GrossEfficiencyScpg));
+                AddError(nameof(GrossEfficiencyScpg), "*Поле не может быть пустым.");
+                _checkGrossEfficiency = false;
+
+            }
+            else
+            {
+                if (!Regex.IsMatch(GrossEfficiencyScpg, decimalNumber, RegexOptions.IgnoreCase))
+                {
+                    AddError(nameof(GrossEfficiencyScpg), "*Введите число или число с плавающей точкой");
+                    _checkGrossEfficiency = false;
+                }
+                else _checkGrossEfficiency = true;
+            }
+        }
+
+        private void ValidateHeatRateSCPG()
+        {
+            ClearErrors(nameof(HeatRateScpg));
+            if (string.IsNullOrWhiteSpace(HeatRateScpg))
+            {
+                ClearErrors(nameof(HeatRateScpg));
+                AddError(nameof(HeatRateScpg), "*Поле не может быть пустым.");
+                _checkHeatRateScpg = false;
+            }
+            else
+            {
+                if (!Regex.IsMatch(HeatRateScpg, decimalNumber, RegexOptions.IgnoreCase))
+                {
+                    AddError(nameof(HeatRateScpg), "*Введите число или число с плавающей точкой");
+                    _checkHeatRateScpg = false;
+                }
+                else _checkHeatRateScpg = true;
+            }
+        }
+
+        private void ValidateTurbineSpeed()
+        {
+            ClearErrors(nameof(TurbineSpeedScpg));
+            if (string.IsNullOrWhiteSpace(TurbineSpeedScpg))
+            {
+                ClearErrors(nameof(TurbineSpeedScpg));
+                AddError(nameof(TurbineSpeedScpg), "*Поле не может быть пустым.");
+                _checkTurbineSpeedScpg = false;
+            }
+            else
+            {
+                if (!Regex.IsMatch(TurbineSpeedScpg, decimalNumber, RegexOptions.IgnoreCase))
+                {
+                    AddError(nameof(TurbineSpeedScpg), "*Введите число или число с плавающей точкой");
+                    _checkTurbineSpeedScpg = false;
+                }
+                else _checkTurbineSpeedScpg = true;
+            }
+        }
+
+        private void ValidatePressureRationSCPG()
+        {
+
+            ClearErrors(nameof(PressureRatioScpg));
+            if (string.IsNullOrWhiteSpace(PressureRatioScpg))
+            {
+                ClearErrors(nameof(PressureRatioScpg));
+                AddError(nameof(PressureRatioScpg), "*Поле не может быть пустым.");
+                _checkPressureRatioScpg = false;
+
+            }
+            else
+            {
+                if (!Regex.IsMatch(PressureRatioScpg, pressureRation, RegexOptions.IgnoreCase))
+                {
+                    AddError(nameof(PressureRatioScpg), "*Введите число или число с плавающей точкой");
+                    _checkPressureRatioScpg = false;
+                }
+                else _checkPressureRatioScpg = true;
+            }
+        }
+
+        private void ValidateExhaustMassFlowSCPG()
+        {
+            ClearErrors(nameof(ExhaustMassFlowScpg));
+            if (string.IsNullOrWhiteSpace(ExhaustMassFlowScpg))
+            {
+                ClearErrors(nameof(ExhaustMassFlowScpg));
+                AddError(nameof(ExhaustMassFlowScpg), "*Поле не может быть пустым.");
+                _checkExhaustMassFlowScpg = false;
+                
+            }
+            else
+            {
+                if (!Regex.IsMatch(ExhaustMassFlowScpg, decimalNumber, RegexOptions.IgnoreCase))
+                {
+                    AddError(nameof(ExhaustMassFlowScpg), "*Введите число или число с плавающей точкой");
+                    _checkExhaustMassFlowScpg = false;
+
+                }
+                else _checkExhaustMassFlowScpg = true;
+            }
+        }
+
+        private void ValidateExhaustTempSCPG()
+        {
+
+            ClearErrors(nameof(ExhaustTemperatureScpg));
+            if (string.IsNullOrWhiteSpace(ExhaustTemperatureScpg))
+            {
+                ClearErrors(nameof(ExhaustTemperatureScpg));
+                AddError(nameof(ExhaustTemperatureScpg), "*Поле не может быть пустым.");
+                _checkExhaustTemperatureScpg = false;
+            }
+            else
+            {
+                if (!Regex.IsMatch(ExhaustTemperatureScpg, decimalNumber, RegexOptions.IgnoreCase))
+                {
+                    AddError(nameof(ExhaustTemperatureScpg), "*Введите число или число с плавающей точкой");
+                    _checkExhaustTemperatureScpg = false;
+                }
+                else _checkExhaustTemperatureScpg = true;
+            }
+        }
+
+        private void ValidateEmissionsSCPG()
+        {
+            ClearErrors(nameof(EmmisionScpg));
+            if (string.IsNullOrWhiteSpace(EmmisionScpg))
+            {
+                ClearErrors(nameof(EmmisionScpg));
+                AddError(nameof(EmmisionScpg), "*Поле не может быть пустым.");
+                _checkEmissionScpg = false;
+            }
+            else
+            {
+                if (!Regex.IsMatch(EmmisionScpg, decimalNumber, RegexOptions.IgnoreCase))
+                {
+                    AddError(nameof(EmmisionScpg), "*Введите число или число с плавающей точкой");
+                    _checkEmissionScpg = false;
+                }
+                else _checkEmissionScpg = true;
+            }
+        }
+        #endregion
+
+        #region Validate MDA
+        private void ValidateDecimalNumericPowerOutputMDA()
+        {
             ClearErrors(nameof(PowerOutputMda));
             if (string.IsNullOrWhiteSpace(PowerOutputMda))
             {
                 ClearErrors(nameof(PowerOutputMda));
                 AddError(nameof(PowerOutputMda), "*Поле не может быть пустым.");
-                stringIsEmpty = true;
+                _checkPowerOutputMda = false;
             }
-            if (!stringIsEmpty)
+            else
             {
                 if (!Regex.IsMatch(PowerOutputMda, decimalNumber, RegexOptions.IgnoreCase))
                 {
-                    AddError(nameof(PowerOutputMda), "*Ошибка валидации введите число или число с плавающей точкой");
-
+                    AddError(nameof(PowerOutputMda), "*Введите число или число с плавающей точкой");
+                    _checkPowerOutputMda = false;
                 }
+                else _checkPowerOutputMda = true;
             }
 
+        }
+
+        private void ValidateFuelMDA()
+        {
+            ClearErrors(nameof(FuelMda));
+            if (string.IsNullOrWhiteSpace(FuelMda) || !Regex.IsMatch(FuelMda, patternLetter, RegexOptions.IgnoreCase))
+            {
+                ClearErrors(nameof(FuelMda));
+                AddError(nameof(FuelMda), "*Поле не может быть пустым.");
+                _checkFuelMda = false;
+            }
+            else _checkFuelMda = true;
+        }
+
+        private void ValidateEfficiencyMDA()
+        {
+            ClearErrors(nameof(EfficiencyMda));
+            if (string.IsNullOrWhiteSpace(EfficiencyMda))
+            {
+                ClearErrors(nameof(EfficiencyMda));
+                AddError(nameof(EfficiencyMda), "*Поле не может быть пустым.");
+                _checkEfficiency = false;
+            }
+            else
+            {
+                if (!Regex.IsMatch(EfficiencyMda, decimalNumber, RegexOptions.IgnoreCase))
+                {
+                    AddError(nameof(EfficiencyMda), "*Введите число или число с плавающей точкой");
+                    _checkEfficiency = false;
+                }
+                else _checkEfficiency = true;
+            }
+        }
+
+        private void ValidateHeatRateMDA()
+        {
+            ClearErrors(nameof(HeatRateMda));
+            if (string.IsNullOrWhiteSpace(HeatRateMda))
+            {
+                ClearErrors(nameof(HeatRateMda));
+                AddError(nameof(HeatRateMda), "*Поле не может быть пустым.");
+                _checkHeatRateMda = false;
+            }
+            else
+            {
+                if (!Regex.IsMatch(HeatRateMda, decimalNumber, RegexOptions.IgnoreCase))
+                {
+                    AddError(nameof(HeatRateMda), "*Введите число или число с плавающей точкой");
+                    _checkHeatRateMda = false;
+                }
+                else _checkHeatRateMda = true;
+            }
+        }
+
+        private void ValidateDriveShaftSpeedMDA()
+        {
+            ClearErrors(nameof(DriveShaftSpeedMda));
+            if (string.IsNullOrWhiteSpace(DriveShaftSpeedMda))
+            {
+                ClearErrors(nameof(DriveShaftSpeedMda));
+                AddError(nameof(DriveShaftSpeedMda), "*Поле не может быть пустым.");
+                _checkDriveShaftSpeed = false;
+            }
+            else
+            {
+                if (!Regex.IsMatch(DriveShaftSpeedMda, driveshaftPattern, RegexOptions.IgnoreCase))
+                {
+                    AddError(nameof(DriveShaftSpeedMda), "*Введите число или число с плавающей точкой");
+                    _checkDriveShaftSpeed = false;
+                }
+                else _checkDriveShaftSpeed = true;
+            }
+        }
+
+        private void ValidatePressureRationMDA()
+        {
+            ClearErrors(nameof(PressureRatioMda));
+            if (string.IsNullOrWhiteSpace(PressureRatioMda))
+            {
+                ClearErrors(nameof(PressureRatioMda));
+                AddError(nameof(PressureRatioMda), "*Поле не может быть пустым.");
+                _checkPressureRatioMda = false;
+            }
+            else
+            {
+                if (!Regex.IsMatch(PressureRatioMda, pressureRation, RegexOptions.IgnoreCase))
+                {
+                    AddError(nameof(PressureRatioMda), "*Введите число или число с плавающей точкой");
+                    _checkPressureRatioMda = false;
+                }
+                else _checkPressureRatioMda = true;
+            }
+        }
+
+        private void ValidateExhaustMassFlowMDA()
+        {
+            ClearErrors(nameof(ExhaustMassFlowMda));
+            if (string.IsNullOrWhiteSpace(ExhaustMassFlowMda))
+            {
+                ClearErrors(nameof(ExhaustMassFlowMda));
+                AddError(nameof(ExhaustMassFlowMda), "*Поле не может быть пустым.");
+                _checkExhaustMassFlowMda = false;
+            }
+            else
+            {
+                if (!Regex.IsMatch(ExhaustMassFlowMda, decimalNumber, RegexOptions.IgnoreCase))
+                {
+                    AddError(nameof(ExhaustMassFlowMda), "*Введите число или число с плавающей точкой");
+                    _checkExhaustMassFlowMda = false;
+                }
+                else _checkExhaustMassFlowMda = true;
+            }
+        }
+
+        private void ValidateExhaustTempMDA()
+        {
+            ClearErrors(nameof(ExhaustTemperatureMda));
+            if (string.IsNullOrWhiteSpace(ExhaustTemperatureMda))
+            {
+                ClearErrors(nameof(ExhaustTemperatureMda));
+                AddError(nameof(ExhaustTemperatureMda), "*Поле не может быть пустым.");
+                _checkExhaustTemperatureMda = false;
+
+            }
+            else
+            {
+                if (!Regex.IsMatch(ExhaustTemperatureMda, decimalNumber, RegexOptions.IgnoreCase))
+                {
+                    AddError(nameof(ExhaustTemperatureMda), "*Введите число или число с плавающей точкой");
+                    _checkExhaustTemperatureMda = false;
+                }
+                else _checkExhaustTemperatureMda = true;
+            }
+        }
+
+        private void ValidateEmissionsMDA()
+        {
+            ClearErrors(nameof(EmmisionMda));
+            if (string.IsNullOrWhiteSpace(EmmisionMda))
+            {
+                ClearErrors(nameof(EmmisionMda));
+                AddError(nameof(EmmisionMda), "*Поле не может быть пустым.");
+                _checkEmissionMda = false;
+            }
+            else
+            {
+                if (!Regex.IsMatch(EmmisionMda, decimalNumber, RegexOptions.IgnoreCase))
+                {
+                    AddError(nameof(EmmisionMda), "*Введите число или число с плавающей точкой");
+                    _checkEmissionMda = false;
+                }
+                else _checkEmissionMda = true;
+            }
+        }
+
+        #endregion
+
+        #region Validate PGP
+        private void ValidateWeightPGP()
+        {
+            ClearErrors(nameof(WeightPgp));
+            if (string.IsNullOrWhiteSpace(WeightPgp))
+            {
+                ClearErrors(nameof(WeightPgp));
+                AddError(nameof(WeightPgp), "*Поле не может быть пустым.");
+                _checkWeightPgp = false;
+            }
+            else
+            {
+                if (!Regex.IsMatch(WeightPgp, decimalNumber, RegexOptions.IgnoreCase))
+                {
+                    AddError(nameof(WeightPgp), "*Введите число или число с плавающей точкой");
+                    _checkWeightPgp = false;
+                }
+                else _checkWeightPgp = true;
+            }
 
         }
+
+        private void ValidateLenghtPGP()
+        {
+
+            ClearErrors(nameof(LenghtPgp));
+            if (string.IsNullOrWhiteSpace(LenghtPgp))
+            {
+                ClearErrors(nameof(LenghtPgp));
+                AddError(nameof(LenghtPgp), "*Поле не может быть пустым.");
+                _checkLenghtPgp = false;
+            }
+            else
+            {
+                if (!Regex.IsMatch(LenghtPgp, decimalNumber, RegexOptions.IgnoreCase))
+                {
+                    AddError(nameof(LenghtPgp), "*Введите число или число с плавающей точкой");
+                    _checkLenghtPgp = false;
+                }
+                else _checkLenghtPgp = true;
+            }
+
+        }
+
+        private void ValidateWidthPGP()
+        {
+
+            ClearErrors(nameof(WidthPgp));
+            if (string.IsNullOrWhiteSpace(WidthPgp))
+            {
+                ClearErrors(nameof(WidthPgp));
+                AddError(nameof(WidthPgp), "*Поле не может быть пустым.");
+                _checkWidthPgp = false;
+
+            }
+            else
+            {
+                if (!Regex.IsMatch(WidthPgp, decimalNumber, RegexOptions.IgnoreCase))
+                {
+                    AddError(nameof(WidthPgp), "*Введите число или число с плавающей точкой");
+                    _checkWidthPgp = false;
+                }
+                else _checkWidthPgp = true;
+            }
+
+        }
+
+        private void ValidateHeightPGP()
+        {
+
+            ClearErrors(nameof(HeightPgp));
+            if (string.IsNullOrWhiteSpace(HeightPgp))
+            {
+                ClearErrors(nameof(HeightPgp));
+                AddError(nameof(HeightPgp), "*Поле не может быть пустым.");
+                _checkHeightPgp = false;
+            }
+            else
+            {
+                if (!Regex.IsMatch(HeightPgp, decimalNumber, RegexOptions.IgnoreCase))
+                {
+                    AddError(nameof(HeightPgp), "*Введите число или число с плавающей точкой");
+                    _checkHeightPgp = false;
+                }
+                else _checkHeightPgp = true;
+            }
+
+        }
+        #endregion
+
+        #region Validate PGP
+        private void ValidateWeightMDP()
+        {
+         
+            ClearErrors(nameof(WeightMdp));
+            if (string.IsNullOrWhiteSpace(WeightMdp))
+            {
+                ClearErrors(nameof(WeightMdp));
+                AddError(nameof(WeightMdp), "*Поле не может быть пустым.");
+                _checkWeightMdp = false;
+
+            }
+            else
+            {
+                if (!Regex.IsMatch(WeightMdp, decimalNumber, RegexOptions.IgnoreCase))
+                {
+                    AddError(nameof(WeightMdp), "*Введите число или число с плавающей точкой");
+                    _checkWeightMdp = false;
+                }
+                else _checkWeightMdp = true;
+            }
+
+        }
+
+        private void ValidateLenghtMDP()
+        {
+            ClearErrors(nameof(LenghtMdp));
+            if (string.IsNullOrWhiteSpace(LenghtMdp))
+            {
+                ClearErrors(nameof(LenghtMdp));
+                AddError(nameof(LenghtMdp), "*Поле не может быть пустым.");
+                _checkLenghtMdp = false;
+            }
+            
+            else
+            {
+                if (!Regex.IsMatch(LenghtMdp, decimalNumber, RegexOptions.IgnoreCase))
+                {
+                    AddError(nameof(LenghtMdp), "*Введите число или число с плавающей точкой");
+                    _checkLenghtMdp = false;
+                }
+                else _checkLenghtMdp = true;
+            }
+
+        }
+
+        private void ValidateWidthMDP()
+        {
+            ClearErrors(nameof(WidthMdp));
+            if (string.IsNullOrWhiteSpace(WidthMdp))
+            {
+                ClearErrors(nameof(WidthMdp));
+                AddError(nameof(WidthMdp), "*Поле не может быть пустым.");
+                _checkWidthMdp = false;
+            }
+            else
+            {
+                if (!Regex.IsMatch(WidthMdp, decimalNumber, RegexOptions.IgnoreCase))
+                {
+                    AddError(nameof(WidthMdp), "*Введите число или число с плавающей точкой");
+                    _checkWidthMdp = false;
+                }
+                else _checkWidthMdp = true;
+            }
+
+        }
+
+        private void ValidateHeightMDP()
+        {
+            ClearErrors(nameof(HeightMdp));
+            if (string.IsNullOrWhiteSpace(HeightMdp))
+            {
+                ClearErrors(nameof(HeightMdp));
+                AddError(nameof(HeightMdp), "*Поле не может быть пустым.");
+                _checkHeightMdp = false;
+            }
+            else
+            {
+                if (!Regex.IsMatch(HeightMdp, decimalNumber, RegexOptions.IgnoreCase))
+                {
+                    AddError(nameof(HeightMdp), "*Введите число или число с плавающей точкой");
+                    _checkHeightMdp = false;
+                }
+                else _checkHeightMdp = true;
+            }
+
+        }
+        #endregion
+
+        #region Validate Image
+        #endregion
 
         private void OnErrorsChanged(string propertyName)
         {
@@ -806,6 +1586,24 @@ namespace TurbineRepair.ViewModel
             }
         }
 
+        #endregion
+
+
+
+        #region CheckName
+        private bool CheckName(string name)
+        {
+            bool isCheked = true;
+            for (int i = 0;i< MainWindowViewModel.main.TurbinesAll.Count;i++) 
+            { 
+                if(TurbineNamesValid == MainWindowViewModel.main.TurbinesAll[i].TurbineName)
+                {
+                    isCheked = false; 
+                    break;
+                }
+            }
+            return isCheked;
+        }
         #endregion
     }
 }
