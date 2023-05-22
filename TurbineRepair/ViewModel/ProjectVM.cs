@@ -143,6 +143,27 @@ namespace TurbineRepair.ViewModel
             set => Set(ref _checkRole, value);
         }
 
+        private string _contentButton;
+        public string ContentButton
+        {
+            get => _contentButton;
+            set => Set(ref _contentButton, value);
+        }
+
+        private string _failedAddOrUpdateContent;
+        public string FailedAddOrUpdateContent
+        {
+            get => _failedAddOrUpdateContent;
+            set => Set(ref _failedAddOrUpdateContent, value);
+        }
+
+        private decimal _foregroundFailedMessage;
+        public decimal ForegroundFailedMessage
+        {
+            get => _foregroundFailedMessage;
+            set => Set(ref _foregroundFailedMessage, value);
+        }
+
         #endregion
 
         public ProjectVM()

@@ -142,7 +142,7 @@ namespace TurbineRepair.ViewModel
         #region List
 
         #region ProjectData
-        private List<ProjectDatum> _projectData = context.ProjectData.ToList();
+        private List<ProjectDatum> _projectData;
         public List<ProjectDatum> ProjectData
         {
             get => _projectData;
@@ -152,7 +152,7 @@ namespace TurbineRepair.ViewModel
 
         #region Customers
 
-        private List<Customer> _customersAll = context.Customers.OrderBy(x => x.CustomerSurname).ToList();
+        private List<Customer> _customersAll;
         public List<Customer> CustomersAll
         {
             get=> _customersAll;
@@ -163,7 +163,7 @@ namespace TurbineRepair.ViewModel
 
         #region Turbine
 
-        private List<Turbine> _turbinesAll = context.Turbines.ToList();
+        private List<Turbine> _turbinesAll;
 
         public List<Turbine> TurbinesAll
         {
@@ -173,7 +173,7 @@ namespace TurbineRepair.ViewModel
         #endregion
 
         #region Status
-        private List<StatusProject> _statusesAll = context.StatusProjects.ToList();
+        private List<StatusProject> _statusesAll;
         public List<StatusProject> StatusesAll
         {
             get => _statusesAll;
@@ -182,7 +182,7 @@ namespace TurbineRepair.ViewModel
         #endregion
 
         #region UserAll
-        private List<UserDatum> _usersAll = context.UserData.OrderBy(x=>x.Surname).ToList();
+        private List<UserDatum> _usersAll;
         public List<UserDatum> UsersAll
         {
             get => _usersAll;
@@ -192,14 +192,14 @@ namespace TurbineRepair.ViewModel
 
         #region TurbineData
 
-        private List<TurbineScpg> _turbineScpg = context.TurbineScpgs.ToList();
+        private List<TurbineScpg> _turbineScpg;
         public List<TurbineScpg> TurbineScpgs
         {
             get => _turbineScpg;
             set => Set(ref _turbineScpg, value);
         }
 
-        private List<TurbineMdum> _turbineMda = context.TurbineMda.ToList();
+        private List<TurbineMdum> _turbineMda;
         public List<TurbineMdum> TurbineMda
         {
             get => _turbineMda;
@@ -207,21 +207,21 @@ namespace TurbineRepair.ViewModel
         }
 
 
-        private List<TurbinePgp> _turbinePgp = context.TurbinePgps.ToList();
+        private List<TurbinePgp> _turbinePgp;
         public List<TurbinePgp> TurbinePgp
         {
             get => _turbinePgp;
             set => Set(ref _turbinePgp, value);
         }
 
-        private List<TurbineMdp> _turbineMdp = context.TurbineMdps.ToList();
+        private List<TurbineMdp> _turbineMdp;
         public List<TurbineMdp> TurbineMdp
         {
             get => _turbineMdp;
             set => Set(ref _turbineMdp, value);
         }
 
-        private List<TurbineImage> _turbineImage = context.TurbineImages.ToList();
+        private List<TurbineImage> _turbineImage;
         public List<TurbineImage> TurbineImage
         {
             get => _turbineImage;
@@ -231,7 +231,7 @@ namespace TurbineRepair.ViewModel
         #endregion
 
         #region Posts
-        private List<Post> _postsAll = context.Posts.ToList();
+        private List<Post> _postsAll;
         public List<Post> PostsAll
         {
             get => _postsAll;
@@ -241,7 +241,7 @@ namespace TurbineRepair.ViewModel
 
         #region Deportaments
 
-        private List<Deportament> _deportamentsAll = context.Deportaments.ToList();
+        private List<Deportament> _deportamentsAll;
         public List <Deportament> DeportamentsAll
         {
             get => _deportamentsAll;
@@ -250,7 +250,7 @@ namespace TurbineRepair.ViewModel
         #endregion
 
         #region Role
-        private List<Role> _roleAll = context.Roles.ToList();
+        private List<Role> _roleAll;
         public List<Role> RoleAll
         {
             get => _roleAll;
@@ -259,7 +259,7 @@ namespace TurbineRepair.ViewModel
         #endregion
 
         #region Organization
-        private List<Oraganization> _oraganizations = context.Oraganizations.ToList();
+        private List<Oraganization> _oraganizations;
 
         public List<Oraganization> Oraganizations
         {
@@ -269,7 +269,7 @@ namespace TurbineRepair.ViewModel
         #endregion
 
         #region TypeOfWork
-        private List<TypeOfWork> _typesWork = context.TypeOfWorks.ToList();
+        private List<TypeOfWork> _typesWork;
         public List<TypeOfWork> TypesWork
         {
             get => _typesWork;
@@ -278,7 +278,7 @@ namespace TurbineRepair.ViewModel
         #endregion
 
         #region MessageLists
-        private List<MessageList> _messageLists = context.MessageLists.ToList();
+        private List<MessageList> _messageLists;
         public List<MessageList> MessageLists
         {
             get => _messageLists;
@@ -298,12 +298,13 @@ namespace TurbineRepair.ViewModel
         {           
             CurrentControl = new AutheticationVM();
             main = this;
+            UpdateData();
         }
 
 
         #region UpdateDate
         public async Task UpdateData()
-        {
+        {      
             await Task.Run(() => ProjectData = context.ProjectData.ToList());
             await Task.Run(() => CustomersAll = context.Customers.OrderBy(x => x.CustomerSurname).ToList());
             await Task.Run(() => TurbinesAll = context.Turbines.ToList());
@@ -316,6 +317,10 @@ namespace TurbineRepair.ViewModel
             await Task.Run(() => TurbineMdp = context.TurbineMdps.ToList());
             await Task.Run(() => Oraganizations = context.Oraganizations.ToList());     
             await Task.Run(() => MessageLists = context.MessageLists.ToList());
+            await Task.Run(() => RoleAll = context.Roles.ToList());
+            await Task.Run(() => PostsAll = context.Posts.ToList());
+            await Task.Run(() => TypesWork = context.TypeOfWorks.ToList());
+            await Task.Run(() => DeportamentsAll = context.Deportaments.ToList());
         }
         #endregion
 

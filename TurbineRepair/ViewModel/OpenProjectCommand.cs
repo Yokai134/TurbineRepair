@@ -15,16 +15,18 @@ namespace TurbineRepair.ViewModel
 
         public override void Execute(object parameter)
         {
-            try
             {
                 if (ProjectVM.projectVM.SelectedProject != null)
                 {
                     MainWindowViewModel.main.CurrentProject = ProjectVM.projectVM.SelectedProject;
                     MainVM.mainVM.MainCurrentControl = new ProjectContentVM();
                 }
-                else MessageBox.Show("Не выбран проект", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+                else
+                {
+                    ProjectVM.projectVM.FailedAddOrUpdateContent = "*Не выбран проект";
+                    ProjectVM.projectVM.ForegroundFailedMessage = -1;
+                }
             }
-            catch { }
         }    
 
             

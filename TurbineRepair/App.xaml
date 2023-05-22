@@ -24,10 +24,6 @@
                 <view:Authetication/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModel:PinCodeVM}">
-                <view:Pincode/>
-            </DataTemplate>
-
             <DataTemplate DataType="{x:Type viewModel:MainVM}">
                 <view:Main/>
             </DataTemplate>

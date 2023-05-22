@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Effects;
 using TurbineRepair.View.ContentGUI.MainContentGUI;
 using TurbineRepair.Model;
+using TurbineRepair.Migration;
 
 namespace TurbineRepair.ViewModel
 {
@@ -32,7 +33,6 @@ namespace TurbineRepair.ViewModel
         private void OnCloseAppCommandExecute(object parameter)
         {
             Application.Current.Shutdown();
-            IsOnlineStatus(false);
         }
 
         #endregion
@@ -133,7 +133,6 @@ namespace TurbineRepair.ViewModel
                     MainWindowViewModel.main.CurrentControl = new AutheticationVM();
                     Application.Current.MainWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
                     Application.Current.MainWindow.SizeToContent = SizeToContent.WidthAndHeight;
-                    IsOnlineStatus(false);
                     break;
                 case MessageBoxResult.Cancel:
                     break;
@@ -311,8 +310,7 @@ namespace TurbineRepair.ViewModel
         {
             MainCurrentControl = new ProjectVM();
             BoolBackgroundProject = true;
-            mainVM = this;
-            IsOnlineStatus(true);
+            mainVM = this;            
 
             #region Command
             /*------------------------------------------- Command ---------------------------------------------------*/
@@ -368,22 +366,6 @@ namespace TurbineRepair.ViewModel
             #endregion
         }
 
-        private async void IsOnlineStatus(bool isValid)
-        {
-            if (isValid)
-            {
-                UserDatum isOnline = MainWindowViewModel.main.CurrentUser;
-                isOnline.IsOnline = true;
-                MainWindowViewModel.context.SaveChanges();
-                await MainWindowViewModel.main.UpdateData();
-            }
-            else
-            {
-                UserDatum isOnline = MainWindowViewModel.main.CurrentUser;
-                isOnline.IsOnline = false;
-                MainWindowViewModel.context.SaveChanges();
-                await MainWindowViewModel.main.UpdateData();
-            }
-        }
+
     }
 }

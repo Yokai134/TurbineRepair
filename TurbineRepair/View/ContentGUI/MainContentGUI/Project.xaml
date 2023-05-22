@@ -4,9 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TurbineRepair.View.ContentGUI.MainContentGUI"
+             xmlns:converter="clr-namespace:TurbineRepair.ResourceApp"
              xmlns:viewModel="clr-namespace:TurbineRepair.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="520" d:DesignWidth="700">
+    <UserControl.Resources>
+        <viewModel:OpenProjectCommand x:Key="OpenProjects"/>
+        <converter:ConvertColor x:Key="colorConverter"/>
+    </UserControl.Resources>
     <UserControl.DataContext>
         <viewModel:ProjectVM/>
     </UserControl.DataContext>
@@ -62,6 +67,16 @@
         <StackPanel Grid.Row="2"
                    Orientation="Horizontal"
                     HorizontalAlignment="Right">
+            <Label Content="{Binding FailedAddOrUpdateContent,UpdateSourceTrigger=PropertyChanged}" 
+                   FontSize="15"
+                   VerticalAlignment="Center"
+                   Foreground="{Binding ForegroundFailedMessage, Converter={StaticResource colorConverter}}"/>
+            <Button Style="{StaticResource ButtonMain}"                   
+                    Margin="10"
+                    Command="{StaticResource OpenProjects}"
+                    Width="100"
+                    Content="Открыть">
+            </Button>
             <Button Style="{StaticResource ButtonMain}"
                     Margin="10"
                     Width="100"

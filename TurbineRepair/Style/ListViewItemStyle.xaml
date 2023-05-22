@@ -99,7 +99,7 @@
                                        Foreground="Gray"
                                        FontWeight="SemiBold"/>
                             </StackPanel>
-                            <StackPanel HorizontalAlignment="Right"
+                            <!--<StackPanel HorizontalAlignment="Right"
                                         Margin="0,0,10,10">
                                 <Button Content="Open project"
                                         Style="{DynamicResource ButtonAuthetication}"
@@ -111,7 +111,7 @@
                                         <cmd:OpenProjectCommand/>
                                     </Button.Command>
                                 </Button>
-                            </StackPanel>
+                            </StackPanel>-->
                         </StackPanel>
                         
                     </Border>
@@ -160,66 +160,114 @@
     </Style>
 
     <Style TargetType="ListViewItem" x:Key="ContactCard">
-
-        <Style.Triggers>
-            <Trigger Property="IsSelected" Value="True">
-                <Setter Property="Background" Value="#292b2F"/>
-            </Trigger>
-        </Style.Triggers>
-
-        <Setter Property="Background" Value="#36393F"/>
-
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ListViewItem">
-                    <Border Background="{TemplateBinding Background}"
+      
+        <Style.Resources>
+            <ControlTemplate x:Key="OnlineRow">
+                <Border Background="#36393F"
                             BorderBrush="#3e4147"
                             BorderThickness="1"
                             CornerRadius="15"
                             Height="50"
                             Margin="8,2">
 
-                        <StackPanel Orientation="Horizontal"
+                    <StackPanel Orientation="Horizontal"
                                     Margin="10,0,0,0">
 
-                            <Image Source="{Binding Image}"
+                        <Image Source="{Binding Image}"
                                    Height="30"
                                    Width="30"
                                    Stretch="UniformToFill">
-                                <Image.Clip>
-                                    <RectangleGeometry RadiusX="30" RadiusY="30" Rect="0,0,30,30"/>
-                                </Image.Clip>
-                            </Image>
+                            <Image.Clip>
+                                <RectangleGeometry RadiusX="30" RadiusY="30" Rect="0,0,30,30"/>
+                            </Image.Clip>
+                        </Image>
 
-                            <StackPanel Margin="0,5,0,0">
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Content="{Binding Surname}"
+                        <StackPanel Margin="0,5,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{Binding Surname}"
                                            FontSize="15"
                                            Foreground="Gray"
                                            FontWeight="SemiBold"/>
-                                    <Label Content="{Binding Name}"
+                                <Label Content="{Binding Name}"
                                            FontSize="15"
                                            Foreground="Gray"
                                            Margin="-5,0,0,0"
                                            FontWeight="SemiBold"/>
-                                </StackPanel>
-                                <TextBlock Text="В сети"
-                                           TextTrimming="CharacterEllipsis"
-                                           FontSize="10"
-                                           Foreground="Green"
-                                           Margin="5,-5,0,0"
-                                           Visibility="{Binding IsOnline}"/>
-                                <TextBlock Text="{Binding PostNavigation.PostName}"
-                                           TextTrimming="CharacterEllipsis"
-                                           FontSize="10"
-                                           Foreground="Gray"
-                                           Margin="5,-5,0,0"/>
                             </StackPanel>
+                            <TextBlock Text="В сети"
+                                       TextTrimming="CharacterEllipsis"
+                                       FontSize="10"
+                                       Foreground="Green"
+                                       Margin="5,-5,0,0"/>
+                            <TextBlock Text="{Binding PostNavigation.PostName}"
+                                       TextTrimming="CharacterEllipsis"
+                                       FontSize="10"
+                                       Foreground="Gray"
+                                       Margin="5,-5,0,0"/>
                         </StackPanel>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+                    </StackPanel>
+                </Border>
+            </ControlTemplate>
+            <ControlTemplate x:Key="NotOnlineRow">
+                <Border Background="{TemplateBinding Background}"
+                        BorderBrush="#3e4147"
+                        BorderThickness="1"
+                        CornerRadius="15"
+                        Height="50"
+                        Margin="8,2">
+
+                    <StackPanel Orientation="Horizontal"
+                                 Margin="10,0,0,0">
+
+                        <Image Source="{Binding Image}"
+                               Height="30"
+                               Width="30"
+                               Stretch="UniformToFill">
+                            <Image.Clip>
+                                <RectangleGeometry RadiusX="30" RadiusY="30" Rect="0,0,30,30"/>
+                            </Image.Clip>
+                        </Image>
+
+                        <StackPanel Margin="0,5,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{Binding Surname}"
+                                       FontSize="15"
+                                       Foreground="Gray"
+                                       FontWeight="SemiBold"/>
+                                <Label Content="{Binding Name}"
+                                       FontSize="15"
+                                       Foreground="Gray"
+                                       Margin="-5,0,0,0"
+                                       FontWeight="SemiBold"/>
+                            </StackPanel>
+                            <TextBlock Text="Не в сети"
+                                       TextTrimming="CharacterEllipsis"
+                                       FontSize="10"
+                                       Foreground="Gray"
+                                       Margin="5,-5,0,0"/>
+                            <TextBlock Text="{Binding PostNavigation.PostName}"
+                                       TextTrimming="CharacterEllipsis"
+                                       FontSize="10"
+                                       Foreground="Gray"
+                                       Margin="5,-5,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </ControlTemplate>
+        </Style.Resources>
+
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="#292b2F"/>
+            </Trigger>
+            <DataTrigger Binding="{Binding IsOnline}" Value="true">
+                <Setter Property="Template" Value="{StaticResource OnlineRow}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsOnline}" Value="false">
+                <Setter Property="Template" Value="{StaticResource NotOnlineRow}"/>
+            </DataTrigger>
+        </Style.Triggers>
+
     </Style>
 
     <Style TargetType="ListViewItem" x:Key="ChatCard">

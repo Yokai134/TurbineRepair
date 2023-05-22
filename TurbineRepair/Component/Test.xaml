@@ -8,6 +8,7 @@
              d:DesignHeight="200" d:DesignWidth="750">
 
     <Grid>
-        <Image Source="/ResourceApp/Image/picture.png"/>
+        <RadioButton Content="aa"                   
+                     Foreground="Green"/>
     </Grid>
 </UserControl>

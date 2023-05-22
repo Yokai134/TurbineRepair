@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using TurbineRepair.Infrastructure;
 using TurbineRepair.Model;
 
 namespace TurbineRepair.ViewModel
@@ -11,6 +13,7 @@ namespace TurbineRepair.ViewModel
     internal class ProjectContentVM : Base.ViewModel
     {
 
+        #region Property
 
         private static string pathImage = Path.GetFullPath(Directory.GetCurrentDirectory() + "\\..\\..\\..\\" + @"TurbineResource");
 
@@ -121,6 +124,16 @@ namespace TurbineRepair.ViewModel
 
         #endregion
 
+        #endregion
+
+        #region Command
+        public ICommand BackProjectList {  get; }
+        private bool CanBackProjectListExecute(object parameter) => true;
+        private void OnBackProjectListExecute(object parametr)
+        {
+            MainVM.mainVM.MainCurrentControl = new ProjectVM();
+        }
+        #endregion
 
         public ProjectContentVM() 
         {
@@ -153,8 +166,12 @@ namespace TurbineRepair.ViewModel
 
                 }
                 
-            }       
-            
+            }
+
+            #region Command
+            BackProjectList = new LambdaCommand(OnBackProjectListExecute, CanBackProjectListExecute);
+            #endregion
+
         }
 
         protected async Task CreateContract()

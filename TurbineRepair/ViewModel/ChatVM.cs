@@ -33,8 +33,9 @@ namespace TurbineRepair.ViewModel
         {
             if (SearchUser != null)
             {
-               
+               ContactItem = ContactList.Where(x => x.Surname.StartsWith(SearchUser) && x.DeleteUser == false).ToList();
             }
+            else if (SearchUser == "") ContactItem = ContactList;
         }
         #endregion
 
@@ -81,6 +82,14 @@ namespace TurbineRepair.ViewModel
 
         #endregion
 
+        #region Object
+        private object _contactItem;
+        public object ContactItem
+        {
+            get => _contactItem;
+            set => Set(ref _contactItem, value);
+        }
+        #endregion
 
         #region SearchUser
         private string _searchUser;
@@ -125,6 +134,13 @@ namespace TurbineRepair.ViewModel
             get => _currentUser;
             set => Set(ref _currentUser, value);
         }
+
+        private string _statusUser;
+        public string StatusUser 
+        { 
+            get => _statusUser; 
+            set => Set(ref _statusUser, value); 
+        }
         #endregion
 
 
@@ -135,8 +151,13 @@ namespace TurbineRepair.ViewModel
         /// </summary>
         public ChatVM()
         {
-
-            ContactList = MainWindowViewModel.main.UsersAll.Where(x=>x.Id != CurrentUser.Id).ToList();
+            if(CurrentUser.IsOnline == true) 
+            {
+                StatusUser = "В сети";
+            }
+            else StatusUser = "Не сети";
+            ContactList = MainWindowViewModel.main.UsersAll.Where(x=>x.Id != CurrentUser.Id && x.DeleteUser == false).ToList();
+            ContactItem = ContactList;
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += RefreshMessage;
             timer.Start();
@@ -246,6 +267,8 @@ namespace TurbineRepair.ViewModel
             }
 
         }
+
+    
 
     }
 }
