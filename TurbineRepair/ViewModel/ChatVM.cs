@@ -46,7 +46,7 @@ namespace TurbineRepair.ViewModel
         {
             if(Message != null) 
             {
-                Model.MessageList newMessage = new MessageList()
+                MessageList newMessage = new MessageList()
                 {
                     MessageSender = CurrentUser.Id,
                     MessageReceipt = SelectContact.Id,

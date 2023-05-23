@@ -18,5 +18,4 @@ public partial class MessageList
     public virtual UserDatum MessageReceiptNavigation { get; set; } = null!;
 
     public virtual UserDatum MessageSenderNavigation { get; set; } = null!;
-
 }

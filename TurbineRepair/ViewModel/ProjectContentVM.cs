@@ -15,19 +15,10 @@ namespace TurbineRepair.ViewModel
 
         #region Property
 
-        private static string pathImage = Path.GetFullPath(Directory.GetCurrentDirectory() + "\\..\\..\\..\\" + @"TurbineResource");
-
-        private string _viewImage;
-        public string ViewImage
-        {
-            get => _viewImage; 
-            set => Set(ref _viewImage, value);
-        }
-
         #region HelperClass
         public class ImageSource
         {
-            public string imageSource { get; set; }
+            public byte[] imageSource { get; set; }
         }
 
         public class DataGridInfo
@@ -144,24 +135,23 @@ namespace TurbineRepair.ViewModel
             {
                 if (MainWindowViewModel.main.TurbineImage[i].Id == MainWindowViewModel.main.CurrentProject.ProjectTurbineNavigation.TurbineImage)
                 {
-                    ViewImage = pathImage + MainWindowViewModel.main.TurbineImage[i].ImageOne;
                     ImageSources.Add(new ImageSource(){ 
-                        imageSource = pathImage + MainWindowViewModel.main.TurbineImage[i].ImageOne 
+                        imageSource =  MainWindowViewModel.main.TurbineImage[i].ImageOne 
                     });
 
                     ImageSources.Add(new ImageSource()
                     {
-                        imageSource = pathImage + MainWindowViewModel.main.TurbineImage[i].ImageTwo
+                        imageSource =  MainWindowViewModel.main.TurbineImage[i].ImageTwo
                     });
 
                     ImageSources.Add(new ImageSource()
                     {
-                        imageSource = pathImage + MainWindowViewModel.main.TurbineImage[i].ImageThree
+                        imageSource =  MainWindowViewModel.main.TurbineImage[i].ImageThree
                     });
 
                     ImageSources.Add(new ImageSource()
                     {
-                        imageSource = pathImage + MainWindowViewModel.main.TurbineImage[i].ImageFour
+                        imageSource =  MainWindowViewModel.main.TurbineImage[i].ImageFour
                     });
 
                 }

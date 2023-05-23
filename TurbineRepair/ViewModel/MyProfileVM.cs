@@ -40,9 +40,15 @@ namespace TurbineRepair.ViewModel
 
         public MyProfileVM() 
         {
-            UserDatum = MainWindowViewModel.main.CurrentUser;
-            Deport = MainWindowViewModel.main.Deport;
-            Posts = MainWindowViewModel.main.Posts;
+            if (MainWindowViewModel.main.ObsUser == null)
+            {
+                UserDatum = MainWindowViewModel.main.CurrentUser;
+            }
+            else
+            {
+                UserDatum = MainWindowViewModel.main.ObsUser;
+            }
+        
         }
 
 

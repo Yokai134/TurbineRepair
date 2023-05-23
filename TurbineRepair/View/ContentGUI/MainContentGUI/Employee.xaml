@@ -5,9 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TurbineRepair.View.ContentGUI.MainContentGUI"
              xmlns:viewModel="clr-namespace:TurbineRepair.ViewModel"
+             xmlns:converter="clr-namespace:TurbineRepair.ResourceApp"
              mc:Ignorable="d" 
              d:DesignHeight="520" d:DesignWidth="750">
 
+    <UserControl.Resources>
+        <converter:ConvertColor x:Key="colorConverter"/>
+    </UserControl.Resources>
     <UserControl.DataContext>
         <viewModel:EmployeeVM/>
     </UserControl.DataContext>
@@ -39,6 +43,15 @@
         <StackPanel Grid.Row="2"
                    Orientation="Horizontal"
                     HorizontalAlignment="Right">
+            <Label Content="{Binding FailedAddOrUpdateContent,UpdateSourceTrigger=PropertyChanged}" 
+                   FontSize="15"
+                   VerticalAlignment="Center"
+                   Foreground="{Binding ForegroundFailedMessage, Converter={StaticResource colorConverter}}"/>
+            <Button Style="{StaticResource ButtonMain}"
+                    Command="{Binding OpenProfileEmployee}"
+                    Margin="10"
+                    Width="100"
+                    Content="Открыть"/>
             <Button Style="{StaticResource ButtonMain}"
                     Command="{Binding DeleteUser}"
                     Margin="10"

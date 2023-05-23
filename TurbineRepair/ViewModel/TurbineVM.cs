@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -79,7 +80,6 @@ namespace TurbineRepair.ViewModel
                 MainWindowViewModel.main.UpdTurbine = SelectTurbine;
                 MainVM.mainVM.MainCurrentControl = new CreateOrUpdateTurbineVM();
             }
-            else MessageBox.Show("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         }
 
 
@@ -96,7 +96,8 @@ namespace TurbineRepair.ViewModel
 
         public TurbineVM() 
         { 
-            Turbines = MainWindowViewModel.main.TurbinesAll.ToList();
+
+            Turbines = MainWindowViewModel.main.TurbinesAll;
 
             TurbineItem = Turbines;
 

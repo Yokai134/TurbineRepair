@@ -13,28 +13,31 @@ using TurbineRepair.Migration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using TurbineRepair.Model;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Data.Entity;
 
 namespace TurbineRepair.ViewModel
 {
     internal class MainWindowViewModel : Base.ViewModel
     {
+        #region Global
         public static MainWindowViewModel main;
         public static TurbinerepairContext context = new TurbinerepairContext();
-
-
-        /* ------------------------------------------ UserControl ----------------------------------*/
+        #endregion
 
         #region UserControl
         private AutheticationVM? autheticationVM { get; set; }
         #endregion
 
-        /* ------------------------------------------ UserControl ----------------------------------*/
-
-
-
-        /* ------------------------------------------- Property ------------------------------------*/
-
         #region Property
+
+        private UserDatum? _obsUser;
+        public UserDatum? ObsUser
+        {
+            get=>_obsUser; 
+            set => Set(ref _obsUser, value);
+        }
 
         #region CurrentControl
         private object? _currentControl;
@@ -133,12 +136,6 @@ namespace TurbineRepair.ViewModel
 
         #endregion
 
-        /* ------------------------------------------- Property ------------------------------------*/
-
-
-
-        /* --------------------------------------------- List --------------------------------------*/
-
         #region List
 
         #region ProjectData
@@ -220,7 +217,7 @@ namespace TurbineRepair.ViewModel
             get => _turbineMdp;
             set => Set(ref _turbineMdp, value);
         }
-
+        
         private List<TurbineImage> _turbineImage;
         public List<TurbineImage> TurbineImage
         {
@@ -288,9 +285,6 @@ namespace TurbineRepair.ViewModel
 
         #endregion
 
-        /* --------------------------------------------- List --------------------------------------*/
-
-
         /// <summary>
         /// Логика взаимодействия с MainWindow.xaml
         /// </summary>
@@ -298,7 +292,8 @@ namespace TurbineRepair.ViewModel
         {           
             CurrentControl = new AutheticationVM();
             main = this;
-            UpdateData();
+            _ = UpdateData();
+        
         }
 
 
@@ -307,7 +302,7 @@ namespace TurbineRepair.ViewModel
         {      
             await Task.Run(() => ProjectData = context.ProjectData.ToList());
             await Task.Run(() => CustomersAll = context.Customers.OrderBy(x => x.CustomerSurname).ToList());
-            await Task.Run(() => TurbinesAll = context.Turbines.ToList());
+            await Task.Run(() => TurbinesAll = context.Turbines.OrderBy(x=>x.Id).ToList());
             await Task.Run(() => StatusesAll = context.StatusProjects.ToList());
             await Task.Run(() => UsersAll = context.UserData.OrderBy(x => x.Surname).ToList());
             await Task.Run(() => TurbineImage = context.TurbineImages.ToList());
@@ -324,6 +319,7 @@ namespace TurbineRepair.ViewModel
         }
         #endregion
 
+       
 
     }
 }

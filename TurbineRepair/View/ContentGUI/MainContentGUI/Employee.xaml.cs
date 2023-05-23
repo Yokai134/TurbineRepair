@@ -24,5 +24,6 @@ namespace TurbineRepair.View.ContentGUI.MainContentGUI
         {
             InitializeComponent();
         }
+
     }
 }

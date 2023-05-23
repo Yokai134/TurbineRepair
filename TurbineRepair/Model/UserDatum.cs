@@ -23,11 +23,11 @@ public partial class UserDatum
 
     public string Password { get; set; } = null!;
 
-    public bool? IsOnline { get; set; }
-
     public string? Image { get; set; }
 
     public bool? DeleteUser { get; set; }
+
+    public bool? IsOnline { get; set; }
 
     public virtual ICollection<MessageList> MessageListMessageReceiptNavigations { get; set; } = new List<MessageList>();
 

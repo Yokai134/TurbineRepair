@@ -15,9 +15,11 @@ using System.Reflection;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using TurbineRepair.Infrastructure;
 using TurbineRepair.Model;
 
@@ -30,13 +32,15 @@ namespace TurbineRepair.ViewModel
         string decimalNumber = @"^\d+([,]\d+?)?$";
         string freqencyNumber = @"^\d+([\/]\d+?)?$";
         string pressureRation = @"\d+([,]\d+?)+([:]?\d+)?$";
-        string driveshaftPattern = @"\d+([-]\d+?)+?$";
-        string patternLetter = @"^[а-яА-Я,.0-9]+$";
+        string driveshaftPattern = @"\d+([,]\d+?)+([-]?\d+)?$";
+        string patternLetter = @"^[а-яА-Яa-zA-z(),-.0-9\s\n]+$";
         string patternNames = @"^[a-zA-Z-0-9]+$";
         #endregion
 
 
         #region Property
+
+        private string _picturePath = "/ResourceApp/Image/picture.png";
 
         private string _failedAddOrUpdate;
         public string FailedAddOrUpdate
@@ -59,11 +63,18 @@ namespace TurbineRepair.ViewModel
             set => Set(ref _countImage, value);
         }
 
-        private string _imagePath;
-        public string ImagePath
+        private byte[] _imagePath;
+        public byte[] ImagePath
         {
             get => _imagePath;
             set => Set(ref _imagePath, value);
+        }
+
+        private string _imagePathFile;
+        public string ImagePathFile
+        {
+            get => _imagePathFile;
+            set => Set(ref _imagePathFile, value);
         }
 
         private bool _imageOneUpd;
@@ -107,6 +118,11 @@ namespace TurbineRepair.ViewModel
             get => _contentButton;
             set => Set(ref _contentButton, value);
         }
+
+        private string _imageSourceOne;
+        private string _imageSourceTwo;
+        private string _imageSourceThree;
+        private string _imageSourceFour;
 
         #region Turbine Field
 
@@ -456,33 +472,48 @@ namespace TurbineRepair.ViewModel
         #endregion
 
         #region TurbineImage
-        private string _imagePathOne;
-        public string ImagePathOne
+        private byte[] _imagePathOne;
+        public byte[] ImagePathOne
         {
             get => _imagePathOne;
-            set => Set(ref _imagePathOne, value);
+            set
+            {
+                Set(ref _imagePathOne, value);
+                ValidateImageOne();
+            }
         }
 
-        private string _imagePathTwo;
-        public string ImagePathTwo
+        private byte[] _imagePathTwo;
+        public byte[] ImagePathTwo
         {
             get => _imagePathTwo;
-            set => Set(ref _imagePathTwo, value);
+            set
+            {
+                Set(ref _imagePathTwo, value);
+                ValidateImageTwo();
+            }
         }
 
-        private string _imagePathThree;
-        public string ImagePathThree
+        private byte[] _imagePathThree;
+        public byte[] ImagePathThree
         {
             get => _imagePathThree;
-            set => Set(ref _imagePathThree, value);
+            set
+            {
+                Set(ref _imagePathThree, value);
+                ValidateImageThree();
+            }
         }
 
-        private string _imagePathFour;
-
-        public string ImagePathFour
+        private byte[] _imagePathFour;
+        public byte[] ImagePathFour
         {
             get => _imagePathFour;
-            set => Set(ref _imagePathFour, value);
+            set
+            {
+                Set(ref _imagePathFour, value);
+                ValidateImageFour();
+            }
         }
 
         #endregion
@@ -556,7 +587,15 @@ namespace TurbineRepair.ViewModel
         private bool _checkHeightMdp;
         #endregion
 
+        #region BoolTurbineImage
+        private bool _checkImageOne;
+        private bool _checkImageTwo;
+        private bool _checkImageThree;
+        private bool _checkImageFour;
         #endregion
+
+        #endregion
+
 
         #endregion
 
@@ -567,274 +606,254 @@ namespace TurbineRepair.ViewModel
         private bool CanCreateOrUpdateExecute(object parameter) => true;
         private async void OnCreateOrUpdateExecute(object parameter)
         {
-            if (CheckName(TurbineNamesValid))
+
+            
+                #region ValidatePre
+                ValidateTurbineName();
+                ValidateDescription();
+                #region ValidatePreSCPG
+                ValidateDecimalNumericPowerOutputSCPG();
+                ValidateFuelSCPG();
+                ValidateFreqency();
+                ValidateHeatRateSCPG();
+                ValidateGrossEfficiency();
+                ValidateTurbineSpeed();
+                ValidatePressureRationSCPG();
+                ValidateExhaustMassFlowSCPG();
+                ValidateExhaustTempSCPG();
+                ValidateEmissionsSCPG();
+                #endregion
+                #region ValidatePreMDA
+                ValidateDecimalNumericPowerOutputMDA();
+                ValidateFuelMDA();
+                ValidateHeatRateMDA();
+                ValidateEfficiencyMDA();
+                ValidateDriveShaftSpeedMDA();
+                ValidatePressureRationMDA();
+                ValidateExhaustMassFlowMDA();
+                ValidateExhaustTempMDA();
+                ValidateEmissionsMDA();
+                #endregion
+                #region ValidatePrePGP
+                ValidateWeightPGP();
+                ValidateLenghtPGP();
+                ValidateWidthPGP();
+                ValidateHeightPGP();
+                #endregion
+                #region ValidatePreMDP
+                ValidateWeightMDP();
+                ValidateHeightMDP();
+                ValidateWidthMDP();
+                ValidateLenghtMDP();
+                #endregion
+                #region ValidateImege
+                ValidateImageOne();
+                ValidateImageTwo();
+                ValidateImageThree();
+                ValidateImageFour();
+            #endregion
+            #endregion
+            if (MainWindowViewModel.main.UpdTurbine != null)
             {
-                if (_checkPowerOutputScpg && _checkFuelScpg && _checkFrequency && _checkHeatRateScpg && _checkGrossEfficiency && _checkTurbineSpeedScpg
-                     && _checkPressureRatioScpg && _checkExhaustMassFlowScpg && _checkExhaustTemperatureScpg && _checkEmissionScpg &&
-                     _checkPowerOutputMda && _checkFuelMda && _checkHeatRateMda && _checkEfficiency && _checkDriveShaftSpeed
-                     && _checkPressureRatioMda && _checkExhaustMassFlowMda && _checkExhaustTemperatureMda && _checkEmissionMda &&
-                     _checkWeightPgp && _checkLenghtPgp && _checkWidthPgp && _checkHeightPgp && _checkWeightMdp && _checkLenghtMdp && _checkWidthMdp && _checkHeightMdp)
+                if (CheckName(TurbineNamesValid) || TurbineNamesValid == OriginalName)
+                    if (_checkPowerOutputScpg && _checkFuelScpg && _checkFrequency && _checkHeatRateScpg && _checkGrossEfficiency && _checkTurbineSpeedScpg
+                        && _checkPressureRatioScpg && _checkExhaustMassFlowScpg && _checkExhaustTemperatureScpg && _checkEmissionScpg &&
+                        _checkPowerOutputMda && _checkFuelMda && _checkHeatRateMda && _checkEfficiency && _checkDriveShaftSpeed
+                        && _checkPressureRatioMda && _checkExhaustMassFlowMda && _checkExhaustTemperatureMda && _checkEmissionMda &&
+                        _checkWeightPgp && _checkLenghtPgp && _checkWidthPgp && _checkHeightPgp && _checkWeightMdp && _checkLenghtMdp && _checkWidthMdp && _checkHeightMdp
+                        && _checkTurbineDescription && _checkTurbineName && _checkImageOne && _checkImageTwo && _checkImageThree && _checkImageFour)
+                    {
+                        Turbine updTurbine = MainWindowViewModel.main.UpdTurbine;
+                        updTurbine.TurbineName = TurbineNamesValid;
+                        updTurbine.TurbineDescription = TurbineDescriptions;
+                        #region TurbineScpg
+                        updTurbine.TurbineScpgNavigation.PowerOutput = PowerOutputScpg;
+                        updTurbine.TurbineScpgNavigation.Fuel = FuelScpg;
+                        updTurbine.TurbineScpgNavigation.Frequency = FrequencyScpg;
+                        updTurbine.TurbineScpgNavigation.GrossEfficiency = GrossEfficiencyScpg;
+                        updTurbine.TurbineScpgNavigation.HeatRate = HeatRateScpg;
+                        updTurbine.TurbineScpgNavigation.TurbineSpeed = TurbineSpeedScpg;
+                        updTurbine.TurbineScpgNavigation.PressureRatio = PressureRatioScpg;
+                        updTurbine.TurbineScpgNavigation.ExhaustMassFlow = ExhaustMassFlowScpg;
+                        updTurbine.TurbineScpgNavigation.ExhaustTemperature = ExhaustTemperatureScpg;
+                        updTurbine.TurbineScpgNavigation.Emissions = EmmisionScpg;
+                        #endregion
+                        #region TurbineMda
+                        updTurbine.TurbineMdaNavigation.PowerOutput = PowerOutputMda;
+                        updTurbine.TurbineMdaNavigation.Fuel = FuelMda;
+                        updTurbine.TurbineMdaNavigation.Efficiency = EfficiencyMda;
+                        updTurbine.TurbineMdaNavigation.HeatRate = HeatRateMda;
+                        updTurbine.TurbineMdaNavigation.DriveShaftSpeed = DriveShaftSpeedMda;
+                        updTurbine.TurbineMdaNavigation.PressureRatio = PressureRatioMda;
+                        updTurbine.TurbineMdaNavigation.ExhaustMassFlow = ExhaustMassFlowMda;
+                        updTurbine.TurbineMdaNavigation.ExhaustTemperature = ExhaustTemperatureMda;
+                        updTurbine.TurbineMdaNavigation.Emissions = EmmisionMda;
+                        #endregion
+                        #region TurbinePgp    
+                        updTurbine.TurbinePgpNavigation.Weight = WeightPgp;
+                        updTurbine.TurbinePgpNavigation.Lenght = LenghtPgp;
+                        updTurbine.TurbinePgpNavigation.Width = WidthPgp;
+                        updTurbine.TurbinePgpNavigation.Height = HeightPgp;
+                        #endregion
+                        #region TurbineMdp
+                        updTurbine.TurbineMdpNavigation.Weight = WeightMdp;
+                        updTurbine.TurbineMdpNavigation.Lenght = LenghtMdp;
+                        updTurbine.TurbineMdpNavigation.Width = WidthMdp;
+                        updTurbine.TurbineMdpNavigation.Height = HeightMdp;
+                        #endregion
+                        #region TurbineImage
+                        updTurbine.TurbineImageNavigation.ImageOne = ImagePathOne;
+                        updTurbine.TurbineImageNavigation.ImageTwo = ImagePathTwo;
+                        updTurbine.TurbineImageNavigation.ImageThree = ImagePathThree;
+                        updTurbine.TurbineImageNavigation.ImageFour = ImagePathFour;
+                        #endregion
+                        MainWindowViewModel.context.SaveChanges();
+                        await MainWindowViewModel.main.UpdateData();
+                        FailedAddOrUpdate = "*Данные обновлены";
+                        ForegroundFailedMessage = 1;
+                        timer.Interval = TimeSpan.FromSeconds(1);
+                        timer.Tick += OpenTurbineList;
+                        timer.Start();
+                    }
+                    else
+                    {
+                        FailedAddOrUpdate = "*Данные не удалось обновить";
+                        ForegroundFailedMessage = -1;
+                        timer.Interval = TimeSpan.FromSeconds(1);
+                        timer.Tick += RefreshValidator;
+                        timer.Start();
+                    }
+                else
                 {
-                    FailedAddOrUpdate = "*Данные обновлены";
-                    ForegroundFailedMessage = 1;
+                    FailedAddOrUpdate = "*Данное наименование уже используется";
+                    ForegroundFailedMessage = -1;
+                    timer.Interval = TimeSpan.FromSeconds(1);
+                    timer.Tick += RefreshValidator;
+                    timer.Start();
+                }
+            }
+            else
+            {
+                if (CheckName(TurbineNamesValid))
+                {
+
+
+                    if (_checkPowerOutputScpg && _checkFuelScpg && _checkFrequency && _checkHeatRateScpg && _checkGrossEfficiency && _checkTurbineSpeedScpg
+                          && _checkPressureRatioScpg && _checkExhaustMassFlowScpg && _checkExhaustTemperatureScpg && _checkEmissionScpg &&
+                          _checkPowerOutputMda && _checkFuelMda && _checkHeatRateMda && _checkEfficiency && _checkDriveShaftSpeed
+                          && _checkPressureRatioMda && _checkExhaustMassFlowMda && _checkExhaustTemperatureMda && _checkEmissionMda &&
+                          _checkWeightPgp && _checkLenghtPgp && _checkWidthPgp && _checkHeightPgp && _checkWeightMdp && _checkLenghtMdp && _checkWidthMdp && _checkHeightMdp
+                          && _checkTurbineDescription && _checkTurbineName && _checkImageOne && _checkImageTwo && _checkImageThree && _checkImageFour)
+                    {
+                        #region Create TurbineScpg
+                        TurbineScpg newTurbineScpg = new TurbineScpg()
+                        {
+                            PowerOutput = PowerOutputScpg,
+                            Fuel = FuelScpg,
+                            Frequency = FrequencyScpg,
+                            GrossEfficiency = GrossEfficiencyScpg,
+                            HeatRate = HeatRateScpg,
+                            TurbineSpeed = TurbineSpeedScpg,
+                            PressureRatio = PressureRatioScpg,
+                            ExhaustMassFlow = ExhaustMassFlowScpg,
+                            ExhaustTemperature = ExhaustTemperatureScpg,
+                            Emissions = EmmisionScpg
+
+                        };
+                        #endregion
+                        #region Create TurbineMda
+                        TurbineMdum newTurbineMda = new TurbineMdum()
+                        {
+                            PowerOutput = PowerOutputMda,
+                            Fuel = FuelMda,
+                            Efficiency = EmmisionMda,
+                            HeatRate = HeatRateMda,
+                            DriveShaftSpeed = DriveShaftSpeedMda,
+                            PressureRatio = PressureRatioMda,
+                            ExhaustMassFlow = ExhaustMassFlowMda,
+                            ExhaustTemperature = ExhaustTemperatureMda,
+                            Emissions = EmmisionMda
+                        };
+                        #endregion
+                        #region Create TurbinePgp
+                        TurbinePgp newTurbinePgp = new TurbinePgp()
+                        {
+                            Weight = WeightPgp,
+                            Lenght = LenghtPgp,
+                            Width = WidthPgp,
+                            Height = HeightPgp,
+                        };
+                        #endregion
+                        #region Create TurbineMdp
+                        TurbineMdp newTurbineMdp = new TurbineMdp()
+                        {
+                            Weight = WidthMdp,
+                            Lenght = WidthMdp,
+                            Width = WidthMdp,
+                            Height = HeightMdp,
+                        };
+                        #endregion
+                        #region Create TurbineImage                       
+                        ImageOneUpd = false;
+                        ImageTwoUpd = false;
+                        ImageThreeUpd = false;
+                        ImageFourUpd = false;
+                        TurbineImage newTurbineImage = new TurbineImage()
+                        {
+                            ImageOne = ImagePathOne,
+                            ImageTwo = ImagePathTwo,
+                            ImageThree = ImagePathThree,
+                            ImageFour = ImagePathFour,
+                        };
+                        #endregion
+                        MainWindowViewModel.context.TurbineScpgs.Add(newTurbineScpg);
+                        MainWindowViewModel.context.TurbineMda.Add(newTurbineMda);
+                        MainWindowViewModel.context.TurbinePgps.Add(newTurbinePgp);
+                        MainWindowViewModel.context.TurbineMdps.Add(newTurbineMdp);
+                        MainWindowViewModel.context.TurbineImages.Add(newTurbineImage);
+                        MainWindowViewModel.context.SaveChanges();
+                        #region Create Turbine
+                        Turbine newTurbine = new Turbine()
+                        {
+                            TurbineName = TurbineNamesValid,
+                            TurbineScpg = MainWindowViewModel.context.TurbineScpgs.Count(),
+                            TurbineMda = MainWindowViewModel.context.TurbineMda.Count(),
+                            TurbineDescription = TurbineDescriptions,
+                            DeleteTurbine = false,
+                            TurbinePgp = MainWindowViewModel.context.TurbinePgps.Count(),
+                            TurbineMdp = MainWindowViewModel.context.TurbineMdps.Count(),
+                            TurbineImage = MainWindowViewModel.context.TurbineImages.Count()
+
+                        };
+                        #endregion
+                        MainWindowViewModel.context.Turbines.Add(newTurbine);
+                        MainWindowViewModel.context.SaveChanges();
+                        await MainWindowViewModel.main.UpdateData();
+                        FailedAddOrUpdate = "*Турбина добавленна ";
+                        ForegroundFailedMessage = 1;
+                        timer.Interval = TimeSpan.FromSeconds(1);
+                        timer.Tick += RefreshContent;
+                        timer.Start();
+                    }
+                    else
+                    {
+                        FailedAddOrUpdate = "*Данные не удалось добавить";
+                        ForegroundFailedMessage = -1;
+                        timer.Interval = TimeSpan.FromSeconds(1);
+                        timer.Tick += RefreshValidator;
+                        timer.Start();
+                    }
+
                 }
                 else
                 {
-                    FailedAddOrUpdate = "*Данные не удалось обновить";
-                    ForegroundFailedMessage = -1;
+
                 }
             }
-            else 
-            {
-                FailedAddOrUpdate = "*Данное наименование уже используется";
-                ForegroundFailedMessage = -1;
-            }
+            
+           
 
 
-            #region Comment
-            //if (MainWindowViewModel.main.UpdTurbine != null)
-            //{
-            //    Turbine updTurbine = MainWindowViewModel.main.UpdTurbine;
-            //    updTurbine.TurbineName = TurbineNames;
-            //    updTurbine.TurbineDescription = TurbineDescriptions;
-            //    #region TurbineScpg
-            //    updTurbine.TurbineScpgNavigation.PowerOutput = PowerOutputScpg;
-            //    updTurbine.TurbineScpgNavigation.Fuel = FuelScpg;
-            //    updTurbine.TurbineScpgNavigation.Frequency = FrequencyScpg;
-            //    updTurbine.TurbineScpgNavigation.GrossEfficiency = GrossEfficiencyScpg;
-            //    updTurbine.TurbineScpgNavigation.HeatRate = HeatRateScpg;
-            //    updTurbine.TurbineScpgNavigation.TurbineSpeed = TurbineSpeedScpg;
-            //    updTurbine.TurbineScpgNavigation.PressureRatio = PressureRatioScpg;
-            //    updTurbine.TurbineScpgNavigation.ExhaustMassFlow = ExhaustMassFlowScpg;
-            //    updTurbine.TurbineScpgNavigation.ExhaustTemperature = ExhaustTemperatureScpg;
-            //    updTurbine.TurbineScpgNavigation.Emissions = EmmisionScpg;
-            //    #endregion
-            //    #region TurbineMda
-            //    updTurbine.TurbineMdaNavigation.PowerOutput = PowerOutputMda;
-            //    updTurbine.TurbineMdaNavigation.Fuel = FuelMda;
-            //    updTurbine.TurbineMdaNavigation.Efficiency = EfficiencyMda;
-            //    updTurbine.TurbineMdaNavigation.HeatRate = HeatRateMda;
-            //    updTurbine.TurbineMdaNavigation.DriveShaftSpeed = DriveShaftSpeedMda;
-            //    updTurbine.TurbineMdaNavigation.PressureRatio = PressureRatioMda;
-            //    updTurbine.TurbineMdaNavigation.ExhaustMassFlow = ExhaustMassFlowMda;
-            //    updTurbine.TurbineMdaNavigation.ExhaustTemperature = ExhaustTemperatureMda;
-            //    updTurbine.TurbineMdaNavigation.Emissions = EmmisionMda;
-            //    #endregion
-            //    #region TurbinePgp    
-            //    updTurbine.TurbinePgpNavigation.Weight = WeightPgp;
-            //    updTurbine.TurbinePgpNavigation.Lenght = LenghtPgp;
-            //    updTurbine.TurbinePgpNavigation.Width = WidthPgp;
-            //    updTurbine.TurbinePgpNavigation.Height = HeightPgp;
-            //    #endregion
-            //    #region TurbineMdp
-            //    updTurbine.TurbineMdpNavigation.Weight = WeightMdp;
-            //    updTurbine.TurbineMdpNavigation.Lenght = LenghtMdp;
-            //    updTurbine.TurbineMdpNavigation.Width = WidthMdp;
-            //    updTurbine.TurbineMdpNavigation.Height = HeightMdp;
-            //    #endregion
-            //    #region TurbineImage
-            //    if (OriginalName != updTurbine.TurbineName)
-            //    {
-            //        string basePath = Path.GetFullPath(pathProject + @"\" + OriginalName);
-            //        string movePath = Path.GetFullPath(pathProject + @"\" + updTurbine.TurbineName);
-            //    }
-            //    string imagePath = Path.GetFullPath(pathProject + @"\" + OriginalName);
-            //    string[] imageFile = Directory.GetFiles(imagePath);
-            //    if (ImageOneUpd)
-            //    {
-            //        string copyPath = imageFile[0];
-            //        FileInfo fileInfo = new FileInfo(ImagePathOne);
-            //        if (fileInfo.Exists)
-            //        {
-            //            fileInfo.CopyTo(copyPath, true);
-            //        }
-            //    }
-            //    if (ImageTwoUpd)
-            //    {
-
-            //        string copyPath = imageFile[1];
-            //        FileInfo fileInfo = new FileInfo(ImagePathTwo);
-            //        if (fileInfo.Exists)
-            //        {
-            //            fileInfo.CopyTo(copyPath, true);
-            //        }
-            //    }
-            //    if (ImageThreeUpd)
-            //    {
-
-            //        string copyPath = imageFile[2];
-            //        FileInfo fileInfo = new FileInfo(ImagePathThree);
-            //        if (fileInfo.Exists)
-            //        {
-            //            fileInfo.CopyTo(copyPath, true);
-            //        }
-            //    }
-            //    if (ImageFourUpd)
-            //    {
-
-            //        string copyPath = imageFile[3];
-            //        FileInfo fileInfo = new FileInfo(ImagePathFour);
-            //        if (fileInfo.Exists)
-            //        {
-            //            fileInfo.CopyTo(copyPath, true);
-            //        }
-            //    }
-
-            //    ImageOneUpd = false;
-            //    ImageTwoUpd = false;
-            //    ImageThreeUpd = false;
-            //    ImageFourUpd = false;
-            //    #endregion
-            //    MainWindowViewModel.context.SaveChanges();
-            //    await MainWindowViewModel.main.UpdateData();
-
-            //}
-            //else
-            //{
-            //    #region Create TurbineScpg
-            //    TurbineScpg newTurbineScpg = new TurbineScpg()
-            //    {
-            //        PowerOutput = PowerOutputScpg,
-            //        Fuel = FuelScpg,
-            //        Frequency = FrequencyScpg,
-            //        GrossEfficiency = GrossEfficiencyScpg,
-            //        HeatRate = HeatRateScpg,
-            //        TurbineSpeed = TurbineSpeedScpg,
-            //        PressureRatio = PressureRatioScpg,
-            //        ExhaustMassFlow = ExhaustMassFlowScpg,
-            //        ExhaustTemperature = ExhaustTemperatureScpg,
-            //        Emissions = EmmisionScpg
-
-            //    };
-            //    #endregion
-            //    #region Create TurbineMda
-            //    TurbineMdum newTurbineMda = new TurbineMdum()
-            //    {
-            //        PowerOutput = PowerOutputMda,
-            //        Fuel = FuelMda,
-            //        Efficiency = EmmisionMda,
-            //        HeatRate = HeatRateMda,
-            //        DriveShaftSpeed = DriveShaftSpeedMda,
-            //        PressureRatio = PressureRatioMda,
-            //        ExhaustMassFlow = ExhaustMassFlowMda,
-            //        ExhaustTemperature = ExhaustTemperatureMda,
-            //        Emissions = EmmisionMda
-            //    };
-            //    #endregion
-            //    #region Create TurbinePgp
-            //    TurbinePgp newTurbinePgp = new TurbinePgp()
-            //    {
-            //        Weight = WeightPgp,
-            //        Lenght = LenghtPgp,
-            //        Width = WidthPgp,
-            //        Height = HeightPgp,
-            //    };
-            //    #endregion
-            //    #region Create TurbineMdp
-            //    TurbineMdp newTurbineMdp = new TurbineMdp()
-            //    {
-            //        Weight = WidthMdp,
-            //        Lenght = WidthMdp,
-            //        Width = WidthMdp,
-            //        Height = HeightMdp,
-            //    };
-            //    #endregion
-            //    #region Create TurbineImage
-            //    Directory.CreateDirectory(pathProject + @"\" + TurbineNames);
-            //    for(int i = 0; i < 4; i++)
-            //    {
-            //        var jpg = new Bitmap(256, 256);
-            //        using (var g = Graphics.FromImage(jpg))
-            //        {
-            //            g.Clear(Color.White);
-            //        }
-            //        jpg.Save(pathProject + @"\" + TurbineNames + @"\" + TurbineNames + "-" + (i + 1) + ".jpg");
-
-            //    }
-
-            //    string imagePath = Path.GetFullPath(pathProject + @"\" + TurbineNames);
-            //    string[] imageFile = Directory.GetFiles(imagePath);
-            //    if (ImageOneUpd)
-            //    {
-            //        string copyPath = imageFile[0];
-            //        FileInfo fileInfo = new FileInfo(ImagePathOne);
-            //        if (fileInfo.Exists)
-            //        {
-            //            fileInfo.CopyTo(copyPath, true);
-            //        }
-            //    }
-            //    if (ImageTwoUpd)
-            //    {
-
-            //        string copyPath = imageFile[1];
-            //        FileInfo fileInfo = new FileInfo(ImagePathTwo);
-            //        if (fileInfo.Exists)
-            //        {
-            //            fileInfo.CopyTo(copyPath, true);
-            //        }
-            //    }
-            //    if (ImageThreeUpd)
-            //    {
-
-            //        string copyPath = imageFile[2];
-            //        FileInfo fileInfo = new FileInfo(ImagePathThree);
-            //        if (fileInfo.Exists)
-            //        {
-            //            fileInfo.CopyTo(copyPath, true);
-            //        }
-            //    }
-            //    if (ImageFourUpd)
-            //    {
-
-            //        string copyPath = imageFile[3];
-            //        FileInfo fileInfo = new FileInfo(ImagePathFour);
-            //        if (fileInfo.Exists)
-            //        {
-            //            fileInfo.CopyTo(copyPath, true);
-            //        }
-            //    }
-            //    ImagePathOne = "\\" +TurbineNames + "\\" + TurbineNames + "-1.jpg";
-            //    ImagePathTwo = "\\" + TurbineNames + "\\" + TurbineNames + "-2.jpg";
-            //    ImagePathThree = "\\" + TurbineNames + "\\" + TurbineNames + "-3.jpg";
-            //    ImagePathFour = "\\" + TurbineNames + "\\" + TurbineNames + "-4.jpg";
-            //    ImageOneUpd = false;
-            //    ImageTwoUpd = false;
-            //    ImageThreeUpd = false;
-            //    ImageFourUpd = false;
-            //    TurbineImage newTurbineImage = new TurbineImage() 
-            //    { 
-            //        ImageOne = ImagePathOne, 
-            //        ImageTwo = ImagePathTwo,
-            //        ImageThree = ImagePathThree,
-            //        ImageFour = ImagePathFour,
-            //    };
-            //    #endregion
-            //    MainWindowViewModel.context.TurbineScpgs.Add(newTurbineScpg);
-            //    MainWindowViewModel.context.TurbineMda.Add(newTurbineMda);
-            //    MainWindowViewModel.context.TurbinePgps.Add(newTurbinePgp);
-            //    MainWindowViewModel.context.TurbineMdps.Add(newTurbineMdp);
-            //    MainWindowViewModel.context.TurbineImages.Add(newTurbineImage);
-            //    MainWindowViewModel.context.SaveChanges();
-            //    #region Create Turbine
-            //    Turbine newTurbine = new Turbine()
-            //    {
-            //        TurbineName = TurbineNames,
-            //        TurbineScpg = MainWindowViewModel.context.TurbineScpgs.Count(),
-            //        TurbineMda = MainWindowViewModel.context.TurbineMda.Count(),
-            //        TurbineDescription = TurbineDescriptions,
-            //        DeleteTurbine = false,
-            //        TurbinePgp = MainWindowViewModel.context.TurbinePgps.Count(),
-            //        TurbineMdp = MainWindowViewModel.context.TurbineMdps.Count(),
-            //        TurbineImage = MainWindowViewModel.context.TurbineImages.Count()
-
-            //    };
-            //    #endregion
-            //    MainWindowViewModel.context.Turbines.Add(newTurbine);
-            //    MainWindowViewModel.context.SaveChanges();
-            //    await MainWindowViewModel.main.UpdateData();
-
-            //}
-            #endregion
         }
 
 
@@ -847,7 +866,8 @@ namespace TurbineRepair.ViewModel
             openFileDialog.Multiselect = true;
             openFileDialog.Filter = "Image files (*.png;*.jpg)|*.png;*.jpg|All files (*.*)|*.*";
             openFileDialog.ShowDialog();
-            ImagePath = openFileDialog.FileName;
+            ImagePathFile = openFileDialog.FileName;
+            ImagePath = File.ReadAllBytes(openFileDialog.FileName);
             switch (CountImage)
             {
                 case 0:
@@ -872,6 +892,15 @@ namespace TurbineRepair.ViewModel
                     break;
             }
                                                  
+        }
+
+        public ICommand BackTurbineList { get; }
+        private bool CanBackTurbineListExecute(object parameter) => true;
+        private async void OnBackTubineListExecute(object parametr) 
+        {
+            await MainWindowViewModel.main.UpdateData();
+            MainVM.mainVM.MainCurrentControl = new TurbineVM();
+            
         }
   
         #endregion
@@ -922,25 +951,21 @@ namespace TurbineRepair.ViewModel
                 HeightMdp = MainWindowViewModel.main.UpdTurbine.TurbineMdpNavigation.Height;
                 #endregion
                 #region Update TurbineImage
-                ImagePathOne = pathProject + MainWindowViewModel.main.UpdTurbine.TurbineImageNavigation.ImageOne;
-                ImagePathTwo = pathProject + MainWindowViewModel.main.UpdTurbine.TurbineImageNavigation.ImageTwo;
-                ImagePathThree = pathProject + MainWindowViewModel.main.UpdTurbine.TurbineImageNavigation.ImageThree;
-                ImagePathFour = pathProject + MainWindowViewModel.main.UpdTurbine.TurbineImageNavigation.ImageFour;
+                ImagePathOne = MainWindowViewModel.main.UpdTurbine.TurbineImageNavigation.ImageOne;
+                ImagePathTwo = MainWindowViewModel.main.UpdTurbine.TurbineImageNavigation.ImageTwo;
+                ImagePathThree = MainWindowViewModel.main.UpdTurbine.TurbineImageNavigation.ImageThree;
+                ImagePathFour = MainWindowViewModel.main.UpdTurbine.TurbineImageNavigation.ImageFour;
                 #endregion
             }
             else 
             { 
-                ContentButton = "Добавить";
-                ImagePathOne = "/ResourceApp/Image/picture.png";
-                ImagePathTwo = "/ResourceApp/Image/picture.png";
-                ImagePathThree = "/ResourceApp/Image/picture.png";
-                ImagePathFour = "/ResourceApp/Image/picture.png";
+                ContentButton = "Добавить";              
 
             }
 
             #region Command
             CreateOrUpdate = new LambdaCommand(OnCreateOrUpdateExecute, CanCreateOrUpdateExecute);
-
+            BackTurbineList = new LambdaCommand(OnBackTubineListExecute, CanBackTurbineListExecute);
             OpenImage = new LambdaCommand(OnOpenImageExecute, CanOpenImageExecute);
             #endregion
 
@@ -1558,6 +1583,47 @@ namespace TurbineRepair.ViewModel
         #endregion
 
         #region Validate Image
+        private void ValidateImageOne()
+        {
+            ClearErrors(nameof(ImagePathOne));
+            if (ImagePathOne == null)
+            {
+                AddError(nameof(ImagePathOne), "*Не выбранно изображение");
+                _checkImageOne = false;
+            }
+            else _checkImageOne = true;
+        }
+        private void ValidateImageTwo()
+        {
+            ClearErrors(nameof(ImagePathTwo));
+            if (ImagePathTwo == null)
+            {
+                AddError(nameof(ImagePathTwo), "*Не выбранно изображение");
+                _checkImageTwo = false;
+            }
+            else _checkImageTwo= true;
+        }
+
+        private void ValidateImageThree()
+        {
+            ClearErrors(nameof(ImagePathThree));
+            if (ImagePathThree == null)
+            {
+                AddError(nameof(ImagePathThree), "*Не выбранно изображение");
+                _checkImageThree = false;
+            }
+            else _checkImageThree = true;
+        }
+        private void ValidateImageFour()
+        {
+            ClearErrors(nameof(ImagePathFour));
+            if (ImagePathFour == null)
+            {
+                AddError(nameof(ImagePathFour), "*Не выбранно изображение");
+                _checkImageFour = false;
+            }
+            else _checkImageFour = true;
+        }
         #endregion
 
         private void OnErrorsChanged(string propertyName)
@@ -1588,7 +1654,131 @@ namespace TurbineRepair.ViewModel
 
         #endregion
 
-
+        #region DispatherTimer
+        DispatcherTimer timer = new DispatcherTimer();
+        private void RefreshValidator(object e, object sender)
+        {
+            ForegroundFailedMessage = 0;
+            FailedAddOrUpdate = "";
+            #region ClearErrors
+            ClearErrors(nameof(TurbineNamesValid));
+            ClearErrors(nameof(TurbineDescriptions));
+            ClearErrors(nameof(PowerOutputScpg));
+            ClearErrors(nameof(FuelScpg));  
+            ClearErrors(nameof(HeatRateScpg));
+            ClearErrors(nameof(GrossEfficiencyScpg));
+            ClearErrors(nameof(TurbineSpeedScpg));
+            ClearErrors(nameof(PressureRatioScpg));
+            ClearErrors(nameof(ExhaustMassFlowScpg));
+            ClearErrors(nameof(ExhaustTemperatureScpg));
+            ClearErrors(nameof(EmmisionScpg));
+            ClearErrors(nameof(PowerOutputMda));
+            ClearErrors(nameof(FuelMda));
+            ClearErrors(nameof(EfficiencyMda));
+            ClearErrors(nameof(HeatRateMda));
+            ClearErrors(nameof(PressureRatioMda));
+            ClearErrors(nameof(DriveShaftSpeedMda));
+            ClearErrors(nameof(ExhaustMassFlowMda));
+            ClearErrors(nameof(ExhaustTemperatureMda));
+            ClearErrors(nameof(EmmisionMda));
+            ClearErrors(nameof(WeightPgp));
+            ClearErrors(nameof(LenghtPgp));
+            ClearErrors(nameof(WidthPgp));
+            ClearErrors(nameof(HeightPgp));
+            ClearErrors(nameof(WeightMdp));
+            ClearErrors(nameof(LenghtMdp));
+            ClearErrors(nameof(WidthMdp));
+            ClearErrors(nameof(HeightMdp));
+            ClearErrors(nameof(ImagePathOne));
+            ClearErrors(nameof(ImagePathTwo));
+            ClearErrors(nameof(ImagePathThree));
+            ClearErrors(nameof(ImagePathFour));
+            #endregion
+            timer.Stop();
+        }
+        private void RefreshContent(object e, object sender)
+        {
+            #region Prop drop
+            _checkTurbineName = false;
+            TurbineNamesValid = string.Empty;
+            _checkTurbineDescription = false;
+            TurbineDescriptions = string.Empty;
+            #region Drop SCPG
+            _checkPowerOutputScpg = false;
+            PowerOutputScpg = string.Empty;
+            _checkFuelScpg = false;
+            FuelScpg = string.Empty;
+            _checkHeatRateScpg = false;
+            HeatRateScpg = string.Empty;
+            _checkGrossEfficiency = false;
+            GrossEfficiencyScpg = string.Empty;
+            _checkTurbineSpeedScpg = false;
+            TurbineSpeedScpg = string.Empty;
+            _checkPressureRatioScpg = false;
+            PressureRatioScpg = string.Empty;
+            _checkExhaustMassFlowMda = false;
+            ExhaustMassFlowScpg = string.Empty;
+            _checkExhaustTemperatureScpg = false;
+            ExhaustTemperatureScpg = string.Empty;
+            _checkEmissionScpg = false;
+            EmmisionScpg = string.Empty;
+            #endregion
+            #region Drop MDA
+            _checkPowerOutputMda = false;
+            PowerOutputMda = string.Empty;
+            _checkFuelMda = false;
+            FuelMda = string.Empty;
+            _checkHeatRateMda = false;
+            HeatRateMda = string.Empty;
+            _checkEfficiency = false;
+            EfficiencyMda = string.Empty;
+            _checkDriveShaftSpeed = false;
+            DriveShaftSpeedMda = string.Empty;
+            _checkPressureRatioMda = false;
+            PressureRatioMda = string.Empty;
+            _checkExhaustMassFlowMda = false;
+            ExhaustMassFlowMda = string.Empty;
+            _checkExhaustTemperatureMda = false;
+            ExhaustTemperatureMda = string.Empty;
+            _checkEmissionMda = false;
+            EmmisionMda = string.Empty;
+            #endregion
+            #region Drop PGP
+            _checkWeightPgp = false;
+            WeightPgp = string.Empty;
+            _checkLenghtPgp = false;
+            LenghtPgp = string.Empty;
+            _checkWidthPgp = false;
+            WidthPgp = string.Empty;
+            _checkHeightPgp = false;
+            HeightPgp = string.Empty;
+            #endregion
+            #region Drop MDP
+            _checkWeightMdp = false;
+            WeightMdp = string.Empty;
+            _checkLenghtMdp = false;
+            LenghtMdp= string.Empty;
+            _checkWidthMdp = false;
+            WidthMdp = string.Empty;
+            _checkHeightMdp = false;
+            HeightMdp= string.Empty;
+            #endregion
+            #region DropImage
+            ImagePathOne = null;
+            ImagePathTwo = null;
+            ImagePathThree = null;
+            ImagePathFour = null;
+            #endregion
+            #endregion
+            FailedAddOrUpdate = string.Empty;
+            timer.Stop();
+        }
+        private void OpenTurbineList(object sender, object e)
+        {
+            MainVM.mainVM.MainCurrentControl = new TurbineVM();
+            timer.Stop();
+        }
+        #endregion
 
         #region CheckName
         private bool CheckName(string name)
@@ -1605,5 +1795,71 @@ namespace TurbineRepair.ViewModel
             return isCheked;
         }
         #endregion
+
+
+        private async Task ImageMove(Turbine updTurbine)
+        {
+            if (OriginalName != updTurbine.TurbineName)
+            {
+                string basePath = Path.GetFullPath(pathProject + @"\" + OriginalName);
+                string movePath = Path.GetFullPath(pathProject + @"\" + updTurbine.TurbineName);
+                Directory.Move(basePath, movePath);
+            }
+            string imagePath = Path.GetFullPath(pathProject + @"\" + OriginalName);
+            string[] imageFile = Directory.GetFiles(imagePath);
+            if (ImageOneUpd)
+            {
+                string copyPath = imageFile[0];
+                FileInfo fileInfo = new FileInfo(_imageSourceOne);
+                using (FileStream fs = File.Open(copyPath, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
+                {
+                    if (fileInfo.Exists)
+                    {
+                        fileInfo.CopyTo(copyPath, true);
+                    }
+                }
+
+            }
+            if (ImageTwoUpd)
+            {
+
+                string copyPath = imageFile[1];
+                FileInfo fileInfo = new FileInfo(_imageSourceTwo);
+                using (FileStream fs = File.Open(copyPath, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
+                {
+                    if (fileInfo.Exists)
+                    {
+                        fileInfo.CopyTo(copyPath, true);
+                    }
+                }
+            }
+            if (ImageThreeUpd)
+            {
+
+                string copyPath = imageFile[2];
+                FileInfo fileInfo = new FileInfo(_imageSourceThree);
+                using (FileStream fs = File.Open(copyPath, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
+                {
+                    if (fileInfo.Exists)
+                    {
+                        fileInfo.CopyTo(copyPath, true);
+                    }
+                }
+            }
+            if (ImageFourUpd)
+            {
+
+                string copyPath = imageFile[3];
+                FileInfo fileInfo = new FileInfo(_imageSourceFour);
+                using (FileStream fs = File.Open(copyPath, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
+                {
+                    if (fileInfo.Exists)
+                    {
+                        fileInfo.CopyTo(copyPath, true);
+                    }
+                }
+            }
+
+        }
     }
 }

@@ -14,6 +14,7 @@
     
     <UserControl.Resources>
         <converter:ConvertColor x:Key="colorConverter"/>
+        <converter:ByteToImage x:Key="imageConverter"/>
     </UserControl.Resources>
     
     <UserControl.DataContext>
@@ -1060,7 +1061,7 @@
                             </StackPanel>
                         </StackPanel>
                         <!-- TurbineMdpNavigation -->
-                        <StackPanel>
+                        <StackPanel Margin="0">
                             <StackPanel>
                                 <Label Content="Изображение"
                                        FontSize="15"
@@ -1075,7 +1076,7 @@
                                          Height="50"
                                          Foreground="Gray"
                                          FontSize="20"
-                                         Text="{Binding ImagePath, UpdateSourceTrigger=PropertyChanged}"
+                                         Text="{Binding ImagePathFile, UpdateSourceTrigger=PropertyChanged}"
                                          Padding="20,13,0,0"/>
                                     <Button Grid.Column="1"
                                             Content="Выбрать"
@@ -1099,36 +1100,109 @@
                                     
                                 </StackPanel>
                                 <Image Margin="30"
-                                       Source="{Binding ElementName=ImageSourseOne, Path=Text, UpdateSourceTrigger=PropertyChanged}"
-                                       Stretch="UniformToFill"/>
-                                <TextBox Text="{Binding ImagePathOne, UpdateSourceTrigger=PropertyChanged}"
-                                         x:Name="ImageSourseOne"
-                                         Height="0"/>
+                                       Source="{Binding ImagePathOne,Mode=OneWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
+                                       Stretch="Uniform">
+                                    <Validation.ErrorTemplate>
+                                        <ControlTemplate>
+                                            <StackPanel>
+                                                <AdornedElementPlaceholder x:Name="textBox"/>
+                                                <ItemsControl ItemsSource="{Binding}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel>
+                                                                <Border CornerRadius="25" 
+                                                                        BorderBrush="Red" 
+                                                                        Height="0"
+                                                                        BorderThickness="1"/>
+                                                                <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                       Margin="10,5,0,0"/>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </Validation.ErrorTemplate>
+                                </Image>
                                 <Image Margin="30"
                                        Grid.Row="1"
-                                       Source="{Binding ElementName=ImageSourceTwo, Path=Text, UpdateSourceTrigger=PropertyChanged}"
-                                       Stretch="UniformToFill"/>
-                                <TextBox Text="{Binding ImagePathTwo, UpdateSourceTrigger=PropertyChanged}"
-                                         x:Name="ImageSourceTwo"
-                                         Grid.Row="1"
-                                         Height="0"/>
+                                       Source="{Binding ImagePathTwo,Mode=OneWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
+                                       Stretch="Uniform">
+                                    <Validation.ErrorTemplate>
+                                        <ControlTemplate>
+                                            <StackPanel>
+                                                <AdornedElementPlaceholder x:Name="textBox"/>
+                                                <ItemsControl ItemsSource="{Binding}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel>
+                                                                <Border CornerRadius="25" 
+                                                                        BorderBrush="Red" 
+                                                                        Height="0"
+                                                                        BorderThickness="1"/>
+                                                                <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                       Margin="10,5,0,0"/>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </Validation.ErrorTemplate>
+                                </Image>
                                 <Image Margin="30"
                                        Grid.Column="1"
-                                       Source="{Binding ElementName=ImageSourceThree, Path=Text, UpdateSourceTrigger=PropertyChanged}"
-                                       Stretch="UniformToFill"/>
-                                <TextBox Text="{Binding ImagePathThree, UpdateSourceTrigger=PropertyChanged}"
-                                         x:Name="ImageSourceThree"
-                                         Grid.Column="1"
-                                         Height="0"/>
+                                       Source="{Binding ImagePathThree,Mode=OneWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
+                                       Stretch="Uniform">
+                                <Validation.ErrorTemplate>
+                                        <ControlTemplate>
+                                            <StackPanel>
+                                                <AdornedElementPlaceholder x:Name="textBox"/>
+                                                <ItemsControl ItemsSource="{Binding}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel>
+                                                                <Border CornerRadius="25" 
+                                                                        BorderBrush="Red" 
+                                                                        Height="0"
+                                                                        BorderThickness="1"/>
+                                                                <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                       Margin="10,5,0,0"/>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </Validation.ErrorTemplate>
+                                </Image>
                                 <Image Margin="30"
                                        Grid.Row="1"
                                        Grid.Column="1"
-                                       Source="{Binding ElementName=ImageSourceFour, Path=Text, UpdateSourceTrigger=PropertyChanged}"
-                                       Stretch="UniformToFill"/>
-                                <TextBox Text="{Binding ImagePathFour, UpdateSourceTrigger=PropertyChanged}"
-                                         x:Name="ImageSourceFour"
-                                         Grid.Row="1"
-                                         Height="0"/>
+                                       Source="{Binding ImagePathFour,Mode=OneWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
+                                       Stretch="Uniform">
+                                <Validation.ErrorTemplate>
+                                        <ControlTemplate>
+                                            <StackPanel>
+                                                <AdornedElementPlaceholder x:Name="textBox"/>
+                                                <ItemsControl ItemsSource="{Binding}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel>
+                                                                <Border CornerRadius="25" 
+                                                                        BorderBrush="Red" 
+                                                                        Height="0"
+                                                                        BorderThickness="1"/>
+                                                                <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                       Margin="10,5,0,0"/>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </ControlTemplate>
+                                    </Validation.ErrorTemplate>
+                                </Image>
                             </Grid>
                         </StackPanel>
                     </StackPanel>
@@ -1142,6 +1216,7 @@
             </Grid.ColumnDefinitions>
             <Button fa6p:FontAwesome.Icon="Solid_DeleteLeft"
                     fa6p:FontAwesome.PrimaryColor="LightGray"
+                    Command="{Binding BackTurbineList}"
                     Style="{StaticResource ButtonMain}"
                     Margin="10,5"/>
             <StackPanel Grid.Column="1" Margin="10,5" Orientation="Horizontal" HorizontalAlignment="Right">

@@ -57,7 +57,11 @@ namespace TurbineRepair.ViewModel
                 MainWindowViewModel.main.UpdateUser = UserUpd;
                 MainVM.mainVM.MainCurrentControl = new CreateOrUpdateEmployee();
             }
-            else MessageBox.Show("Не выбран пользователь","Уведомление",MessageBoxButton.OK,MessageBoxImage.Question);
+            else
+            {
+                FailedAddOrUpdateContent = "*Не выбран сотрудник";
+                ForegroundFailedMessage = -1;
+            }
            
         }
         #endregion
@@ -75,15 +79,40 @@ namespace TurbineRepair.ViewModel
                 delUser.DeleteUser = true;
                 MainWindowViewModel.context.SaveChanges();
                 await MainWindowViewModel.main.UpdateData();
+                ForegroundFailedMessage = 1;
+                FailedAddOrUpdateContent = "Сотрудник удален";
                 UserItem = MainWindowViewModel.main.UsersAll;
                 UserItem = Users.Where(x => x.DeleteUser == false);
             }
-            else MessageBox.Show("Не выбран пользователь", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Question);
+            else
+            {
+                FailedAddOrUpdateContent = "*Не выбран сотрудник";
+                ForegroundFailedMessage = -1;
+            }
             
             
 
         }
         #endregion
+
+        public ICommand OpenProfileEmployee { get; }
+        private bool CanOpenProfileEmployeeExecute(object parametr) => true;
+        private void OnOpenProfileEmployeeExecute(object parametr)
+        {
+            if (UserUpd != null)
+            {
+                MainWindowViewModel.main.ObsUser = UserUpd;
+                MainVM.mainVM.MainCurrentControl = new MyProfileVM();
+            }
+            else
+            {
+                FailedAddOrUpdateContent = "*Не выбран сотрудник";
+                ForegroundFailedMessage = -1;
+            }
+        }
+
+
+
 
         /*-----------------------------------Command-------------------------------------*/
 
@@ -112,6 +141,21 @@ namespace TurbineRepair.ViewModel
 
         /*----------------------------------- Property ---------------------------*/
 
+
+        private string _failedAddOrUpdateContent;
+        public string FailedAddOrUpdateContent
+        {
+            get => _failedAddOrUpdateContent;
+            set => Set(ref _failedAddOrUpdateContent, value);
+        }
+
+        private decimal _foregroundFailedMessage;
+        public decimal ForegroundFailedMessage
+        {
+            get => _foregroundFailedMessage;
+            set => Set(ref _foregroundFailedMessage, value);
+        }
+
         #region SearchUser
 
         private string _searchUser;
@@ -139,7 +183,7 @@ namespace TurbineRepair.ViewModel
         public EmployeeVM() 
         {
 
-            UserSearch = new LambdaCommand(OnUserSearchExecute, CanUserSearchExecute);
+
             Users = MainWindowViewModel.main.UsersAll;
             UserItem = Users.Where(x => x.DeleteUser == false);
 
@@ -160,6 +204,8 @@ namespace TurbineRepair.ViewModel
             #region DeleteUser
             DeleteUser = new LambdaCommand(OnDeleteUserExecute, CanDeleteUserExecute);
             #endregion
+            UserSearch = new LambdaCommand(OnUserSearchExecute, CanUserSearchExecute);
+            OpenProfileEmployee = new LambdaCommand(OnOpenProfileEmployeeExecute, CanOpenProfileEmployeeExecute);
 
             /*----------------------------------- Command --------------------------------*/
 

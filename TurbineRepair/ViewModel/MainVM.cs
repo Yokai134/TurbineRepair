@@ -108,6 +108,7 @@ namespace TurbineRepair.ViewModel
         private bool CanOpenProfileControlExecute(object parameter) => true;
         private void OnOpenProfileControlExecute(object parameter)
         {
+            MainWindowViewModel.main.ObsUser = null;
             MainCurrentControl = new MyProfileVM();
             BoolBackgroundProfile = true;
             BoolBackgroundChat = false;

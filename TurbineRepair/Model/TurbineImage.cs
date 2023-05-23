@@ -7,13 +7,13 @@ public partial class TurbineImage
 {
     public int Id { get; set; }
 
-    public string ImageOne { get; set; } = null!;
+    public byte[]? ImageOne { get; set; }
 
-    public string ImageTwo { get; set; } = null!;
+    public byte[]? ImageTwo { get; set; }
 
-    public string ImageThree { get; set; } = null!;
+    public byte[]? ImageThree { get; set; }
 
-    public string ImageFour { get; set; } = null!;
+    public byte[]? ImageFour { get; set; }
 
     public virtual ICollection<Turbine> Turbines { get; set; } = new List<Turbine>();
 }
