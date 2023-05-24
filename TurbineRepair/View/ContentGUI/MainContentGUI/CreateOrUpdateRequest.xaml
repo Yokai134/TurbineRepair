@@ -1,0 +1,348 @@
+﻿<UserControl x:Class="TurbineRepair.View.ContentGUI.MainContentGUI.CreateOrUpdateRequest"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TurbineRepair.View.ContentGUI.MainContentGUI"
+             xmlns:viewModel="clr-namespace:TurbineRepair.ViewModel"
+             xmlns:converter="clr-namespace:TurbineRepair.ResourceApp"
+             xmlns:fa6="http://schemas.fontawesome.com/icons/svg"
+             xmlns:fa6p="http://schemas.fontawesome.com/icons/svg/properties"
+             xmlns:view="clr-namespace:TurbineRepair.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="550" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converter:ConvertColor x:Key="colorConverter"/>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <view:CreateOrUpdateRequestVM/>
+    </UserControl.DataContext>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <ScrollViewer Margin="10">
+            <StackPanel>
+                <StackPanel Margin="0,10">
+                    <Label Content="Наименование"
+                           FontSize="15"
+                           Foreground="Gray"
+                           FontWeight="SemiBold"/>
+                    <TextBox Style="{StaticResource AutheticationTextBox}"
+                             Height="40"
+                             Foreground="Gray"
+                             FontSize="20"
+                             Text="{Binding RequestName, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                             Padding="20,6,0,0">
+                        <Validation.ErrorTemplate>
+                            <ControlTemplate>
+                                <StackPanel>
+                                    <AdornedElementPlaceholder x:Name="textBox"/>
+                                    <ItemsControl ItemsSource="{Binding}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Margin="0,-40,0,0">
+                                                    <Border CornerRadius="15" 
+                                                            BorderBrush="Red" 
+                                                            BorderThickness="1"
+                                                            Height="40"/>
+                                                    <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                               Margin="20,5,0,0"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </ControlTemplate>
+                        </Validation.ErrorTemplate>
+                    </TextBox>
+                </StackPanel>
+                <StackPanel Margin="0,10">
+                    <Label Content="Описание"
+                           FontSize="15"
+                           Foreground="Gray"
+                           FontWeight="SemiBold"/>
+                    <TextBox Style="{StaticResource AutheticationTextBox}"
+                             Height="150"
+                             Foreground="Gray"
+                             FontSize="20"
+                             Text="{Binding RequestDescriptions, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                             Padding="20,13,0,0">
+                        <Validation.ErrorTemplate>
+                            <ControlTemplate>
+                                <StackPanel>
+                                    <AdornedElementPlaceholder x:Name="textBox"/>
+                                    <ItemsControl ItemsSource="{Binding}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Margin="0,-150,0,0">
+                                                    <Border CornerRadius="15" 
+                                                            BorderBrush="Red" 
+                                                            BorderThickness="1"
+                                                            Height="150"/>
+                                                    <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                               Margin="20,5,0,0"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </ControlTemplate>
+                        </Validation.ErrorTemplate>
+                    </TextBox>
+                </StackPanel>
+                <StackPanel Margin="0,10">
+                    <Label Content="Проект"
+                           FontSize="15"
+                           Foreground="Gray"
+                           FontWeight="SemiBold"/>
+                    <TextBox Style="{StaticResource AutheticationTextBox}"
+                             FontSize="20"
+                             MaxLength="32"
+                             Height="40"
+                             Text="{Binding ExecutorName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Padding="20,6,0,0">
+                        <TextBox.InputBindings>
+                            <KeyBinding Command="{Binding SearchProject}" Key="Return"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <ListView ItemsSource="{Binding ProjectItem, UpdateSourceTrigger=PropertyChanged}"
+                              SelectedItem="{Binding SelectProjectRequest,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,ValidatesOnNotifyDataErrors=True}"
+                              Background="Transparent"
+                              Margin="0,10"
+                              Height="350"
+                              BorderThickness="0"
+                              ItemContainerStyle="{StaticResource ProjectCard}">
+                        <Validation.ErrorTemplate>
+                            <ControlTemplate>
+                                <StackPanel>
+                                    <AdornedElementPlaceholder x:Name="textBox"/>
+                                    <ItemsControl ItemsSource="{Binding}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Margin="0,-350,0,0">
+                                                    <Border CornerRadius="15" 
+                                                        BorderBrush="Red" 
+                                                        BorderThickness="1"
+                                                        Height="350"/>
+                                                    <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                           Margin="20,5,0,0"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </ControlTemplate>
+                        </Validation.ErrorTemplate>
+                    </ListView>
+                </StackPanel>
+                <StackPanel Margin="0,10">
+                    <Label Content="Ответственный"
+                       Foreground="Gray"
+                       FontSize="20"
+                       Margin="0,10,0,0"
+                       FontWeight="SemiBold"/>
+                    <ListView Height="100"
+                          ItemsSource="{Binding Posts}"
+                          Background="Transparent"
+                          SelectedItem="{Binding SelectPost, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                          BorderThickness="0"
+                          ItemContainerStyle="{StaticResource PostRequest}">
+                        <Validation.ErrorTemplate>
+                            <ControlTemplate>
+                                <StackPanel>
+                                    <AdornedElementPlaceholder x:Name="textBox"/>
+                                    <ItemsControl ItemsSource="{Binding}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Margin="0,-100,0,0">
+                                                    <Border CornerRadius="15" 
+                                                        BorderBrush="Red" 
+                                                        BorderThickness="1"
+                                                        Height="100"/>
+                                                    <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                           Margin="20,5,0,0"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </ControlTemplate>
+                        </Validation.ErrorTemplate>
+                    </ListView>
+                </StackPanel>
+                <StackPanel Margin="0,10">
+                    <Label Content="Статус проекта"
+                       Foreground="Gray"
+                       FontSize="20"
+                       Margin="0,10,0,0"
+                       FontWeight="SemiBold"/>
+                    <ListView Height="100"
+                          ItemsSource="{Binding StatusProjects}"
+                          Background="Transparent"
+                          SelectedItem="{Binding SelectSatus, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                          BorderThickness="0"
+                          ItemContainerStyle="{StaticResource StatusCreateProjectCard}">
+                        <Validation.ErrorTemplate>
+                            <ControlTemplate>
+                                <StackPanel>
+                                    <AdornedElementPlaceholder x:Name="textBox"/>
+                                    <ItemsControl ItemsSource="{Binding}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Margin="0,-100,0,0">
+                                                    <Border CornerRadius="15" 
+                                                        BorderBrush="Red" 
+                                                        BorderThickness="1"
+                                                        Height="100"/>
+                                                    <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                           Margin="20,5,0,0"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </ControlTemplate>
+                        </Validation.ErrorTemplate>
+                    </ListView>
+                </StackPanel>
+                <StackPanel Margin="0,10">
+                    <Label Content="Тип работ"
+                       Foreground="Gray"
+                       FontSize="20"
+                       Margin="0,10,0,0"
+                       FontWeight="SemiBold"/>
+                    <ListView Height="100"
+                          ItemsSource="{Binding TypeOfWorks}"
+                          Background="Transparent"
+                          SelectedItem="{Binding SelectTypeOfWork, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                          BorderThickness="0"
+                          ItemContainerStyle="{StaticResource TypeOfWorkCreateProjectCard}">
+                        <Validation.ErrorTemplate>
+                            <ControlTemplate>
+                                <StackPanel>
+                                    <AdornedElementPlaceholder x:Name="textBox"/>
+                                    <ItemsControl ItemsSource="{Binding}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Margin="0,-100,0,0">
+                                                    <Border CornerRadius="15" 
+                                                        BorderBrush="Red" 
+                                                        BorderThickness="1"
+                                                        Height="100"/>
+                                                    <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                           Margin="20,5,0,0"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </ControlTemplate>
+                        </Validation.ErrorTemplate>
+                    </ListView>
+                </StackPanel>
+                <StackPanel Margin="0,10,0,0">
+                    <Grid Height="120">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Margin="10" Height="150">
+                            <Label Content="Дата начала"
+                                   FontSize="20"
+                                   Foreground="Gray"
+                                   FontWeight="SemiBold"/>
+                            <DatePicker Style="{DynamicResource DatePickerCreateStyle}" 
+                                        Foreground="Gray"
+                                        FontSize="20"
+                                        Text="{Binding DateStart, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,ValidatesOnNotifyDataErrors=True}">
+                                <Validation.ErrorTemplate>
+                                    <ControlTemplate>
+                                        <StackPanel>
+                                            <AdornedElementPlaceholder x:Name="textBox"/>
+                                            <ItemsControl ItemsSource="{Binding}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Margin="0,-40,0,0">
+                                                            <Border CornerRadius="15" 
+                                                                    BorderBrush="Red" 
+                                                                    BorderThickness="1"
+                                                                    Height="40"/>
+                                                            <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                       Margin="20,5,0,0"/>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                </Validation.ErrorTemplate>
+                            </DatePicker>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1"
+                                    Margin="10">
+                            <Label Content="Дата окончания"
+                                   FontSize="20"
+                                   Foreground="Gray"
+                                   FontWeight="SemiBold"/>
+                            <DatePicker Foreground="Gray"
+                                        Style="{StaticResource DatePickerCreateStyle}"
+                                        FontSize="20"
+                                        Text="{Binding DateEnd, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,ValidatesOnNotifyDataErrors=True}">
+                                <Validation.ErrorTemplate>
+                                    <ControlTemplate>
+                                        <StackPanel>
+                                            <AdornedElementPlaceholder x:Name="textBox"/>
+                                            <ItemsControl ItemsSource="{Binding}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Margin="0,-40,0,0">
+                                                            <Border CornerRadius="15" 
+                                                                    BorderBrush="Red" 
+                                                                    BorderThickness="1"
+                                                                    Height="40"/>
+                                                            <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                                      Margin="20,5,0,0"/>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                </Validation.ErrorTemplate>
+                            </DatePicker>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button fa6p:FontAwesome.Icon="Solid_DeleteLeft"
+                    fa6p:FontAwesome.PrimaryColor="LightGray"
+                    Command="{Binding BackRequest}"
+                    Style="{StaticResource ButtonMain}"
+                    Margin="10,5"/>
+            <StackPanel Grid.Column="1" Margin="10,5" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Label Content="{Binding FiledAddOrUpdateContent,UpdateSourceTrigger=PropertyChanged}" 
+                       Margin="10,5"
+                       FontSize="15"
+                       Foreground="{Binding ForegroundFailedMessage, Converter={StaticResource colorConverter}}"/>
+                <Button Content="{Binding ContentButton}"
+                        Width="120"
+                        Command="{Binding CreateOrUpdateRequest}"
+                        Style="{StaticResource ButtonMain}"
+                        Height="40"
+                        Grid.Row="2"
+                        HorizontalAlignment="Right"
+                        Margin="0,0,10,0"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

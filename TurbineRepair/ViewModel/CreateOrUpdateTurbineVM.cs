@@ -150,6 +150,17 @@ namespace TurbineRepair.ViewModel
             }
         }
 
+        private string _turbineCost;
+        public string TurbineCost
+        {
+            get => _turbineCost;
+            set
+            {
+                Set(ref _turbineCost, value);
+                ValidateCost();
+            }
+        }
+
         private bool _deleteTurbine;
         public bool DeleteTurbine
         {
@@ -527,6 +538,8 @@ namespace TurbineRepair.ViewModel
 
         private bool _checkTurbineDescription;
 
+        private bool _checkTurbineCost;
+
         #endregion
 
         #region BoolTurbineSCPG
@@ -661,11 +674,12 @@ namespace TurbineRepair.ViewModel
                         _checkPowerOutputMda && _checkFuelMda && _checkHeatRateMda && _checkEfficiency && _checkDriveShaftSpeed
                         && _checkPressureRatioMda && _checkExhaustMassFlowMda && _checkExhaustTemperatureMda && _checkEmissionMda &&
                         _checkWeightPgp && _checkLenghtPgp && _checkWidthPgp && _checkHeightPgp && _checkWeightMdp && _checkLenghtMdp && _checkWidthMdp && _checkHeightMdp
-                        && _checkTurbineDescription && _checkTurbineName && _checkImageOne && _checkImageTwo && _checkImageThree && _checkImageFour)
+                        && _checkTurbineDescription && _checkTurbineName && _checkImageOne && _checkImageTwo && _checkImageThree && _checkImageFour && _checkTurbineCost)
                     {
                         Turbine updTurbine = MainWindowViewModel.main.UpdTurbine;
                         updTurbine.TurbineName = TurbineNamesValid;
                         updTurbine.TurbineDescription = TurbineDescriptions;
+                        updTurbine.TurbineCost = Convert.ToDecimal(TurbineCost);
                         #region TurbineScpg
                         updTurbine.TurbineScpgNavigation.PowerOutput = PowerOutputScpg;
                         updTurbine.TurbineScpgNavigation.Fuel = FuelScpg;
@@ -743,7 +757,7 @@ namespace TurbineRepair.ViewModel
                           _checkPowerOutputMda && _checkFuelMda && _checkHeatRateMda && _checkEfficiency && _checkDriveShaftSpeed
                           && _checkPressureRatioMda && _checkExhaustMassFlowMda && _checkExhaustTemperatureMda && _checkEmissionMda &&
                           _checkWeightPgp && _checkLenghtPgp && _checkWidthPgp && _checkHeightPgp && _checkWeightMdp && _checkLenghtMdp && _checkWidthMdp && _checkHeightMdp
-                          && _checkTurbineDescription && _checkTurbineName && _checkImageOne && _checkImageTwo && _checkImageThree && _checkImageFour)
+                          && _checkTurbineDescription && _checkTurbineName && _checkImageOne && _checkImageTwo && _checkImageThree && _checkImageFour && _checkTurbineCost)
                     {
                         #region Create TurbineScpg
                         TurbineScpg newTurbineScpg = new TurbineScpg()
@@ -816,6 +830,7 @@ namespace TurbineRepair.ViewModel
                         Turbine newTurbine = new Turbine()
                         {
                             TurbineName = TurbineNamesValid,
+                            TurbineCost = Convert.ToDecimal(TurbineCost),
                             TurbineScpg = MainWindowViewModel.context.TurbineScpgs.Count(),
                             TurbineMda = MainWindowViewModel.context.TurbineMda.Count(),
                             TurbineDescription = TurbineDescriptions,
@@ -915,6 +930,7 @@ namespace TurbineRepair.ViewModel
                 OriginalName = MainWindowViewModel.main.UpdTurbine.TurbineName;
                 TurbineNamesValid = MainWindowViewModel.main.UpdTurbine.TurbineName;
                 TurbineDescriptions = MainWindowViewModel.main.UpdTurbine.TurbineDescription;
+                TurbineCost = MainWindowViewModel.main.UpdTurbine.TurbineCost.ToString();
                 #region Update TurbineScpg
                 PowerOutputScpg = MainWindowViewModel.main.UpdTurbine.TurbineScpgNavigation.PowerOutput;
                 FuelScpg = MainWindowViewModel.main.UpdTurbine.TurbineScpgNavigation.Fuel;
@@ -1019,6 +1035,29 @@ namespace TurbineRepair.ViewModel
                 }
                 else _checkTurbineName = true;                           
             }
+        }
+
+        private void ValidateCost()
+        {
+
+            ClearErrors(nameof(TurbineCost));
+            if (string.IsNullOrWhiteSpace(TurbineCost))
+            {
+                ClearErrors(nameof(TurbineCost));
+                AddError(nameof(TurbineCost), "*Поле не может быть пустым.");
+                _checkTurbineCost = false;
+
+            }
+            else
+            {
+                if (!Regex.IsMatch(TurbineCost, decimalNumber, RegexOptions.IgnoreCase))
+                {
+                    AddError(nameof(TurbineCost), "*Введите число или число с плавающей точкой");
+                    _checkTurbineCost = false;
+                }
+                else _checkTurbineCost = true;
+            }
+
         }
 
         #region Validate SCPG
@@ -1663,6 +1702,7 @@ namespace TurbineRepair.ViewModel
             #region ClearErrors
             ClearErrors(nameof(TurbineNamesValid));
             ClearErrors(nameof(TurbineDescriptions));
+            ClearErrors(nameof(TurbineCost));
             ClearErrors(nameof(PowerOutputScpg));
             ClearErrors(nameof(FuelScpg));  
             ClearErrors(nameof(HeatRateScpg));
@@ -1703,6 +1743,8 @@ namespace TurbineRepair.ViewModel
             TurbineNamesValid = string.Empty;
             _checkTurbineDescription = false;
             TurbineDescriptions = string.Empty;
+            _checkTurbineCost = false;
+            TurbineCost = string.Empty;
             #region Drop SCPG
             _checkPowerOutputScpg = false;
             PowerOutputScpg = string.Empty;
@@ -1796,70 +1838,6 @@ namespace TurbineRepair.ViewModel
         }
         #endregion
 
-
-        private async Task ImageMove(Turbine updTurbine)
-        {
-            if (OriginalName != updTurbine.TurbineName)
-            {
-                string basePath = Path.GetFullPath(pathProject + @"\" + OriginalName);
-                string movePath = Path.GetFullPath(pathProject + @"\" + updTurbine.TurbineName);
-                Directory.Move(basePath, movePath);
-            }
-            string imagePath = Path.GetFullPath(pathProject + @"\" + OriginalName);
-            string[] imageFile = Directory.GetFiles(imagePath);
-            if (ImageOneUpd)
-            {
-                string copyPath = imageFile[0];
-                FileInfo fileInfo = new FileInfo(_imageSourceOne);
-                using (FileStream fs = File.Open(copyPath, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
-                {
-                    if (fileInfo.Exists)
-                    {
-                        fileInfo.CopyTo(copyPath, true);
-                    }
-                }
-
-            }
-            if (ImageTwoUpd)
-            {
-
-                string copyPath = imageFile[1];
-                FileInfo fileInfo = new FileInfo(_imageSourceTwo);
-                using (FileStream fs = File.Open(copyPath, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
-                {
-                    if (fileInfo.Exists)
-                    {
-                        fileInfo.CopyTo(copyPath, true);
-                    }
-                }
-            }
-            if (ImageThreeUpd)
-            {
-
-                string copyPath = imageFile[2];
-                FileInfo fileInfo = new FileInfo(_imageSourceThree);
-                using (FileStream fs = File.Open(copyPath, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
-                {
-                    if (fileInfo.Exists)
-                    {
-                        fileInfo.CopyTo(copyPath, true);
-                    }
-                }
-            }
-            if (ImageFourUpd)
-            {
-
-                string copyPath = imageFile[3];
-                FileInfo fileInfo = new FileInfo(_imageSourceFour);
-                using (FileStream fs = File.Open(copyPath, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
-                {
-                    if (fileInfo.Exists)
-                    {
-                        fileInfo.CopyTo(copyPath, true);
-                    }
-                }
-            }
-
-        }
+           
     }
 }

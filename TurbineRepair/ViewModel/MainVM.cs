@@ -78,7 +78,7 @@ namespace TurbineRepair.ViewModel
             BoolBackgroundProfile = false;
             BoolBackgroundChat = false;
             BoolBackgroundProject = true;
-            BoolBackgroundNotification = false;
+            BoolBackgroundRequest = false;
             BoolBackgroundEmployee = false;
             BoolBackgroundTurbine = false;
             BoolBackgroundCustomer = false;
@@ -88,14 +88,14 @@ namespace TurbineRepair.ViewModel
         #region OpenNotificationControl
         public ICommand OpenNotificationControl { get; }
 
-        private bool CanOpenNotificationControlExecute(object parameter) => true;
-        private void OnOpenNotificationControlExecute(object parameter)
+        private bool CanOpenRequestControlExecute(object parameter) => true;
+        private void OnOpenRequestControlExecute(object parameter)
         {
-            MainCurrentControl = new NotificationVM();
+            MainCurrentControl = new RequestVM();
             BoolBackgroundProfile = false;
             BoolBackgroundChat = false;
             BoolBackgroundProject = false;
-            BoolBackgroundNotification = true;
+            BoolBackgroundRequest = true;
             BoolBackgroundEmployee = false;
             BoolBackgroundTurbine = false;
             BoolBackgroundCustomer = false;
@@ -113,7 +113,7 @@ namespace TurbineRepair.ViewModel
             BoolBackgroundProfile = true;
             BoolBackgroundChat = false;
             BoolBackgroundProject = false;
-            BoolBackgroundNotification = false;
+            BoolBackgroundRequest = false;
             BoolBackgroundEmployee = false;
             BoolBackgroundTurbine = false;
             BoolBackgroundCustomer = false;
@@ -127,13 +127,12 @@ namespace TurbineRepair.ViewModel
         private void OnLogOutExecute(object parameter)
         {
             MessageBoxResult result = MessageBox.Show("Вы уверены что хотите выйти, все не сохраненные данные будут утеряны?", "Уведомление",
-                MessageBoxButton.OKCancel, MessageBoxImage.Question);
+                MessageBoxButton.OKCancel, MessageBoxImage.Question);        
+
             switch (result)
             {
                 case MessageBoxResult.OK:
                     MainWindowViewModel.main.CurrentControl = new AutheticationVM();
-                    Application.Current.MainWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                    Application.Current.MainWindow.SizeToContent = SizeToContent.WidthAndHeight;
                     break;
                 case MessageBoxResult.Cancel:
                     break;
@@ -151,7 +150,7 @@ namespace TurbineRepair.ViewModel
             BoolBackgroundProfile = false;
             BoolBackgroundChat = true;
             BoolBackgroundProject = false;
-            BoolBackgroundNotification = false;
+            BoolBackgroundRequest = false;
             BoolBackgroundEmployee = false;
             BoolBackgroundTurbine = false;
             BoolBackgroundCustomer = false;
@@ -167,7 +166,7 @@ namespace TurbineRepair.ViewModel
             BoolBackgroundProfile = false;
             BoolBackgroundChat = false;
             BoolBackgroundProject = false;
-            BoolBackgroundNotification = false;
+            BoolBackgroundRequest = false;
             BoolBackgroundEmployee = true;
             BoolBackgroundTurbine = false;
             BoolBackgroundCustomer = false;
@@ -183,7 +182,7 @@ namespace TurbineRepair.ViewModel
             BoolBackgroundProfile = false;
             BoolBackgroundChat = false;
             BoolBackgroundProject = false;
-            BoolBackgroundNotification = false;
+            BoolBackgroundRequest = false;
             BoolBackgroundEmployee = false;
             BoolBackgroundTurbine = true;
             BoolBackgroundCustomer = false;
@@ -199,7 +198,7 @@ namespace TurbineRepair.ViewModel
             BoolBackgroundProfile = false;
             BoolBackgroundChat = false;
             BoolBackgroundProject = false;
-            BoolBackgroundNotification = false;
+            BoolBackgroundRequest = false;
             BoolBackgroundEmployee = false;
             BoolBackgroundTurbine = false;
             BoolBackgroundCustomer = true;
@@ -245,12 +244,12 @@ namespace TurbineRepair.ViewModel
         }
         #endregion
 
-        #region BoolBackgroundNotification
-        private bool _boolBackgroundNotification = false;
-        public bool BoolBackgroundNotification
+        #region BoolBackgroundRequest
+        private bool _boolBackgroundRequest = false;
+        public bool BoolBackgroundRequest
         {
-            get => _boolBackgroundNotification;
-            set => Set(ref _boolBackgroundNotification, value);
+            get => _boolBackgroundRequest;
+            set => Set(ref _boolBackgroundRequest, value);
         }
         #endregion
 
@@ -335,7 +334,7 @@ namespace TurbineRepair.ViewModel
             #endregion
 
             #region OpenNotificationControl
-            OpenNotificationControl = new LambdaCommand(OnOpenNotificationControlExecute, CanOpenNotificationControlExecute);
+            OpenNotificationControl = new LambdaCommand(OnOpenRequestControlExecute, CanOpenRequestControlExecute);
             #endregion
 
             #region OpenProfileControl

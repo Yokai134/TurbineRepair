@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TurbineRepair.Model;
+namespace TurbineRepair;
 
 public partial class ProjectDatum
 {
@@ -23,7 +23,7 @@ public partial class ProjectDatum
 
     public bool? DeleteProject { get; set; }
 
-    public decimal ProjectCost { get; set; }
+    public int ProjectCount { get; set; }
 
     public int TypeProject { get; set; }
 
@@ -38,6 +38,8 @@ public partial class ProjectDatum
     public virtual StatusProject? ProjectStatusNavigation { get; set; }
 
     public virtual Turbine ProjectTurbineNavigation { get; set; } = null!;
+
+    public virtual ICollection<TurbineRequest> TurbineRequests { get; set; } = new List<TurbineRequest>();
 
     public virtual TypeOfWork TypeProjectNavigation { get; set; } = null!;
 }

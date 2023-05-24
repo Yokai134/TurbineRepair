@@ -17,8 +17,8 @@ namespace TurbineRepair.ViewModel
 
         #region List
 
-        private List<Model.Turbine>? _turbines;
-        public List<Model.Turbine>? Turbines
+        private List<Turbine>? _turbines;
+        public List<Turbine>? Turbines
         {
             get => _turbines;
             set => Set(ref _turbines, value);
@@ -28,8 +28,8 @@ namespace TurbineRepair.ViewModel
 
         #region Property
 
-        private Model.Turbine? _selectTurbine;
-        public Model.Turbine? SelectTurbine
+        private Turbine? _selectTurbine;
+        public Turbine? SelectTurbine
         {
             get => _selectTurbine;
             set => Set(ref _selectTurbine, value);
@@ -66,7 +66,8 @@ namespace TurbineRepair.ViewModel
             }
             catch
             {
-                MessageBox.Show("Исполнитель не найден", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Question);
+                FailedAddOrUpdateContent = "*Турбина не найдена";
+                ForegroundFailedMessage = -1;
             }
         }
 
@@ -80,6 +81,11 @@ namespace TurbineRepair.ViewModel
                 MainWindowViewModel.main.UpdTurbine = SelectTurbine;
                 MainVM.mainVM.MainCurrentControl = new CreateOrUpdateTurbineVM();
             }
+            else
+            {
+                FailedAddOrUpdateContent = "*Турбина не выбранна";
+                ForegroundFailedMessage = -1;
+            }
         }
 
 
@@ -92,12 +98,50 @@ namespace TurbineRepair.ViewModel
             MainVM.mainVM.MainCurrentControl = new CreateOrUpdateTurbineVM();
         }
 
+        public ICommand DeleteTurbine { get; }
+        private bool CanDeleteTurbineExecute(object parameter) => true;
+        private async void OnDeleteTurbineExecute(object parametr)
+        {
+            if(SelectTurbine != null)
+            {
+                Turbine delTurbine = SelectTurbine;
+                delTurbine.DeleteTurbine = true;
+                await MainWindowViewModel.context.SaveChangesAsync();
+                await MainWindowViewModel.main.UpdateData();
+                Turbines = MainWindowViewModel.main.TurbinesAll.Where(x => x.DeleteTurbine == false).ToList();
+                TurbineItem = Turbines;
+                FailedAddOrUpdateContent = "*Турбина удалена";
+                ForegroundFailedMessage = 1;
+            }
+            else
+            {
+                FailedAddOrUpdateContent = "*Турбина не выбранна";
+                ForegroundFailedMessage = -1;
+            }
+        }
+
+        public ICommand OpenTurbine { get; }
+        private bool CanOpenTurbineExecute(object parameter) => true;
+        private void OnOpenTurbineExecute(object parametr)
+        {
+            if (SelectTurbine != null)
+            {
+                MainWindowViewModel.main.OpenTurbine = SelectTurbine;
+                MainVM.mainVM.MainCurrentControl = new TurbineContentVM();
+            }
+            else
+            {
+                FailedAddOrUpdateContent = "*Турбина не выбранна";
+                ForegroundFailedMessage = -1;
+            }
+        }
+
         #endregion
 
         public TurbineVM() 
         { 
 
-            Turbines = MainWindowViewModel.main.TurbinesAll;
+            Turbines = MainWindowViewModel.main.TurbinesAll.Where(x => x.DeleteTurbine == false).ToList();
 
             TurbineItem = Turbines;
 
@@ -106,6 +150,18 @@ namespace TurbineRepair.ViewModel
             UpdateTurbine = new LambdaCommand(OnUpdateTurbineExecute, CanUpdateTurbineExecute);
 
             CreateTurbine = new LambdaCommand(OnCreateTurbineExecute, CanCreateTurbineExecute);
+
+            DeleteTurbine = new LambdaCommand(OnDeleteTurbineExecute, CanDeleteTurbineExecute);
+
+            OpenTurbine = new LambdaCommand(OnOpenTurbineExecute, CanOpenTurbineExecute);
         }
+
+        private decimal foregroundFailedMessage;
+
+        public decimal ForegroundFailedMessage { get => foregroundFailedMessage; set => Set(ref foregroundFailedMessage, value); }
+
+        private string failedAddOrUpdateContent;
+
+        public string FailedAddOrUpdateContent { get => failedAddOrUpdateContent; set => Set(ref failedAddOrUpdateContent, value); }
     }
 }

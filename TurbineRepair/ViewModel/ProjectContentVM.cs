@@ -241,11 +241,12 @@ namespace TurbineRepair.ViewModel
             {
                 ProductName = Projects[0].ProjectTurbineNavigation.TurbineName,
                 Unit = "шт.",
-                ProductCount = Projects.Count,
-                ProductCost = Convert.ToDouble(Projects[0].ProjectCost),
-                NDS = Convert.ToDouble(Projects[0].ProjectCost) * 0.1,
-                ProductCostNDS = Convert.ToDouble(Projects[0].ProjectCost) + (Convert.ToDouble(Projects[0].ProjectCost) * 0.1),
-            }));
+                ProductCount = Projects[0].ProjectCount,
+                ProductCost = Math.Round(Convert.ToDouble(Projects[0].ProjectTurbineNavigation.TurbineCost) * Projects[0].ProjectCount,2,MidpointRounding.AwayFromZero),
+                NDS = Math.Round(Convert.ToDouble(Projects[0].ProjectTurbineNavigation.TurbineCost * Projects[0].ProjectCount) * 0.1, 2, MidpointRounding.AwayFromZero),
+                ProductCostNDS = Math.Round(Convert.ToDouble(Projects[0].ProjectTurbineNavigation.TurbineCost * Projects[0].ProjectCount) 
+                    + (Convert.ToDouble(Projects[0].ProjectTurbineNavigation.TurbineCost * Projects[0].ProjectCount) * 0.1),2,MidpointRounding.AwayFromZero)
+            })); ;
 
         }
 

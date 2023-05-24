@@ -32,6 +32,20 @@ namespace TurbineRepair.ViewModel
 
         #region Property
 
+        private Turbine _openTurbine;
+        public Turbine OpenTurbine
+        {
+            get => _openTurbine;
+            set => Set(ref _openTurbine, value);
+        }
+
+        private TurbineRequest _updRequest;
+        public TurbineRequest UpdRequest
+        {
+            get => _updRequest;
+            set => Set(ref _updRequest, value);
+        }
+
         private UserDatum? _obsUser;
         public UserDatum? ObsUser
         {
@@ -137,6 +151,13 @@ namespace TurbineRepair.ViewModel
         #endregion
 
         #region List
+
+        private List<TurbineRequest> _turbineRequests;
+        public List<TurbineRequest> TurbineRequests
+        {
+            get => _turbineRequests;
+            set => Set(ref _turbineRequests, value);
+        }
 
         #region ProjectData
         private List<ProjectDatum> _projectData;
@@ -299,12 +320,13 @@ namespace TurbineRepair.ViewModel
 
         #region UpdateDate
         public async Task UpdateData()
-        {      
+        {
+            await Task.Run(() => UsersAll = context.UserData.OrderBy(x => x.Surname).ToList());
             await Task.Run(() => ProjectData = context.ProjectData.ToList());
             await Task.Run(() => CustomersAll = context.Customers.OrderBy(x => x.CustomerSurname).ToList());
             await Task.Run(() => TurbinesAll = context.Turbines.OrderBy(x=>x.Id).ToList());
             await Task.Run(() => StatusesAll = context.StatusProjects.ToList());
-            await Task.Run(() => UsersAll = context.UserData.OrderBy(x => x.Surname).ToList());
+            await Task.Run(() => TurbineRequests = context.TurbineRequests.ToList());
             await Task.Run(() => TurbineImage = context.TurbineImages.ToList());
             await Task.Run(() => TurbineScpgs = context.TurbineScpgs.ToList());
             await Task.Run(() => TurbineMda = context.TurbineMda.ToList());

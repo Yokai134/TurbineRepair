@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using TurbineRepair.Model;
 
 namespace TurbineRepair.Migration;
 
@@ -40,7 +39,11 @@ public partial class TurbinerepairContext : DbContext
 
     public virtual DbSet<TurbineMdum> TurbineMda { get; set; }
 
+    public virtual DbSet<TurbineNotification> TurbineNotifications { get; set; }
+
     public virtual DbSet<TurbinePgp> TurbinePgps { get; set; }
+
+    public virtual DbSet<TurbineRequest> TurbineRequests { get; set; }
 
     public virtual DbSet<TurbineScpg> TurbineScpgs { get; set; }
 
@@ -133,7 +136,6 @@ public partial class TurbinerepairContext : DbContext
             entity.HasKey(e => e.Id).HasName("ProjectData_pkey");
 
             entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.ProjectCost).HasPrecision(15, 4);
             entity.Property(e => e.ProjectName).HasMaxLength(255);
 
             entity.HasOne(d => d.ProjectCustomerNavigation).WithMany(p => p.ProjectData)
@@ -190,6 +192,7 @@ public partial class TurbinerepairContext : DbContext
             entity.ToTable("Turbine");
 
             entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.TurbineCost).HasPrecision(15, 4);
             entity.Property(e => e.TurbineMda).HasColumnName("TurbineMDA");
             entity.Property(e => e.TurbineMdp).HasColumnName("TurbineMDP");
             entity.Property(e => e.TurbineName).HasMaxLength(30);
@@ -262,6 +265,16 @@ public partial class TurbinerepairContext : DbContext
             entity.Property(e => e.PressureRatio).HasMaxLength(32);
         });
 
+        modelBuilder.Entity<TurbineNotification>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToTable("TurbineNotification");
+
+            entity.Property(e => e.TurbineNotificationDateTime).HasColumnType("timestamp without time zone");
+            entity.Property(e => e.TurbineNotificationId).ValueGeneratedOnAdd();
+        });
+
         modelBuilder.Entity<TurbinePgp>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("TurbinePGP_pkey");
@@ -273,6 +286,29 @@ public partial class TurbinerepairContext : DbContext
             entity.Property(e => e.Lenght).HasMaxLength(32);
             entity.Property(e => e.Weight).HasMaxLength(32);
             entity.Property(e => e.Width).HasMaxLength(32);
+        });
+
+        modelBuilder.Entity<TurbineRequest>(entity =>
+        {
+            entity.HasKey(e => e.TurbineRequestId).HasName("TurbineRequest_pkey");
+
+            entity.ToTable("TurbineRequest");
+
+            entity.HasOne(d => d.TurbineRequestExecutorNavigation).WithMany(p => p.TurbineRequests)
+                .HasForeignKey(d => d.TurbineRequestExecutor)
+                .HasConstraintName("TurbineRepairExecutor_fk");
+
+            entity.HasOne(d => d.TurbineRequestProjectNavigation).WithMany(p => p.TurbineRequests)
+                .HasForeignKey(d => d.TurbineRequestProject)
+                .HasConstraintName("TurbineRequestProject_fk");
+
+            entity.HasOne(d => d.TurbineRequestStatusNavigation).WithMany(p => p.TurbineRequests)
+                .HasForeignKey(d => d.TurbineRequestStatus)
+                .HasConstraintName("TurbineRequestStatus_fk");
+
+            entity.HasOne(d => d.TurbineRequestTypeOfWorkNavigation).WithMany(p => p.TurbineRequests)
+                .HasForeignKey(d => d.TurbineRequestTypeOfWork)
+                .HasConstraintName("TurbineRepairTypeOfWork_fk");
         });
 
         modelBuilder.Entity<TurbineScpg>(entity =>

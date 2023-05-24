@@ -36,10 +36,6 @@
                 <viewMain:Project/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModel:NotificationVM}">
-                <viewMain:Notification/>
-            </DataTemplate>
-
             <DataTemplate DataType="{x:Type viewModel:ChatVM}">
                 <viewMain:Chat/>
             </DataTemplate>
@@ -78,6 +74,18 @@
 
             <DataTemplate DataType="{x:Type viewModel:CreateOrUpdateOraganization}">
                 <viewMain:CreateOrUpdateOraganization/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:RequestVM}">
+                <viewMain:Request/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:CreateOrUpdateRequestVM}">
+                <viewMain:CreateOrUpdateRequest/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:TurbineContentVM}">
+                <viewMain:TurbineContent/>
             </DataTemplate>
             
         </ResourceDictionary>

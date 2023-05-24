@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TurbineRepair.Model;
+namespace TurbineRepair;
 
 public partial class UserDatum
 {

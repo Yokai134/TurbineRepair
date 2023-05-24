@@ -165,11 +165,11 @@
                         <StackPanel.Style>
                             <Style TargetType="StackPanel">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Path=BoolBackgroundNotification, UpdateSourceTrigger=PropertyChanged}"
+                                    <DataTrigger Binding="{Binding Path=BoolBackgroundRequest, UpdateSourceTrigger=PropertyChanged}"
                                                  Value="True">
                                         <Setter Property="Background" Value="#252b2F"/>
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding Path=BoolBackgroundNotification, UpdateSourceTrigger=PropertyChanged}"
+                                    <DataTrigger Binding="{Binding Path=BoolBackgroundRequest, UpdateSourceTrigger=PropertyChanged}"
                                                  Value="false">
                                         <Setter Property="Background" Value="#36393F"/>
                                     </DataTrigger>
@@ -180,12 +180,12 @@
                             <MouseBinding Command="{Binding OpenNotificationControl}"
                                           MouseAction="LeftClick"/>
                         </StackPanel.InputBindings>
-                        <fa6:SvgAwesome Icon="Solid_Bell"
+                        <fa6:SvgAwesome Icon="Solid_Receipt"
                                         Height="25"
                                         PrimaryColor="Gray"
                                         Width="25"
                                         Margin="12.5,0,0,0"/>
-                        <Label Content="Уведомление"
+                        <Label Content="Заявки"
                                FontSize="20"
                                Margin="10,0,0,0"
                                Foreground="Gray"
@@ -216,7 +216,7 @@
                                         PrimaryColor="Gray"
                                         Width="25"
                                         Margin="12.5,0,0,0"/>
-                        <Label Content="Чат"
+                        <Label Content="Мессенджер"
                                FontSize="20"
                                Margin="10,0,0,0"
                                Foreground="Gray"

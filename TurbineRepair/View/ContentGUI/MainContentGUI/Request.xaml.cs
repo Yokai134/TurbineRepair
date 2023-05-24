@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace TurbineRepair.View.ContentGUI.MainContentGUI
 {
     /// <summary>
-    /// Логика взаимодействия для Notification.xaml
+    /// Логика взаимодействия для Request.xaml
     /// </summary>
-    public partial class Notification : UserControl
+    public partial class Request : UserControl
     {
-        public Notification()
+        public Request()
         {
             InitializeComponent();
         }

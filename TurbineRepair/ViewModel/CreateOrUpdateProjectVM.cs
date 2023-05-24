@@ -19,7 +19,7 @@ namespace TurbineRepair.ViewModel
 {
     internal class CreateOrUpdateProjectVM : Base.ViewModel, INotifyDataErrorInfo
     {
-        string decimalNumber = @"^\d+([.,]\d+?)?$";
+        string decimalNumber = @"^\d+?$";
 
         #region Property
 
@@ -146,14 +146,14 @@ namespace TurbineRepair.ViewModel
             }
         }
 
-        private string _selectCost;
-        public string SelectCost
+        private string _selectCount;
+        public string SelectCount
         {
-            get => _selectCost;
+            get => _selectCount;
             set
             {
-                Set(ref _selectCost, value);
-                ValidateCost();
+                Set(ref _selectCount, value);
+                ValidateCount();
             }
         }
 
@@ -202,11 +202,11 @@ namespace TurbineRepair.ViewModel
             get => _checkCustomer;
             set => Set(ref _checkCustomer, value);
         }
-        private bool _checkCost;
-        public bool CheckCost
+        private bool _checkCount;
+        public bool CheckCount
         {
-            get => _checkCost;
-            set => Set(ref _checkCost, value);
+            get => _checkCount;
+            set => Set(ref _checkCount, value);
         }
         #endregion
 
@@ -239,13 +239,13 @@ namespace TurbineRepair.ViewModel
                 ValidateFirstExecutor();
                 ValidateSecondExecutor();
                 ValidateCustomer();
-                ValidateCost();
+                ValidateCount();
                 ValidateDateStart();
                 ValidateDateEnd();
                 ValidateStatus();
                 ValidateTurbine();
                 #endregion
-                if (CheckFirstExecutor && CheckSecondExecutor && CheckDateStart && CheckDateEnd && CheckCost && CheckStatus && CheckCustomer && CheckTurbine)
+                if (CheckFirstExecutor && CheckSecondExecutor && CheckDateStart && CheckDateEnd && CheckCount && CheckStatus && CheckCustomer && CheckTurbine)
                 {
                     ProjectDatum updProject = MainWindowViewModel.main.UpdProject;
                     updProject.ProjectName = "Заказ на изготовление турбины " + SelectTurbine.TurbineName;
@@ -258,7 +258,7 @@ namespace TurbineRepair.ViewModel
                     updProject.ProjectStatus = SelectStatusProject.Id;
                     updProject.TypeProject = 1;
                     updProject.ProjectTurbine = SelectTurbine.Id;
-                    updProject.ProjectCost = Convert.ToDecimal(SelectCost);
+                    updProject.ProjectCount = Convert.ToInt32(SelectCount);
                     MainWindowViewModel.context.SaveChanges();
                     await MainWindowViewModel.main.UpdateData();
                     FailedAddOrUpdateContent = "Данные проекта обновлены";
@@ -282,13 +282,13 @@ namespace TurbineRepair.ViewModel
                 ValidateFirstExecutor();
                 ValidateSecondExecutor();
                 ValidateCustomer();
-                ValidateCost();
+                ValidateCount();
                 ValidateDateStart();
                 ValidateDateEnd();
                 ValidateStatus();
                 ValidateTurbine();
                 #endregion
-                if (CheckFirstExecutor && CheckSecondExecutor && CheckDateStart && CheckDateEnd && CheckCost && CheckStatus && CheckCustomer && CheckTurbine)
+                if (CheckFirstExecutor && CheckSecondExecutor && CheckDateStart && CheckDateEnd && CheckCount && CheckStatus && CheckCustomer && CheckTurbine)
                 {
                     ProjectDatum newProject = new ProjectDatum()
                     {
@@ -302,7 +302,7 @@ namespace TurbineRepair.ViewModel
                         ProjectStatus = SelectStatusProject.Id,
                         TypeProject = 1,
                         ProjectTurbine = SelectTurbine.Id,
-                        ProjectCost = Convert.ToDecimal(SelectCost)
+                        ProjectCount = Convert.ToInt32(SelectCount)
                     };
                     MainWindowViewModel.context.ProjectData.Add(newProject);
                     MainWindowViewModel.context.SaveChanges();
@@ -353,7 +353,7 @@ namespace TurbineRepair.ViewModel
                 SelectCustomer = MainWindowViewModel.main.CustomersAll.Where(x => x.Id == MainWindowViewModel.main.UpdProject.ProjectCustomerNavigation.Id).FirstOrDefault();
                 SelectTurbine = MainWindowViewModel.main.TurbinesAll.Where(x => x.Id == MainWindowViewModel.main.UpdProject.ProjectTurbineNavigation.Id).FirstOrDefault();
                 SelectStatusProject = MainWindowViewModel.main.StatusesAll.Where(x => x.Id == MainWindowViewModel.main.UpdProject.ProjectStatusNavigation.Id).FirstOrDefault();
-                SelectCost = MainWindowViewModel.main.UpdProject.ProjectCost.ToString();
+                SelectCount = MainWindowViewModel.main.UpdProject.ProjectCount.ToString();
                 ContentButton = "Изменить";
             }
             else
@@ -517,18 +517,18 @@ namespace TurbineRepair.ViewModel
             }
         }
 
-        private void ValidateCost()
+        private void ValidateCount()
         {
-            ClearErrors(nameof(SelectCost));
-            if (string.IsNullOrWhiteSpace(SelectCost) || !Regex.IsMatch(SelectCost, decimalNumber, RegexOptions.IgnoreCase))
+            ClearErrors(nameof(SelectCount));
+            if (string.IsNullOrWhiteSpace(SelectCount) || !Regex.IsMatch(SelectCount, decimalNumber, RegexOptions.IgnoreCase))
             {
-                ClearErrors(nameof(SelectCost));
-                AddError(nameof(SelectCost), "*Поле не может быть пустым, введите число.");
-                CheckCost = false;
+                ClearErrors(nameof(SelectCount));
+                AddError(nameof(SelectCount), "*Поле не может быть пустым, введите число.");
+                CheckCount = false;
             }
             else
             {
-                CheckCost = true;
+                CheckCount = true;
             }
 
         }
@@ -569,7 +569,7 @@ namespace TurbineRepair.ViewModel
             FailedAddOrUpdateContent = "";
             ClearErrors(nameof(SelectFirstExecutor));
             ClearErrors(nameof(SelectSecondExecutor));
-            ClearErrors(nameof(SelectCost));
+            ClearErrors(nameof(SelectCount));
             ClearErrors(nameof(SelectCustomer));
             ClearErrors(nameof(SelectStatusProject));
             ClearErrors(nameof(SelectTurbine));
@@ -583,7 +583,7 @@ namespace TurbineRepair.ViewModel
             CheckSecondExecutor = false;
             CheckDateStart = false;
             CheckDateEnd = false;
-            CheckCost = false;
+            CheckCount = false;
             CheckStatus = false;
             CheckCustomer = false;
             CheckTurbine = false;
@@ -592,7 +592,7 @@ namespace TurbineRepair.ViewModel
             SelectCustomer = null;
             DateStart = DateTime.Now.ToShortDateString();
             DateEnd = DateTime.Now.ToShortDateString();
-            SelectCost = string.Empty;
+            SelectCount = string.Empty;
             SelectStatusProject = null;
             SelectTurbine = null;
             FailedAddOrUpdateContent = string.Empty;

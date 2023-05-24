@@ -59,10 +59,8 @@ namespace TurbineRepair.ViewModel
                     MainWindowViewModel.main.CurrentControl = new MainVM();
                     Application.Current.MainWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                     Application.Current.MainWindow.SizeToContent = SizeToContent.Manual;
-                    Application.Current.MainWindow.Width = 950;
+                    Application.Current.MainWindow.Width = 1050;
                     Application.Current.MainWindow.Height = 550;
-                    Application.Current.MainWindow.MinWidth = 950;
-                    Application.Current.MainWindow.MinHeight = 550;
 
                 }
                 else
@@ -127,6 +125,7 @@ namespace TurbineRepair.ViewModel
         /// </summary>
         public AutheticationVM()
         {
+            Application.Current.MainWindow.SizeToContent = SizeToContent.WidthAndHeight;
             /*------------------------------------------- Command ---------------------------------------------------*/
 
             #region Command

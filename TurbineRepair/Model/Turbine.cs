@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TurbineRepair.Model;
+namespace TurbineRepair;
 
 public partial class Turbine
 {
@@ -22,6 +22,8 @@ public partial class Turbine
     public string TurbineDescription { get; set; } = null!;
 
     public bool? DeleteTurbine { get; set; }
+
+    public decimal? TurbineCost { get; set; }
 
     public virtual ICollection<ProjectDatum> ProjectData { get; set; } = new List<ProjectDatum>();
 

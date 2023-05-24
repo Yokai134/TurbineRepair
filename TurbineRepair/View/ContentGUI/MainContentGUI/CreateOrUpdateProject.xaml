@@ -264,14 +264,14 @@
                     </Validation.ErrorTemplate>
                 </ListView>
 
-                <Label Content="Стоимость"
+                <Label Content="Количество"
                        Foreground="Gray"
                        FontSize="20"
                        Margin="0,10,0,0"
                        FontWeight="SemiBold"/>
                 <TextBox Style="{StaticResource AutheticationTextBox}"
                          Height="50"
-                         Text="{Binding SelectCost, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                         Text="{Binding SelectCount, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
                          Padding="20,13,0,0"
                          TextWrapping="Wrap"
                          Margin="0,0,0,20"
