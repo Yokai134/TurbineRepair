@@ -31,18 +31,7 @@
                 </RowDefinition.Style>
             </RowDefinition>
             <RowDefinition/>
-            <RowDefinition>
-                <RowDefinition.Style>
-                    <Style TargetType="RowDefinition">
-                        <Setter Property="Height" Value="50"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ElementName=VisibleElement, Path=IsChecked}" Value="false">
-                                <Setter Property="Height" Value="0"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </RowDefinition.Style>
-            </RowDefinition>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <TextBox Style="{StaticResource AutheticationTextBox}"
                      Height="50"
@@ -80,15 +69,19 @@
             <Button Style="{StaticResource ButtonMain}"
                     Margin="10"
                     Width="100"
+                    Command="{Binding DeleteProject}"
+                    x:Name="DeleteProject"
                     Content="Удалить"/>
             <Button Style="{StaticResource ButtonMain}"
                     Command="{Binding UpdateProject}"
                     Margin="10"
+                    x:Name="UpdateProject"
                     Width="100"
                     Content="Изменить"/>
             <Button Style="{StaticResource ButtonMain}"
                     Command="{Binding CreateProject}"
                     Margin="10"
+                    x:Name="AddProject"
                     Width="100"
                     Content="Добавить"/>
         </StackPanel>

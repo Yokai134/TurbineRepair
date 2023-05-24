@@ -173,7 +173,7 @@ namespace TurbineRepair.ViewModel
                 ForegroundFailedMessage = 1;
                 CustomerList = MainWindowViewModel.main.CustomersAll.Where(x => x.DeleteCustomer == false).ToList();
                 CustomerItem = CustomerList;
-                NoSelectionCustomer = "Готово";
+                NoSelectionCustomer = "*Готово";
                 SelectCustomer = null;
 
             }

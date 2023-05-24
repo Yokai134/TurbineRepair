@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ResourceApp\Image\hydro.png" />
     <None Remove="ResourceApp\Image\picture.png" />
   </ItemGroup>
 
@@ -28,6 +29,7 @@
 
 
   <ItemGroup>
+    <Resource Include="ResourceApp\Image\hydro.png" />
     <Resource Include="ResourceApp\Image\images.jpg" />
     <Resource Include="ResourceApp\Image\picture.png" />
   </ItemGroup>

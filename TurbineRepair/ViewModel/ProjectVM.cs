@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration.Internal;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -62,19 +63,17 @@ namespace TurbineRepair.ViewModel
         private bool CanUpdateProjectExecute(object parametr) => true;
         private void OnUpdateProjectExecute(object parametr)
         {
-            try
+            if(SelectedProject != null)
             {
-                if(SelectedProject != null)
-                {
-                    MainWindowViewModel.main.UpdProject = SelectedProject;
-                    MainVM.mainVM.MainCurrentControl = new CreateOrUpdateProjectVM();
-                }
-                else MessageBox.Show("Не выбран проект", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MainWindowViewModel.main.UpdProject = SelectedProject;
+                MainVM.mainVM.MainCurrentControl = new CreateOrUpdateProjectVM();
             }
-            catch
+            else
             {
-                MessageBox.Show("Не выбран проект", "Ошибка",MessageBoxButton.OK, MessageBoxImage.Error);
+                ForegroundFailedMessage = -1;
+                FailedAddOrUpdateContent = "*Не выбран проект";
             }
+
         }
 
         #endregion
@@ -84,28 +83,30 @@ namespace TurbineRepair.ViewModel
         private bool CanDeleteProjectExecute(object parametr) => true;
         private async void OnDeleteProjectExecute(object parametr)
         {
-            try
+           
+            if (SelectedProject != null)
             {
-                if (SelectedProject != null)
-                {
-                    ProjectDatum delProject = SelectedProject;
-                    delProject.DeleteProject = true;
-                    await MainWindowViewModel.main.UpdateData();
-                    ProjectItem = MainWindowViewModel.main.ProjectData.Where(x=>x.DeleteProject == false).ToList();
-                }
-                else MessageBox.Show("Проект удален", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+                ProjectDatum delProject = SelectedProject;
+                delProject.DeleteProject = true;
+                MainWindowViewModel.context.SaveChanges();
+                await MainWindowViewModel.main.UpdateData();
+                ProjectItem = MainWindowViewModel.main.ProjectData.Where(x=>x.DeleteProject == false).ToList();
+                ForegroundFailedMessage = 1;
+                FailedAddOrUpdateContent = "*Проект удален";
             }
-            catch
+            else
             {
-                MessageBox.Show("Не выбран проект", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                ForegroundFailedMessage = -1;
+                FailedAddOrUpdateContent = "*Не выбран проект";
             }
+               
+
         }
 
         #endregion
 
 
         #endregion
-
 
         #region Property
         private object _projectItem;
@@ -170,12 +171,12 @@ namespace TurbineRepair.ViewModel
         {
             if (MainWindowViewModel.main.CurrentUser.Role != 1)
             {
-                Projects = MainWindowViewModel.main.ProjectData.Where(x => x.ProjectExecutor == MainWindowViewModel.main.CurrentUser.Id).ToList();
+                Projects = MainWindowViewModel.main.ProjectData.Where(x => x.ProjectExecutor == MainWindowViewModel.main.CurrentUser.Id && x.DeleteProject == false).ToList();
                 CheckRole = false;
             }
             else if(MainWindowViewModel.main.CurrentUser.Role == 1)
             {
-                Projects = MainWindowViewModel.main.ProjectData;
+                Projects = MainWindowViewModel.main.ProjectData.Where(x=>x.DeleteProject == false).ToList();
                 CheckRole = true;
             }
 
@@ -192,6 +193,8 @@ namespace TurbineRepair.ViewModel
             CreateProject = new LambdaCommand(OnCreateProjectExecute, CanCreateProjectExecute);
 
             UpdateProject = new LambdaCommand(OnUpdateProjectExecute, CanUpdateProjectExecute);
+
+            DeleteProject = new LambdaCommand(OnDeleteProjectExecute, CanDeleteProjectExecute);
             
         }
     }

@@ -17,11 +17,24 @@
     
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
+        <TextBox Style="{StaticResource AutheticationTextBox}"
+                 Height="50"
+                 Text="{Binding SearchRequest, UpdateSourceTrigger=PropertyChanged}"
+                 Padding="20,13,0,0"
+                 FontSize="20"
+                 Margin="10">
+            <TextBox.InputBindings>
+                <KeyBinding Command="{Binding SearchNameRequest}" Key="Return"/>
+            </TextBox.InputBindings>
+        </TextBox>
+
         <ListView Margin="10"
+                  Grid.Row="1"
                   BorderThickness="0"
                   ItemContainerStyle="{StaticResource RequestCard}"
                   ItemsSource="{Binding ItemReuest}"

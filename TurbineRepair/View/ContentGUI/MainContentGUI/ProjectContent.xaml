@@ -17,6 +17,7 @@
 
     <UserControl.Resources>
         <converter:ConverterString x:Key="dataConverter"/>
+        <converter:ConvertColor x:Key="colorConverter"/>
     </UserControl.Resources>
 
     <Grid Background="Transparent">
@@ -232,6 +233,18 @@
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
+            <TabItem Style="{StaticResource TabItemStyle}"
+                     Header="Заявки" Height="20" >
+                <ScrollViewer>
+                    <StackPanel Margin="10">
+                        <ListView Background="Transparent"
+                                  BorderThickness="0"
+                                  ItemsSource="{Binding TurbineRequests}"
+                                  ItemContainerStyle="{StaticResource RequestProject}"/>
+                    </StackPanel>
+                </ScrollViewer>
+  
+            </TabItem>
 
         </TabControl>
 
@@ -245,6 +258,12 @@
                     Command="{Binding BackProjectList}"
                     Style="{StaticResource ButtonMain}"
                     Margin="10,5"/>
+            <Label Content="{Binding FailedAddOrUpdate,UpdateSourceTrigger=PropertyChanged}" 
+                   Margin="10,5"
+                   HorizontalAlignment="Right"
+                   Grid.Column="1"
+                   FontSize="15"
+                   Foreground="{Binding ForegroundFailedMessage, Converter={StaticResource colorConverter}}"/>
         </Grid>
 
     </Grid>

@@ -725,9 +725,7 @@ namespace TurbineRepair.ViewModel
                         await MainWindowViewModel.main.UpdateData();
                         FailedAddOrUpdate = "*Данные обновлены";
                         ForegroundFailedMessage = 1;
-                        timer.Interval = TimeSpan.FromSeconds(1);
-                        timer.Tick += OpenTurbineList;
-                        timer.Start();
+
                     }
                     else
                     {
@@ -911,11 +909,9 @@ namespace TurbineRepair.ViewModel
 
         public ICommand BackTurbineList { get; }
         private bool CanBackTurbineListExecute(object parameter) => true;
-        private async void OnBackTubineListExecute(object parametr) 
+        private void OnBackTubineListExecute(object parametr) 
         {
-            await MainWindowViewModel.main.UpdateData();
-            MainVM.mainVM.MainCurrentControl = new TurbineVM();
-            
+            MainVM.mainVM.MainCurrentControl = new TurbineVM();        
         }
   
         #endregion

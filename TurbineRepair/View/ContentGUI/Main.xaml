@@ -8,7 +8,7 @@
              xmlns:local="clr-namespace:TurbineRepair.View.ContentGUI"
              xmlns:viewModel="clr-namespace:TurbineRepair.ViewModel"
              mc:Ignorable="d"
-             d:Width="900"
+             d:Width="1050"
              d:Height="550">
 
     <UserControl.DataContext>
@@ -141,6 +141,10 @@
                                     <DataTrigger Binding="{Binding Path=BoolBackgroundProject, UpdateSourceTrigger=PropertyChanged}"
                                                  Value="false">
                                         <Setter Property="Background" Value="#36393F"/>
+                                        
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding CurrentUser.Role}" Value="3">
+                                        <Setter Property="Height" Value="0"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
@@ -186,6 +190,40 @@
                                         Width="25"
                                         Margin="12.5,0,0,0"/>
                         <Label Content="Заявки"
+                               FontSize="20"
+                               Margin="10,0,0,0"
+                               Foreground="Gray"
+                               FontWeight="SemiBold"/>
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Stretch"
+                                Orientation="Horizontal">
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=BoolBackgroundTurbine, UpdateSourceTrigger=PropertyChanged}"
+                                                 Value="True">
+                                        <Setter Property="Background" Value="#252b2F"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Path=BoolBackgroundTurbine, UpdateSourceTrigger=PropertyChanged}"
+                                                 Value="false">
+                                        <Setter Property="Background" Value="#36393F"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding CurrentUser.Role}" Value="3">
+                                        <Setter Property="Height" Value="0"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+                        <StackPanel.InputBindings>
+                            <MouseBinding Command="{Binding OpenTurbineControl}"
+                                          MouseAction="LeftClick"/>
+                        </StackPanel.InputBindings>
+                        <fa6:SvgAwesome Icon="Solid_Industry"
+                                        Height="25"
+                                        PrimaryColor="Gray"
+                                        Width="25"
+                                        Margin="12.5,0,0,0"/>
+                        <Label Content="Турбины"
                                FontSize="20"
                                Margin="10,0,0,0"
                                Foreground="Gray"
@@ -261,40 +299,6 @@
                         <StackPanel.Style>
                             <Style TargetType="StackPanel">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Path=BoolBackgroundTurbine, UpdateSourceTrigger=PropertyChanged}"
-                                                 Value="True">
-                                        <Setter Property="Background" Value="#252b2F"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Path=BoolBackgroundTurbine, UpdateSourceTrigger=PropertyChanged}"
-                                                 Value="false">
-                                        <Setter Property="Background" Value="#36393F"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding CurrentUser.Role}" Value="3">
-                                        <Setter Property="Height" Value="0"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </StackPanel.Style>
-                        <StackPanel.InputBindings>
-                            <MouseBinding Command="{Binding OpenTurbineControl}"
-                                          MouseAction="LeftClick"/>
-                        </StackPanel.InputBindings>
-                        <fa6:SvgAwesome Icon="Solid_Industry"
-                                        Height="25"
-                                        PrimaryColor="Gray"
-                                        Width="25"
-                                        Margin="12.5,0,0,0"/>
-                        <Label Content="Турбины"
-                               FontSize="20"
-                               Margin="10,0,0,0"
-                               Foreground="Gray"
-                               FontWeight="SemiBold"/>
-                    </StackPanel>
-                    <StackPanel HorizontalAlignment="Stretch"
-                                Orientation="Horizontal">
-                        <StackPanel.Style>
-                            <Style TargetType="StackPanel">
-                                <Style.Triggers>
                                     <DataTrigger Binding="{Binding Path=BoolBackgroundCustomer, UpdateSourceTrigger=PropertyChanged}"
                                                  Value="True">
                                         <Setter Property="Background" Value="#252b2F"/>
@@ -303,7 +307,7 @@
                                                  Value="false">
                                         <Setter Property="Background" Value="#36393F"/>
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding CurrentUser.Role}" Value="3">
+                                    <DataTrigger Binding="{Binding CurrentUser.Role}" Value="2">
                                         <Setter Property="Height" Value="0"/>
                                     </DataTrigger>
                                 </Style.Triggers>

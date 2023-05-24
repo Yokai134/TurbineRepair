@@ -84,17 +84,55 @@ namespace TurbineRepair.ViewModel
                 ForegroundFailedMessage = -1;
             }
         }
+
+        public ICommand SearchNameRequest { get; }
+        private bool CanSearchNameRequestExecute(object parametr) => true;
+        private void OnSearchNameRequestExecute(object parameter)
+        {
+            if(MainWindowViewModel.main.CurrentUser.Role == 2)
+            {
+                if (SearchRequest != string.Empty)
+                {
+                    ItemReuest = Requests.Where(x => x.TurbineRequestName.StartsWith(SearchRequest) && x.TurbineRequestProjectNavigation.ProjectExecutorNavigation.Id ==
+                        MainWindowViewModel.main.CurrentUser.Id).ToList();
+                }
+                else ItemReuest = Requests;
+            }
+            else
+            {
+                if (SearchRequest != string.Empty)
+                {
+                    ItemReuest = Requests.Where(x => x.TurbineRequestName.StartsWith(SearchRequest)).ToList();
+                }
+                else ItemReuest = Requests;
+            }
+     
+        }
         #endregion
 
         public RequestVM() 
         {
-            Requests = MainWindowViewModel.main.TurbineRequests;
-            ItemReuest = Requests;
+            if(MainWindowViewModel.main.CurrentUser.Role == 2)
+            {
+                Requests = MainWindowViewModel.main.TurbineRequests.Where(x=>x.TurbineRequestProjectNavigation.ProjectExecutorNavigation.Id == MainWindowViewModel.main.CurrentUser.Id).ToList();
+                ItemReuest = Requests;
+            }
+            else
+            {
+                Requests = MainWindowViewModel.main.TurbineRequests;
+                ItemReuest = Requests;
+            }
+            
 
             RequestAdd = new LambdaCommand(OnRequestAddExecute, CanRequestAddExecute);
             RequestUpdate = new LambdaCommand(OnRequestUpdateExecute, CanRequestUpdateExecute);
+            SearchNameRequest = new LambdaCommand(OnSearchNameRequestExecute, CanSearchNameRequestExecute);
         }
 
-      
+        private string searchRequest;
+
+        public string SearchRequest { get => searchRequest; set => Set(ref searchRequest, value); }
+
+
     }
 }

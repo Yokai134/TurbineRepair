@@ -67,6 +67,7 @@
                     <TextBox Style="{StaticResource AutheticationTextBox}"
                              Height="150"
                              Foreground="Gray"
+                             TextWrapping="Wrap"
                              FontSize="20"
                              Text="{Binding RequestDescriptions, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
                              Padding="20,13,0,0">

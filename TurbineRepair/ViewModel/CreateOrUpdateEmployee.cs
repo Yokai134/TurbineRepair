@@ -278,9 +278,7 @@ namespace TurbineRepair.ViewModel
                     await MainWindowViewModel.main.UpdateData();
                     FailedAddOrUpdateContent = "Данные обновлены";
                     ForegroundFailedMessage = 1;
-                    timer.Interval = TimeSpan.FromSeconds(1);
-                    timer.Tick += OpenEmployeeList;
-                    timer.Start();
+
 
                 }
                 else

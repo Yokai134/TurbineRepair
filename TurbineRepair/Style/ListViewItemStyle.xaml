@@ -5,6 +5,7 @@
 
     <converter:ConverterString x:Key="dataConverter"/>
     <converter:ByteToImage x:Key="imageConveret"/>
+    <converter:TimeConverter x:Key="timeConverter"/>
 
     <Style TargetType="ListViewItem" x:Key="ProjectCard">
 
@@ -195,11 +196,6 @@
                                            Margin="-5,0,0,0"
                                            FontWeight="SemiBold"/>
                             </StackPanel>
-                            <TextBlock Text="В сети"
-                                       TextTrimming="CharacterEllipsis"
-                                       FontSize="10"
-                                       Foreground="Green"
-                                       Margin="5,-5,0,0"/>
                             <TextBlock Text="{Binding PostNavigation.PostName}"
                                        TextTrimming="CharacterEllipsis"
                                        FontSize="10"
@@ -241,11 +237,6 @@
                                        Margin="-5,0,0,0"
                                        FontWeight="SemiBold"/>
                             </StackPanel>
-                            <TextBlock Text="Не в сети"
-                                       TextTrimming="CharacterEllipsis"
-                                       FontSize="10"
-                                       Foreground="Gray"
-                                       Margin="5,-5,0,0"/>
                             <TextBlock Text="{Binding PostNavigation.PostName}"
                                        TextTrimming="CharacterEllipsis"
                                        FontSize="10"
@@ -287,7 +278,7 @@
                                        VerticalAlignment="Center"
                                        Margin="0,0,-5,0"/>
 
-                            <Label Content="{Binding MessgeTime}"
+                            <Label Content="{Binding MessgeTime, Converter={StaticResource timeConverter}}"
                                        Foreground="Gray"
                                        FontSize="8"
                                        FontWeight="SemiBold"
@@ -2083,6 +2074,108 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style TargetType="ListViewItem" x:Key="RequestProject">
+
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="#292b2F"/>
+            </Trigger>
+        </Style.Triggers>
+
+        <Setter Property="Background" Value="#36393F"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListViewItem">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="#3e4147"
+                            BorderThickness="0.5,0,0.5,2"
+                            Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}, Path=ActualWidth}"
+                            CornerRadius="15"
+                            Margin="-5,10,-5,10">
+
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Margin="10">
+                                <Label Content="{Binding TurbineRequestName}"
+                                       FontSize="20"
+                                       Foreground="Gray"
+                                       FontWeight="SemiBold"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="Исполнитель: "
+                                           FontSize="20"
+                                           Foreground="Gray"
+                                           FontWeight="SemiBold"/>
+                                    <Label Content="{Binding TurbineRequestExecutorNavigation.PostName}"
+                                           FontSize="20"
+                                           Foreground="Gray"
+                                           FontWeight="SemiBold"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="Статус: "
+                                           FontSize="20"
+                                           Foreground="Gray"
+                                           FontWeight="SemiBold"/>
+                                    <Label Content="{Binding TurbineRequestStatusNavigation.StatusName}"
+                                           FontSize="20"
+                                           Foreground="Gray"
+                                           FontWeight="SemiBold"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="Тип работ: "
+                                           FontSize="20"
+                                           Foreground="Gray"
+                                           FontWeight="SemiBold"/>
+                                    <Label Content="{Binding TurbineRequestTypeOfWorkNavigation.NameWork}"
+                                           FontSize="20"
+                                           Foreground="Gray"
+                                           FontWeight="SemiBold"/>
+                                </StackPanel>
+
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal"
+                                        Margin="10,0,0,0">
+                                <Label Content="Дата начала: "
+                                       FontWeight="SemiBold"
+                                       Foreground="Gray"
+                                       FontSize="20"/>
+                                <Label Content="{Binding TurbineRequestDataStart, Converter={StaticResource dataConverter}}"
+                                       FontSize="20"
+                                       Foreground="Gray"
+                                       FontWeight="SemiBold">
+                                </Label>
+                                <Label Content="Дата окончания: "
+                                       FontWeight="SemiBold"
+                                       Foreground="Gray"
+                                       FontSize="20"
+                                       Margin="50,0,0,0"/>
+                                <Label Content="{Binding TurbineRequestDataEnd, Converter={StaticResource dataConverter}}"
+                                       FontSize="20"
+                                       Foreground="Gray"
+                                       FontWeight="SemiBold"/>
+                            </StackPanel>
+                            <StackPanel Margin="10,0,0,0">
+                                <Label Content="Описание заявки: "
+                                       FontWeight="SemiBold"
+                                       Foreground="Gray"
+                                       FontSize="20"/>
+                                <TextBlock Text="{Binding TurbineRequestDescription}"
+                                           FontSize="15"   
+                                           Margin="10"
+                                           HorizontalAlignment="Stretch"
+                                           TextWrapping="Wrap"
+                                           Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type StackPanel}}, Path=ActualWidth}"
+                                           Foreground="Gray"
+                                           FontWeight="SemiBold"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
     </Style>
 
 </ResourceDictionary>

@@ -263,9 +263,7 @@ namespace TurbineRepair.ViewModel
                     await MainWindowViewModel.main.UpdateData();
                     FailedAddOrUpdateContent = "Данные проекта обновлены";
                     ForegroundFailedMessage = 1;
-                    timer.Interval = TimeSpan.FromSeconds(1);
-                    timer.Tick += OpenProjectList;
-                    timer.Start();
+
                 }
                 else
                 {
@@ -336,15 +334,24 @@ namespace TurbineRepair.ViewModel
 
         public CreateOrUpdateProjectVM()
         {
+         
             FirstExercutor = MainWindowViewModel.main.UsersAll.Where(x=>x.Role == 2 && x.DeleteUser == false).ToList();
             SecondExercutor = MainWindowViewModel.main.UsersAll.Where(x=>x.Role == 2 && x.DeleteUser == false).ToList();
             StatusProjects = MainWindowViewModel.main.StatusesAll.Where(x=>x.Id == 4).ToList();
             Customers = MainWindowViewModel.main.CustomersAll.Where(x=>x.DeleteCustomer == false).ToList();
-            Turbines = MainWindowViewModel.main.TurbinesAll;
+            Turbines = MainWindowViewModel.main.TurbinesAll.Where(x=>x.DeleteTurbine == false).ToList();
             
 
             if(MainWindowViewModel.main.UpdProject != null)
             {
+                if (MainWindowViewModel.main.CurrentUser.Role != 1)
+                {
+                    FirstExercutor = MainWindowViewModel.main.UsersAll.Where(x => x.Id == MainWindowViewModel.main.CurrentUser.Id).ToList();
+                }
+                else
+                {
+                    FirstExercutor = MainWindowViewModel.main.UsersAll.Where(x => x.Role == 2 && x.DeleteUser == false).ToList();
+                }
                 StatusProjects = MainWindowViewModel.main.StatusesAll.ToList();
                 SelectFirstExecutor = MainWindowViewModel.main.UsersAll.Where(x => x.Id == MainWindowViewModel.main.UpdProject.ProjectExecutorNavigation.Id).FirstOrDefault();
                 SelectSecondExecutor = MainWindowViewModel.main.UsersAll.Where(x => x.Id == MainWindowViewModel.main.UpdProject.ProjectSecondExecutorNavigation.Id).FirstOrDefault();
@@ -358,6 +365,14 @@ namespace TurbineRepair.ViewModel
             }
             else
             {
+                if (MainWindowViewModel.main.CurrentUser.Role != 1)
+                {
+                    FirstExercutor = MainWindowViewModel.main.UsersAll.Where(x => x.Id == MainWindowViewModel.main.CurrentUser.Id).ToList();
+                }
+                else
+                {
+                    FirstExercutor = MainWindowViewModel.main.UsersAll.Where(x => x.Role == 2 && x.DeleteUser == false).ToList();
+                }
                 ContentButton = "Добавить";
             }
 

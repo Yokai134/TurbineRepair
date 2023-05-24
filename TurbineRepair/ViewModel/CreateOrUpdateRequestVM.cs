@@ -24,8 +24,17 @@ namespace TurbineRepair.ViewModel
         {
             try
             {
-                ProjectData = MainWindowViewModel.main.ProjectData.ToList();
-                ProjectItem = projectData;
+                if(MainWindowViewModel.main.CurrentUser.Role == 2)
+                {
+                    ProjectData = MainWindowViewModel.main.ProjectData.Where(x=>x.ProjectExecutorNavigation.Id == MainWindowViewModel.main.CurrentUser.Id).ToList();
+                    ProjectItem = projectData;
+                }
+                else
+                {
+                    ProjectData = MainWindowViewModel.main.ProjectData.ToList();
+                    ProjectItem = projectData;
+                }
+            
                 TypeOfWorks = MainWindowViewModel.main.TypesWork.Where(x => x.Id != 1).ToList();
                 Posts = MainWindowViewModel.main.PostsAll.Where(x => x.DeportamentId == 6).ToList();
 
@@ -106,9 +115,6 @@ namespace TurbineRepair.ViewModel
                     await MainWindowViewModel.main.UpdateData();
                     ForegroundFailedMessage = 1;
                     FiledAddOrUpdateContent = "*Данные обновлены";
-                    timer.Interval = TimeSpan.FromSeconds(1);
-                    timer.Tick += OpenRequestList;
-                    timer.Start();
 
                 }
                 else

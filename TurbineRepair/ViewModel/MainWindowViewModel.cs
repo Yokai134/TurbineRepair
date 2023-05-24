@@ -309,12 +309,13 @@ namespace TurbineRepair.ViewModel
         /// <summary>
         /// Логика взаимодействия с MainWindow.xaml
         /// </summary>
-        public MainWindowViewModel() 
-        {           
-            CurrentControl = new AutheticationVM();
-            main = this;
-            _ = UpdateData();
-        
+        public MainWindowViewModel()
+        {
+
+                CurrentControl = new AutheticationVM();
+                main = this;
+                _ = UpdateData();
+               
         }
 
 

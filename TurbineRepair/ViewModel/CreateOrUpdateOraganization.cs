@@ -138,9 +138,7 @@ namespace TurbineRepair.ViewModel
                     await MainWindowViewModel.main.UpdateData();
                     FailedAddOrUpdate = "Данные организации обновлены";
                     ForegroundFailedMessage = 1;
-                    timer.Interval = TimeSpan.FromSeconds(1);
-                    timer.Tick += OpenCustomerList;
-                    timer.Start();
+
                 }
                 else
                 {

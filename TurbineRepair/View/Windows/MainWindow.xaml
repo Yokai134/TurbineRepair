@@ -6,13 +6,14 @@
         xmlns:local="clr-namespace:TurbineRepair"
         xmlns:viewModel="clr-namespace:TurbineRepair.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow"
+        Title="TurbineRepair"
         SizeToContent="WidthAndHeight"
         WindowStyle="None"
         FontFamily="Inter"
         WindowStartupLocation="CenterScreen"
         AllowsTransparency="True"
-        Background="#36393F">
+        Background="#36393F" 
+        Icon="/ResourceApp/Image/hydro.png">
 
     <Window.DataContext>
         <viewModel:MainWindowViewModel/>
