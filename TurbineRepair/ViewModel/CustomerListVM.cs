@@ -104,7 +104,7 @@ namespace TurbineRepair.ViewModel
 
                 if (SearchCustomer != null)
                 {
-                    CustomerItem = CustomerList.Where(x => x.CustomerSurname.StartsWith(SearchCustomer) && x.DeleteCustomer == false).ToList();
+                    CustomerItem = CustomerList.Where(x => x.CustomerSurname.StartsWith(SearchCustomer) && x.DeleteCustomer == false && x.CustomerOrganizationNavigation.DeleteOrganization == false).ToList();
                 }
                 else if (SearchCustomer == "") CustomerItem = CustomerList;
             }
@@ -171,7 +171,7 @@ namespace TurbineRepair.ViewModel
                 MainWindowViewModel.context.SaveChanges();
                 await MainWindowViewModel.main.UpdateData();
                 ForegroundFailedMessage = 1;
-                CustomerList = MainWindowViewModel.main.CustomersAll.Where(x => x.DeleteCustomer == false).ToList();
+                CustomerList = MainWindowViewModel.main.CustomersAll.Where(x => x.DeleteCustomer == false && x.CustomerOrganizationNavigation.DeleteOrganization == false).ToList();
                 CustomerItem = CustomerList;
                 NoSelectionCustomer = "*Готово";
                 SelectCustomer = null;
@@ -221,6 +221,8 @@ namespace TurbineRepair.ViewModel
                 MainWindowViewModel.context.SaveChanges();
                 await MainWindowViewModel.main.UpdateData();
                 ForegroundFailedMessage = 1;
+                CustomerList = MainWindowViewModel.main.CustomersAll.Where(x => x.DeleteCustomer == false && x.CustomerOrganizationNavigation.DeleteOrganization == false).ToList();
+                CustomerItem = CustomerList;
                 OrganizationList = MainWindowViewModel.main.Oraganizations.Where(x => x.DeleteOrganization == false).ToList();
                 OrganizationItem = OrganizationList;
                 NoSelectedOrganization = "Готово";
@@ -238,7 +240,7 @@ namespace TurbineRepair.ViewModel
 
         public CustomerListVM() 
         { 
-            CustomerList = MainWindowViewModel.main.CustomersAll.Where(x=>x.DeleteCustomer == false).ToList();
+            CustomerList = MainWindowViewModel.main.CustomersAll.Where(x=>x.DeleteCustomer == false && x.CustomerOrganizationNavigation.DeleteOrganization == false).ToList();
             CustomerItem = CustomerList;
 
             OrganizationList = MainWindowViewModel.main.Oraganizations.Where(x => x.DeleteOrganization == false).ToList();

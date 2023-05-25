@@ -44,20 +44,37 @@ namespace TurbineRepair.ViewModel
         private bool CanSendMessageExecute(object parametr) => true;
         private void OnSendMessageExecute(object parametr)
         {
-            if(Message != null) 
+            try
             {
-                MessageList newMessage = new MessageList()
+                if(SelectContact != null)
                 {
-                    MessageSender = CurrentUser.Id,
-                    MessageReceipt = SelectContact.Id,
-                    MessageText = Message,
-                    MessgeTime = DateTime.Now
+                    if (Message != "")
+                    {
+                        MessageList newMessage = new MessageList()
+                        {
+                            MessageSender = CurrentUser.Id,
+                            MessageReceipt = SelectContact.Id,
+                            MessageText = Message,
+                            MessgeTime = DateTime.Now
 
-                };
-                MainWindowViewModel.context.MessageLists.Add(newMessage);
-                MainWindowViewModel.context.SaveChanges();
-                Message = "";
+                        };
+                        MainWindowViewModel.context.MessageLists.Add(newMessage);
+                        MainWindowViewModel.context.SaveChanges();
+                        Message = "";
+                    }
+                    
+                }
+                else
+                {
+                    Message = "Выбирете получателя";
+                }
+             
             }
+            catch
+            {
+
+            }
+           
         }
         #endregion
 
@@ -175,6 +192,7 @@ namespace TurbineRepair.ViewModel
 
         private void LoadMessage(UserDatum receiptUser) 
         {
+            Message = string.Empty;
             timer.Stop();
             MessageList = context.MessageLists.ToList();
             MessageItems = new ObservableCollection<MessageItem>();

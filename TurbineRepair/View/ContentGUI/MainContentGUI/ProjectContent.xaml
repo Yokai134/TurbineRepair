@@ -223,17 +223,6 @@
                 </ScrollViewer>
             </TabItem>
             <TabItem Style="{StaticResource TabItemStyle}"
-                     Header="Описание">
-                <ScrollViewer>
-                    <StackPanel>
-                        <ListView Background="Transparent"
-                                  BorderThickness="0"
-                                  ItemsSource="{Binding Projects}"
-                                  ItemContainerStyle="{StaticResource DescriptionCard}"/>
-                    </StackPanel>
-                </ScrollViewer>
-            </TabItem>
-            <TabItem Style="{StaticResource TabItemStyle}"
                      Header="Заявки" Height="20" >
                 <ScrollViewer>
                     <StackPanel Margin="10">

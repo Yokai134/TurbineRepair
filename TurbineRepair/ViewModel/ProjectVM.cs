@@ -62,6 +62,7 @@ namespace TurbineRepair.ViewModel
         private bool CanCreateProjectExecute(object parametr) => true;
         private void OnCreateProjectExecute(object parametr)
         {
+            MainWindowViewModel.main.UpdProject = null;
             MainVM.mainVM.MainCurrentControl = new CreateOrUpdateProjectVM();
         }
 

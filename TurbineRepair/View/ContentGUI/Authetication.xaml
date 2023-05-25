@@ -16,14 +16,14 @@
           Height="500">
         <StackPanel Orientation="Vertical">
             <StackPanel HorizontalAlignment="Right">
-                <Image Source="/ResourceApp/Image/images.jpg"
-                       Width="80"
-                       Height="80"
+                <Image Source="/ResourceApp/Image/logo.png"
+                       Width="100"
+                       Height="100"
                        Margin="0,10,30,0">
                     <Image.Clip>
                         <RectangleGeometry RadiusX="10"
                                            RadiusY="10"
-                                           Rect="0,0,80,80"/>
+                                           Rect="0,0,100,100"/>
                     </Image.Clip>
                 </Image>
             </StackPanel>

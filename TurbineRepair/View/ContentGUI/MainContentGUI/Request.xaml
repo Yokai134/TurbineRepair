@@ -50,7 +50,8 @@
                    Foreground="{Binding ForegroundFailedMessage, Converter={StaticResource ResourceKey=colorConverter}}"/>
             <Button Style="{StaticResource ButtonMain}"
                     Margin="10"
-                    Width="100"
+                    Visibility="Hidden"
+                    Width="0"
                     Content="Открыть"/>
             <Button Style="{StaticResource ButtonMain}"
                     Command="{Binding RequestDelete}"

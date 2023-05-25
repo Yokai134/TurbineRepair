@@ -874,36 +874,48 @@ namespace TurbineRepair.ViewModel
         private bool CanOpenImageExecute(object parameter) => true;
         private void OnOpenImageExecute(object parametr)
         {
-
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Multiselect = true;
-            openFileDialog.Filter = "Image files (*.png;*.jpg)|*.png;*.jpg|All files (*.*)|*.*";
-            openFileDialog.ShowDialog();
-            ImagePathFile = openFileDialog.FileName;
-            ImagePath = File.ReadAllBytes(openFileDialog.FileName);
-            switch (CountImage)
+            try
             {
-                case 0:
-                    ImagePathOne = ImagePath;
-                    ImageOneUpd = true;
-                    CountImage++;
-                    break;
-                case 1:
-                    ImageTwoUpd = true;
-                    ImagePathTwo = ImagePath;
-                    CountImage++;
-                    break;
-                case 2:
-                    ImageThreeUpd = true;
-                    ImagePathThree = ImagePath;
-                    CountImage++;
-                    break;
-                case 3:
-                    ImageFourUpd = true;
-                    ImagePathFour = ImagePath;
-                    CountImage = 0;
-                    break;
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Multiselect = true;
+                openFileDialog.Filter = "Image files (*.png;*.jpg)|*.png;*.jpg|All files (*.*)|*.*";
+                openFileDialog.ShowDialog();
+                ImagePathFile = openFileDialog.FileName;
+                ImagePath = File.ReadAllBytes(openFileDialog.FileName);
+                switch (CountImage)
+                {
+                    case 0:
+                        ImagePathOne = ImagePath;
+                        ImageOneUpd = true;
+                        FailedAddOrUpdate = "";
+                        CountImage++;
+                        break;
+                    case 1:
+                        ImageTwoUpd = true;
+                        ImagePathTwo = ImagePath;
+                        FailedAddOrUpdate = "";
+                        CountImage++;
+                        break;
+                    case 2:
+                        ImageThreeUpd = true;
+                        ImagePathThree = ImagePath;
+                        FailedAddOrUpdate = "";
+                        CountImage++;
+                        break;
+                    case 3:
+                        ImageFourUpd = true;
+                        ImagePathFour = ImagePath;
+                        FailedAddOrUpdate = "";
+                        CountImage = 0;
+                        break;
+                }
             }
+            catch
+            {
+                FailedAddOrUpdate = "Не выбранна картинка";
+                ForegroundFailedMessage = -1;
+            }
+           
                                                  
         }
 
@@ -995,6 +1007,32 @@ namespace TurbineRepair.ViewModel
         public IEnumerable GetErrors(string? propertyName)
         {
             return _errorsByPropertyName.ContainsKey(propertyName) ? _errorsByPropertyName[propertyName] : null;
+        }
+
+        private void OnErrorsChanged(string propertyName)
+        {
+            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+        }
+
+        private void AddError(string propertyName, string error)
+        {
+            if (!_errorsByPropertyName.ContainsKey(propertyName))
+                _errorsByPropertyName[propertyName] = new List<string>();
+
+            if (!_errorsByPropertyName[propertyName].Contains(error))
+            {
+                _errorsByPropertyName[propertyName].Add(error);
+                OnErrorsChanged(propertyName);
+            }
+        }
+
+        private void ClearErrors(string propertyName)
+        {
+            if (_errorsByPropertyName.ContainsKey(propertyName))
+            {
+                _errorsByPropertyName.Remove(propertyName);
+                OnErrorsChanged(propertyName);
+            }
         }
 
         private void ValidateDescription()
@@ -1661,31 +1699,7 @@ namespace TurbineRepair.ViewModel
         }
         #endregion
 
-        private void OnErrorsChanged(string propertyName)
-        {
-            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
-        }
-
-        private void AddError(string propertyName, string error)
-        {
-            if (!_errorsByPropertyName.ContainsKey(propertyName))
-                _errorsByPropertyName[propertyName] = new List<string>();
-
-            if (!_errorsByPropertyName[propertyName].Contains(error))
-            {
-                _errorsByPropertyName[propertyName].Add(error);
-                OnErrorsChanged(propertyName);
-            }
-        }
-
-        private void ClearErrors(string propertyName)
-        {
-            if (_errorsByPropertyName.ContainsKey(propertyName))
-            {
-                _errorsByPropertyName.Remove(propertyName);
-                OnErrorsChanged(propertyName);
-            }
-        }
+    
 
         #endregion
 

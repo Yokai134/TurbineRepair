@@ -50,7 +50,7 @@
                             Margin="10,0,0,0">
                     <Image Width="25"
                            Height="25"
-                           Source="/ResourceApp/Image/images.jpg"/>
+                           Source="/ResourceApp/Image/logo.png"/>
 
                     <Label Content="Turbine repair"
                            FontWeight="SemiBold"

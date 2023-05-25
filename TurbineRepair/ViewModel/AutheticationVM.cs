@@ -17,9 +17,9 @@ using TurbineRepair.Model;
 
 namespace TurbineRepair.ViewModel
 {
-    internal class AutheticationVM : Base.ViewModel
+    public class AutheticationVM : Base.ViewModel
     {
-        TurbinerepairContext context = new TurbinerepairContext(); 
+        TurbinerepairContext context = new TurbinerepairContext();
 
         #region Command
         /*------------------------------------------- Command ---------------------------------------------------*/
@@ -43,34 +43,21 @@ namespace TurbineRepair.ViewModel
         private bool CanVerificationLoginExecut(object parameter) => true;
         private void OnVerificationLoginExecut(object parametr)
         {
-            try
+            VerificationData(LoginApp,PasswordApp);
+            if (checkData)
             {
-                List<UserDatum> selectUser = context.UserData.Where(x => x.Login == LoginApp && x.Password == PasswordApp).ToList();
-                List<Post> posts = context.Posts.Where(x => x.Id == selectUser[0].Post).ToList();
-                List<Deportament> deportaments = context.Deportaments.Where(x => x.Id == posts[0].DeportamentId).ToList();
-                UserDatum userCurrent = selectUser.FirstOrDefault();
-                Deportament deportamentCurrent = deportaments.FirstOrDefault();
-                Post postCurrent = posts.FirstOrDefault();
-                if (userCurrent != null)
-                {
-                    MainWindowViewModel.main.CurrentUser = userCurrent;
-                    MainWindowViewModel.main.Posts = postCurrent;
-                    MainWindowViewModel.main.Deport = deportamentCurrent;
-                    MainWindowViewModel.main.CurrentControl = new MainVM();
-                    Application.Current.MainWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-                    Application.Current.MainWindow.SizeToContent = SizeToContent.Manual;
-                    Application.Current.MainWindow.Width = 1050;
-                    Application.Current.MainWindow.Height = 550;
-
-                }
-                else
-                {
-                    ErrorMessage = "*Invalid login or password";
-                }
+                MainWindowViewModel.main.CurrentUser = userCurrent;
+                MainWindowViewModel.main.Posts = postCurrent;
+                MainWindowViewModel.main.Deport = deportamentCurrent;
+                MainWindowViewModel.main.CurrentControl = new MainVM();
+                Application.Current.MainWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                Application.Current.MainWindow.SizeToContent = SizeToContent.Manual;
+                Application.Current.MainWindow.Width = 1280;
+                Application.Current.MainWindow.Height = 750;
             }
-            catch
+            else
             {
-                ErrorMessage = "*Invalid login or password";
+                ErrorMessage = "*Не вырный логин или пароль";
             }
 
         }
@@ -86,6 +73,12 @@ namespace TurbineRepair.ViewModel
         /* ---------------------------------------- Property ---------------------------------------- */
 
         #region Property
+
+        private bool checkData;
+
+        private UserDatum userCurrent;
+        private Post postCurrent;
+        private Deportament deportamentCurrent;
 
         #region Login and Password
 
@@ -125,7 +118,7 @@ namespace TurbineRepair.ViewModel
         /// </summary>
         public AutheticationVM()
         {
-            Application.Current.MainWindow.SizeToContent = SizeToContent.WidthAndHeight;
+            
             /*------------------------------------------- Command ---------------------------------------------------*/
 
             #region Command
@@ -143,6 +136,33 @@ namespace TurbineRepair.ViewModel
             /*------------------------------------------- Command ---------------------------------------------------*/
 
 
+        }
+
+        public bool VerificationData(string log, string pass)
+        {
+            try
+            {
+                List<UserDatum> selectUser = context.UserData.Where(x => x.Login == log && x.Password == pass).ToList();
+                List<Post> posts = context.Posts.Where(x => x.Id == selectUser[0].Post).ToList();
+                List<Deportament> deportaments = context.Deportaments.Where(x => x.Id == posts[0].DeportamentId).ToList();
+                userCurrent = selectUser.FirstOrDefault();
+                deportamentCurrent = deportaments.FirstOrDefault();
+                postCurrent = posts.FirstOrDefault();
+                if (userCurrent != null)
+                {
+                  
+                    checkData = true;
+                }
+                else
+                {
+                   checkData = false;
+                }
+            }
+            catch
+            {
+                checkData= false;
+            }
+            return checkData;
         }
 
     }

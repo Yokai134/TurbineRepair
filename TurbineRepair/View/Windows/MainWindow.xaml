@@ -13,7 +13,7 @@
         WindowStartupLocation="CenterScreen"
         AllowsTransparency="True"
         Background="#36393F" 
-        Icon="/ResourceApp/Image/hydro.png">
+        Icon="/ResourceApp/Image/logo.png">
 
     <Window.DataContext>
         <viewModel:MainWindowViewModel/>

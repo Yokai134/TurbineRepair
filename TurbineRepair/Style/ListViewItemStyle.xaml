@@ -33,7 +33,7 @@
                                        Foreground="Gray"
                                        FontWeight="SemiBold"/>
                                 <StackPanel Orientation="Horizontal">
-                                    <Label Content="Исполнитель: "
+                                    <Label Content="Главные ответсвенный: "
                                            FontSize="20"
                                            Foreground="Gray"
                                            FontWeight="SemiBold"/>
@@ -46,6 +46,24 @@
                                            Foreground="Gray"
                                            FontWeight="SemiBold"/>
                                     <Label Content="{Binding ProjectExecutorNavigation.Patronomyc}"
+                                           FontSize="20"
+                                           Foreground="Gray"
+                                           FontWeight="SemiBold"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="Ответсвенный: "
+                                           FontSize="20"
+                                           Foreground="Gray"
+                                           FontWeight="SemiBold"/>
+                                    <Label Content="{Binding ProjectSecondExecutorNavigation.Surname}"
+                                           FontSize="20"
+                                           Foreground="Gray"
+                                           FontWeight="SemiBold"/>
+                                    <Label Content="{Binding ProjectSecondExecutorNavigation.Name}"
+                                           FontSize="20"
+                                           Foreground="Gray"
+                                           FontWeight="SemiBold"/>
+                                    <Label Content="{Binding ProjectSecondExecutorNavigation.Patronomyc}"
                                            FontSize="20"
                                            Foreground="Gray"
                                            FontWeight="SemiBold"/>

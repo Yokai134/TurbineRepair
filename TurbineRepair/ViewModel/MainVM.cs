@@ -132,6 +132,7 @@ namespace TurbineRepair.ViewModel
             switch (result)
             {
                 case MessageBoxResult.OK:
+                    Application.Current.MainWindow.SizeToContent = SizeToContent.WidthAndHeight;
                     MainWindowViewModel.main.CurrentControl = new AutheticationVM();
                     break;
                 case MessageBoxResult.Cancel:
