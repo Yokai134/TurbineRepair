@@ -29,19 +29,28 @@ namespace TurbineRepair.ViewModel
 
         public void OnSearchUserProjectExecute(object parametr)
         {
-            try {
 
+            if (MainWindowViewModel.main.CurrentUser.Role != 1)
+            {
+                if (SelectUser != null)
+                {
+                    ProjectItem = Projects.Where(x => x.ProjectName.StartsWith(SelectUser)).ToList();
+                }
+                else ProjectItem = Projects;
+            }
+            else
+            {
                 if (SelectUser != null)
                 {
                     ProjectItem = Projects.Where(x => x.ProjectExecutorNavigation.Surname.StartsWith(SelectUser)).ToList();
                 }
-                else if(SelectUser == "")ProjectItem = Projects;
+                else
+                {
+                    ProjectItem = Projects;
+                }
+            
             }
-            catch
-            {
-                MessageBox.Show("Исполнитель не найден", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Question);
-            }
-
+                                 
 
         }
         #endregion

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 
 namespace TurbineRepair;
 
@@ -28,6 +29,14 @@ public partial class UserDatum
     public bool? DeleteUser { get; set; }
 
     public bool? IsOnline { get; set; }
+
+    public string? Town { get; set; }
+
+    public string? Street { get; set; }
+
+    public string? Builder { get; set; }
+
+    public string? UserEmail { get; set; }
 
     public virtual ICollection<MessageList> MessageListMessageReceiptNavigations { get; set; } = new List<MessageList>();
 

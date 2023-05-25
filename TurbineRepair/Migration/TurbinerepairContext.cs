@@ -352,6 +352,10 @@ public partial class TurbinerepairContext : DbContext
             entity.Property(e => e.Patronomyc).HasMaxLength(32);
             entity.Property(e => e.Phone).HasMaxLength(12);
             entity.Property(e => e.Surname).HasMaxLength(32);
+            entity.Property(e => e.Town);
+            entity.Property(e => e.Street);
+            entity.Property(e => e.Builder);
+            entity.Property(e => e.UserEmail);
 
             entity.HasOne(d => d.PostNavigation).WithMany(p => p.UserData)
                 .HasForeignKey(d => d.Post)

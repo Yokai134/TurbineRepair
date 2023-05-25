@@ -23,6 +23,8 @@ namespace TurbineRepair.ViewModel
         private string phonePattern = "^(\\(?\\+?[0-9]*\\)?)?[0-9_\\- \\(\\)]*$";
         private string loginPatttern = "^(?=[a-zA-Z0-9._]{8,32}$)(?!.*[_.]{2})[^_.].*[^_.]$";
         private string passPattern = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,16}$";
+        private string numPattern = "^[0-9]+$";
+        private string emailPatter = "[A-Za-z0-9_]+@[a-z]+\\.[a-z]{2,3}";
 
         #region Prop
 
@@ -75,6 +77,12 @@ namespace TurbineRepair.ViewModel
         #endregion
 
         #region BoolValidate
+
+        private bool _checkUserTown;
+        private bool _checkUserStreet;
+        private bool _checkUserBuilder;
+        private bool _checkUserEmail;
+
         private bool _checkSurname = false;
         public bool CheckSurname
         {
@@ -136,6 +144,49 @@ namespace TurbineRepair.ViewModel
 
         #region UserField
 
+        private string _userEmail;
+        public string UserEmail
+        {
+            get => _userEmail;
+            set
+            {
+                Set(ref _userEmail, value);
+                ValidateEmail();
+            }
+        }
+
+        private string _userTown;
+        public string UserTown
+        {
+            get => _userTown;
+            set
+            {
+                Set(ref _userTown, value);
+                ValidateTown();
+            }
+        }
+
+        private string _userStreet;
+        public string UserStreet
+        {
+            get => _userStreet;
+            set
+            {
+                Set(ref _userStreet, value);
+                ValidateStreet();
+            }
+        }
+
+        private string _userBuild;
+        public string UserBuild
+        {
+            get => _userBuild;
+            set
+            {
+                Set(ref _userBuild, value);
+                ValidateBuilder();
+            }
+        }
 
         private string _surname;
         public string Surname
@@ -251,18 +302,25 @@ namespace TurbineRepair.ViewModel
 
         private async void OnAddUserExecute(object parametr)
         {
+            #region Valid
+            ValidateName();
+            ValidateSurname();
+            ValidatePatronomyc();
+            ValidateImage();
+            ValidatePost();
+            ValidateRole();
+            ValidationPhone();
+            ValidationLogin();
+            ValidationPassword();
+            ValidateTown();
+            ValidateStreet();
+            ValidateBuilder();
+            ValidateEmail();
+            #endregion
             if (MainWindowViewModel.main.UpdateUser != null)
             {
-                ValidateName();
-                ValidateSurname();
-                ValidatePatronomyc();
-                ValidateImage();
-                ValidatePost();
-                ValidateRole();
-                ValidationPhone();
-                ValidationLogin();
-                ValidationPassword();
-                if(CheckName && CheckSurname && CheckPatronomyc && CheckRole && CheckPost && CheckPhone && CheckLogin && CheckPassword && CheckImage)
+                
+                if(CheckName && CheckSurname && CheckPatronomyc && CheckRole && CheckPost && CheckPhone && CheckLogin && CheckPassword && CheckImage && _checkUserTown && _checkUserStreet && _checkUserBuilder && _checkUserEmail)
                 {
                     UserDatum updUserDatum = MainWindowViewModel.main.UpdateUser;
                     updUserDatum.Name = Name;
@@ -272,8 +330,12 @@ namespace TurbineRepair.ViewModel
                     updUserDatum.Post = SelectPost.Id;
                     updUserDatum.Phone = Phone;
                     updUserDatum.Login = Login;
+                    updUserDatum.Town = UserTown;
+                    updUserDatum.Street = UserStreet;
+                    updUserDatum.Builder = UserBuild;
                     updUserDatum.Password = Password;
                     updUserDatum.Image = ImagePath;
+                    updUserDatum.UserEmail = UserEmail;
                     MainWindowViewModel.context.SaveChanges();
                     await MainWindowViewModel.main.UpdateData();
                     FailedAddOrUpdateContent = "Данные обновлены";
@@ -293,16 +355,7 @@ namespace TurbineRepair.ViewModel
             }
             else
             {
-                ValidateName();
-                ValidateSurname();
-                ValidatePatronomyc();
-                ValidateImage();
-                ValidatePost();
-                ValidateRole();
-                ValidationPhone();
-                ValidationLogin();
-                ValidationPassword();
-                if (CheckName && CheckSurname && CheckPatronomyc && CheckRole && CheckPost && CheckPhone && CheckLogin && CheckPassword && CheckImage)
+                if (CheckName && CheckSurname && CheckPatronomyc && CheckRole && CheckPost && CheckPhone && CheckLogin && CheckPassword && CheckImage && _checkUserTown && _checkUserStreet && _checkUserBuilder && _checkUserEmail)
                 {
                     UserDatum newUserDatum = new UserDatum();
                     newUserDatum.Name = Name;
@@ -312,10 +365,14 @@ namespace TurbineRepair.ViewModel
                     newUserDatum.Post = SelectPost.Id;
                     newUserDatum.Phone = Phone;
                     newUserDatum.Login = Login;
+                    newUserDatum.Town = UserTown;
+                    newUserDatum.Street = UserStreet;
+                    newUserDatum.Builder = UserBuild;
                     newUserDatum.Password = Password;
                     newUserDatum.Image = ImagePath;
                     newUserDatum.IsOnline = false;
                     newUserDatum.DeleteUser = false;
+                    newUserDatum.UserEmail = UserEmail;
                     MainWindowViewModel.context.UserData.Add(newUserDatum);
                     MainWindowViewModel.context.SaveChanges();
                     await MainWindowViewModel.main.UpdateData();
@@ -374,6 +431,10 @@ namespace TurbineRepair.ViewModel
                 SelectPost = MainWindowViewModel.main.UpdateUser.PostNavigation;
                 Phone = MainWindowViewModel.main.UpdateUser.Phone;
                 Login = MainWindowViewModel.main.UpdateUser.Login;
+                UserTown = MainWindowViewModel.main.UpdateUser.Town;
+                UserStreet = MainWindowViewModel.main.UpdateUser.Street;
+                UserBuild = MainWindowViewModel.main.UpdateUser.Builder;
+                UserEmail = MainWindowViewModel.main.UpdateUser.UserEmail;
                 Password = MainWindowViewModel.main.UpdateUser.Password;
                 ImagePath = MainWindowViewModel.main.UpdateUser.Image;
                 ContentButton = "Изменить";
@@ -399,6 +460,75 @@ namespace TurbineRepair.ViewModel
         public IEnumerable GetErrors(string? propertyName)
         {
             return _errorsByPropertyName.ContainsKey(propertyName) ? _errorsByPropertyName[propertyName] : null;
+        }
+
+
+        private void ValidateEmail()
+        {
+            ClearErrors(nameof(UserEmail));
+            if (string.IsNullOrWhiteSpace(UserEmail) || !Regex.IsMatch(UserEmail, emailPatter, RegexOptions.IgnoreCase))
+            {
+                ClearErrors(nameof(UserEmail));
+                AddError(nameof(UserEmail), "*Поле не может быть пустым, или в поле не допустимые смволы.");
+                _checkUserEmail = false;
+            }
+            else
+            {
+
+                _checkUserEmail = true;
+            }
+
+        }
+
+        private void ValidateTown()
+        {
+            ClearErrors(nameof(UserTown));
+            if (string.IsNullOrWhiteSpace(UserTown) || !Regex.IsMatch(UserTown, patternRegex, RegexOptions.IgnoreCase))
+            {
+                ClearErrors(nameof(UserTown));
+                AddError(nameof(UserTown), "*Поле не может быть пустым, или в поле не допустимые смволы.");
+                _checkUserTown = false;
+            }
+            else
+            {
+
+                _checkUserTown = true;
+            }
+
+        }
+
+        private void ValidateStreet()
+        {
+            ClearErrors(nameof(UserStreet));
+            if (string.IsNullOrWhiteSpace(UserStreet) || !Regex.IsMatch(UserStreet, patternRegex, RegexOptions.IgnoreCase))
+            {
+                ClearErrors(nameof(UserStreet));
+                AddError(nameof(UserStreet), "*Поле не может быть пустым, или в поле не допустимые смволы.");
+                _checkUserStreet = false;
+
+            }
+            else
+            {
+
+                _checkUserStreet = true;
+            }
+
+        }
+        private void ValidateBuilder()
+        {
+            ClearErrors(nameof(UserBuild));
+            if (string.IsNullOrWhiteSpace(UserBuild) || !Regex.IsMatch(UserBuild, numPattern, RegexOptions.IgnoreCase))
+            {
+                ClearErrors(nameof(UserBuild));
+                AddError(nameof(UserBuild), "*Поле не может быть пустым, или в поле не допустимые смволы.");
+                _checkUserBuilder = false;
+
+            }
+            else
+            {
+                _checkUserBuilder = true;
+            }
+
         }
 
 
@@ -584,6 +714,7 @@ namespace TurbineRepair.ViewModel
         {
             ForegroundFailedMessage = 0;
             FailedAddOrUpdateContent = "";
+            ClearErrors(nameof(UserEmail));
             ClearErrors(nameof(Surname));
             ClearErrors(nameof(Name));
             ClearErrors(nameof(Patronomyc));
@@ -592,6 +723,9 @@ namespace TurbineRepair.ViewModel
             ClearErrors(nameof(Phone));
             ClearErrors(nameof(Login));
             ClearErrors(nameof(Password));
+            ClearErrors(nameof(UserBuild));
+            ClearErrors(nameof(UserStreet));
+            ClearErrors(nameof(UserTown));
             timer.Stop();
         }
         private void RefreshContent(object e, object sender)
@@ -604,9 +738,17 @@ namespace TurbineRepair.ViewModel
             CheckRole = false;
             CheckLogin = false;
             CheckPassword = false;
+            _checkUserBuilder = false;
+            _checkUserStreet = false;
+            _checkUserTown = false;
+            _checkUserEmail = false;
             Surname = "";
             Name = "";
             Patronomyc = "";
+            UserTown = string.Empty;
+            UserStreet = string.Empty;
+            UserBuild = string.Empty;
+            UserEmail = string.Empty;
             SelectRole = null;
             SelectPost = null;
             Phone = "";

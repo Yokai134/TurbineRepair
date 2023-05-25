@@ -12,7 +12,7 @@
         <viewModel:MyProfileVM/>
     </UserControl.DataContext>
 
-        <Grid>
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="*"/>
@@ -33,24 +33,22 @@
                 </Image.Clip>
             </Image>
         </StackPanel>
+        <ScrollViewer Grid.Column="1"
+                      Grid.RowSpan="2"
+                      Margin="10">
+            <StackPanel Grid.Column="1"
+                    Grid.RowSpan="2">
 
-        <StackPanel Grid.Column="1">
-
-        </StackPanel>
-
-        <StackPanel Grid.Column="1"
-                    Grid.Row="1">
-
-            <Grid Margin="10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="115"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Label Content="Фамилия"
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="115"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Фамилия"
                        FontSize="20"
                        Foreground="Gray"
                        FontWeight="SemiBold"/>
-                <TextBox Grid.Column="1"
+                    <TextBox Grid.Column="1"
                          Margin="10,0,0,10"
                          FontSize="20"
                          IsReadOnly="True"
@@ -58,18 +56,18 @@
                          FontWeight="SemiBold"
                          Text="{Binding UserDatum.Surname,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                          Style="{DynamicResource ProfileTextBox}"/>
-            </Grid>
+                </Grid>
 
-            <Grid Margin="10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="115"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Label Content="Имя"
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="115"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Имя"
                        FontSize="20"
                        Foreground="Gray"
                        FontWeight="SemiBold"/>
-                <TextBox Grid.Column="1"
+                    <TextBox Grid.Column="1"
                          IsReadOnly="True"
                          Margin="10,0,0,10"
                          FontSize="20"
@@ -77,18 +75,18 @@
                          FontWeight="SemiBold"
                          Text="{Binding UserDatum.Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                          Style="{DynamicResource ProfileTextBox}"/>
-            </Grid>
+                </Grid>
 
-            <Grid Margin="10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="115"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Label Content="Отчество"
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="115"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Отчество"
                        FontSize="20"
                        Foreground="Gray"
                        FontWeight="SemiBold"/>
-                <TextBox Grid.Column="1"
+                    <TextBox Grid.Column="1"
                          IsReadOnly="True"
                          Margin="10,0,0,10"
                          FontSize="20"
@@ -96,22 +94,22 @@
                          FontWeight="SemiBold"
                          Text="{Binding UserDatum.Patronomyc,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                          Style="{DynamicResource ProfileTextBox}"/>
-            </Grid>
+                </Grid>
 
-            <Border BorderBrush="Gray"
+                <Border BorderBrush="Gray"
                     BorderThickness="1"
                     Margin="10,0"/>
 
-            <Grid Margin="10,20,10,10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="115"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Label Content="Отдел"
+                <Grid Margin="10,20,10,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="115"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Отдел"
                        FontSize="20"
                        Foreground="Gray"
                        FontWeight="SemiBold"/>
-                <TextBox Grid.Column="1"
+                    <TextBox Grid.Column="1"
                          IsReadOnly="True"
                          Margin="10,0,0,10"
                          FontSize="20"
@@ -119,18 +117,18 @@
                          FontWeight="SemiBold"
                          Text="{Binding UserDatum.PostNavigation.Deportament.DeportamentName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                          Style="{DynamicResource ProfileTextBox}"/>
-            </Grid>
+                </Grid>
 
-            <Grid Margin="10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="115"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Label Content="Должность"
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="115"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Должность"
                        FontSize="20"
                        Foreground="Gray"
                        FontWeight="SemiBold"/>
-                <TextBox Grid.Column="1"
+                    <TextBox Grid.Column="1"
                          IsReadOnly="True"
                          Margin="10,0,0,10"
                          FontSize="20"
@@ -138,22 +136,22 @@
                          FontWeight="SemiBold"
                          Text="{Binding UserDatum.PostNavigation.PostName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                          Style="{DynamicResource ProfileTextBox}"/>
-            </Grid>
-            
-            <Border BorderBrush="Gray"
+                </Grid>
+
+                <Border BorderBrush="Gray"
                     BorderThickness="1"
                     Margin="10,0"/>
 
-            <Grid Margin="10,20">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="115"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Label Content="Номер"
+                <Grid Margin="10,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="115"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Номер"
                        FontSize="20"
                        Foreground="Gray"
                        FontWeight="SemiBold"/>
-                <TextBox Grid.Column="1"
+                    <TextBox Grid.Column="1"
                          IsReadOnly="True"
                          Margin="10,0,0,10"
                          FontSize="20"
@@ -161,9 +159,90 @@
                          FontWeight="SemiBold"
                          Text="{Binding UserDatum.Phone,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                          Style="{DynamicResource ProfileTextBox}"/>
-            </Grid>
+                </Grid>
 
-        </StackPanel>
+                <Grid Margin="10,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="115"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Почта"
+                       FontSize="20"
+                       Foreground="Gray"
+                       FontWeight="SemiBold"/>
+                    <TextBox Grid.Column="1"
+                         IsReadOnly="True"
+                         Margin="10,0,0,10"
+                         FontSize="20"
+                         HorizontalContentAlignment="Center"
+                         FontWeight="SemiBold"
+                         Text="{Binding UserDatum.UserEmail,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                         Style="{DynamicResource ProfileTextBox}"/>
+                </Grid>
+                <Border BorderBrush="Gray"
+                    BorderThickness="1"
+                    Margin="10,0"/>
+
+                <Grid Margin="10,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="115"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Город"
+                       FontSize="20"
+                       Foreground="Gray"
+                       FontWeight="SemiBold"/>
+                    <TextBox Grid.Column="1"
+                         IsReadOnly="True"
+                         Margin="10,0,0,10"
+                         FontSize="20"
+                         HorizontalContentAlignment="Center"
+                         FontWeight="SemiBold"
+                         Text="{Binding UserDatum.Town,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                         Style="{DynamicResource ProfileTextBox}"/>
+                </Grid>
+                <Grid Margin="10,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="115"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Улица"
+                       FontSize="20"
+                       Foreground="Gray"
+                       FontWeight="SemiBold"/>
+                    <TextBox Grid.Column="1"
+                         IsReadOnly="True"
+                         Margin="10,0,0,10"
+                         FontSize="20"
+                         HorizontalContentAlignment="Center"
+                         FontWeight="SemiBold"
+                         Text="{Binding UserDatum.Street,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                         Style="{DynamicResource ProfileTextBox}"/>
+                </Grid>
+
+                <Grid Margin="10,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="115"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Дом"
+                       FontSize="20"
+                       Foreground="Gray"
+                       FontWeight="SemiBold"/>
+                    <TextBox Grid.Column="1"
+                             IsReadOnly="True"
+                             Margin="10,0,0,10"
+                             FontSize="20"
+                             HorizontalContentAlignment="Center"
+                             FontWeight="SemiBold"
+                             Text="{Binding UserDatum.Builder,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                             Style="{DynamicResource ProfileTextBox}"/>
+                </Grid>
+
+
+            </StackPanel>
+        </ScrollViewer>
+        
 
     </Grid>
 </UserControl>

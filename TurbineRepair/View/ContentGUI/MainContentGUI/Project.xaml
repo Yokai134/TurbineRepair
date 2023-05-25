@@ -18,18 +18,7 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition>
-                <RowDefinition.Style>
-                    <Style TargetType="RowDefinition">
-                        <Setter Property="Height" Value="70"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ElementName=VisibleElement, Path=IsChecked}" Value="false">
-                                <Setter Property="Height" Value="0"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </RowDefinition.Style>
-            </RowDefinition>
+            <RowDefinition Height="70"/>
             <RowDefinition/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>

@@ -24,6 +24,40 @@
         </Grid.RowDefinitions>
         <ScrollViewer Margin="10">
             <StackPanel Margin="10">
+                <Label Content="Наименование"
+                       Foreground="Gray"
+                       FontSize="20"
+                       Margin="0,10,0,0"
+                       FontWeight="SemiBold"/>
+                <TextBox Style="{StaticResource AutheticationTextBox}"
+                         Height="50"
+                         Text="{Binding ProjectName, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,ValidatesOnNotifyDataErrors=True}"
+                         Padding="20,13,0,0"
+                         TextWrapping="Wrap"
+                         Margin="0,0,0,20"
+                         FontSize="20">
+                    <Validation.ErrorTemplate>
+                        <ControlTemplate>
+                            <StackPanel>
+                                <AdornedElementPlaceholder x:Name="textBox"/>
+                                <ItemsControl ItemsSource="{Binding}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Margin="0,-50,0,0">
+                                                <Border CornerRadius="15" 
+                                                        BorderBrush="Red" 
+                                                        BorderThickness="1"
+                                                        Height="50"/>
+                                                <TextBlock Text="{Binding ErrorContent}" Foreground="Red"
+                                                           Margin="20,5,0,0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </ControlTemplate>
+                    </Validation.ErrorTemplate>
+                </TextBox>
                 <Label Content="Главный ответственный"
                        Foreground="Gray"
                        FontSize="20"

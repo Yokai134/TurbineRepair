@@ -962,40 +962,67 @@
                                 </Image>
 
                             </StackPanel>
-                            <StackPanel VerticalAlignment="Center">
-                                <Label Content="{Binding Surname}"
-                                       Margin="10"
-                                       Foreground="Gray"
-                                       FontSize="20"
-                                       FontWeight="SemiBold"/>
-                                <Label Content="{Binding Name}"
-                                       Margin="10"
-                                       Foreground="Gray"
-                                       FontSize="20"
-                                       FontWeight="SemiBold"/>
-                                <Label Content="{Binding Patronomyc}"
-                                       Margin="10"
-                                       Foreground="Gray"
-                                       FontSize="20"
-                                       FontWeight="SemiBold"/>
-                            </StackPanel>
+                            <StackPanel VerticalAlignment="Center"
+                                        Margin="10,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="ФИО: "
+                                           Margin="0,10,0,0"
+                                           Foreground="Gray"
+                                           FontSize="20"
+                                           FontWeight="SemiBold"/>
+                                    <Label Content="{Binding Surname}"
+                                           Margin="0,10,0,0"
+                                           Foreground="Gray"
+                                           FontSize="20"
+                                           FontWeight="SemiBold"/>
+                                    <Label Content="{Binding Name}"
+                                           Margin="0,10,0,0"
+                                           Foreground="Gray"
+                                           FontSize="20"
+                                           FontWeight="SemiBold"/>
+                                    <Label Content="{Binding Patronomyc}"
+                                           Margin="0,10,0,0"
+                                           Foreground="Gray"
+                                           FontSize="20"
+                                           FontWeight="SemiBold"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="Номер: "
+                                           Margin="0,10,0,0"
+                                           Foreground="Gray"
+                                           FontSize="20"
+                                           FontWeight="SemiBold"/>
+                                    <Label Content="{Binding Phone}"
+                                           Margin="0,10,0,0"
+                                           Foreground="Gray"
+                                           FontSize="20"
+                                           FontWeight="SemiBold"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="Должность: "
+                                           Margin="0,10,0,0"
+                                           Foreground="Gray"
+                                           FontSize="20"
+                                           FontWeight="SemiBold"/>
+                                    <Label Content="{Binding PostNavigation.PostName}"
+                                           Margin="0,10,0,0"
+                                           Foreground="Gray"
+                                           FontSize="20"
+                                           FontWeight="SemiBold"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="Почта: "
+                                           Margin="0,10,0,0"
+                                           Foreground="Gray"
+                                           FontSize="20"
+                                           FontWeight="SemiBold"/>
+                                    <Label Content="{Binding UserEmail}"
+                                           Margin="0,10,0,0"
+                                           Foreground="Gray"
+                                           FontSize="20"
+                                           FontWeight="SemiBold"/>
+                                </StackPanel>
 
-                            <StackPanel VerticalAlignment="Center">
-                                <Label Content="{Binding PostNavigation.PostName}"
-                                       Margin="10"
-                                       Foreground="Gray"
-                                       FontSize="20"
-                                       FontWeight="SemiBold"/>
-                                <Label Content="{Binding PostNavigation.Deportament.DeportamentName}"
-                                       Margin="10"
-                                       Foreground="Gray"
-                                       FontSize="20"
-                                       FontWeight="SemiBold"/>
-                                <Label Content="{Binding Phone}"
-                                       Margin="10"
-                                       Foreground="Gray"
-                                       FontSize="20"
-                                       FontWeight="SemiBold"/>
                             </StackPanel>
                         </StackPanel>
 

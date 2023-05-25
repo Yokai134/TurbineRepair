@@ -23,6 +23,17 @@ namespace TurbineRepair.ViewModel
 
         #region Property
 
+        private string _projectName;
+        public string ProjectName
+        {
+            get => _projectName;
+            set
+            {
+                Set(ref _projectName, value);
+                ValidateProjectName();
+            }
+        }
+
         private List<UserDatum> _firstExecutor;
         public List<UserDatum> FirstExercutor
         {
@@ -160,6 +171,9 @@ namespace TurbineRepair.ViewModel
         #endregion
 
         #region BoolValidation
+
+        private bool _checkProjectName;
+
         private bool _checkFirstExecutor;
         public bool CheckFirstExecutor
         {
@@ -233,22 +247,24 @@ namespace TurbineRepair.ViewModel
         private bool CanCreateOrUpdateProjectExecute(object parametr) => true;
         private async void OnCreateOrUpdateProjectExecute(object parametr)
         {
+            #region ValidationPreUpdate
+            ValidateFirstExecutor();
+            ValidateSecondExecutor();
+            ValidateCustomer();
+            ValidateCount();
+            ValidateDateStart();
+            ValidateDateEnd();
+            ValidateStatus();
+            ValidateTurbine();
+            ValidateProjectName();
+            #endregion
             if (MainWindowViewModel.main.UpdProject != null)
             {
-                #region ValidationPreUpdate
-                ValidateFirstExecutor();
-                ValidateSecondExecutor();
-                ValidateCustomer();
-                ValidateCount();
-                ValidateDateStart();
-                ValidateDateEnd();
-                ValidateStatus();
-                ValidateTurbine();
-                #endregion
-                if (CheckFirstExecutor && CheckSecondExecutor && CheckDateStart && CheckDateEnd && CheckCount && CheckStatus && CheckCustomer && CheckTurbine)
+                
+                if (CheckFirstExecutor && CheckSecondExecutor && CheckDateStart && CheckDateEnd && CheckCount && CheckStatus && CheckCustomer && CheckTurbine && _checkProjectName)
                 {
                     ProjectDatum updProject = MainWindowViewModel.main.UpdProject;
-                    updProject.ProjectName = "Заказ на изготовление турбины " + SelectTurbine.TurbineName;
+                    updProject.ProjectName = ProjectName;
                     updProject.ProjectExecutor = SelectFirstExecutor.Id;
                     updProject.ProjectSecondExecutor = SelectSecondExecutor.Id;
                     updProject.ProjectCustomer = SelectCustomer.Id;
@@ -276,21 +292,12 @@ namespace TurbineRepair.ViewModel
             }
             else
             {
-                #region ValidationPreCreate
-                ValidateFirstExecutor();
-                ValidateSecondExecutor();
-                ValidateCustomer();
-                ValidateCount();
-                ValidateDateStart();
-                ValidateDateEnd();
-                ValidateStatus();
-                ValidateTurbine();
-                #endregion
-                if (CheckFirstExecutor && CheckSecondExecutor && CheckDateStart && CheckDateEnd && CheckCount && CheckStatus && CheckCustomer && CheckTurbine)
+             
+                if (CheckFirstExecutor && CheckSecondExecutor && CheckDateStart && CheckDateEnd && CheckCount && CheckStatus && CheckCustomer && CheckTurbine && _checkProjectName)
                 {
                     ProjectDatum newProject = new ProjectDatum()
                     {
-                        ProjectName = "Заказ на изготовление турбины " + SelectTurbine.TurbineName,
+                        ProjectName = ProjectName,
                         ProjectExecutor = SelectFirstExecutor.Id,
                         ProjectSecondExecutor = SelectSecondExecutor.Id,
                         ProjectCustomer = SelectCustomer.Id,
@@ -352,6 +359,7 @@ namespace TurbineRepair.ViewModel
                 {
                     FirstExercutor = MainWindowViewModel.main.UsersAll.Where(x => x.Role == 2 && x.DeleteUser == false).ToList();
                 }
+                ProjectName = MainWindowViewModel.main.UpdProject.ProjectName;
                 StatusProjects = MainWindowViewModel.main.StatusesAll.ToList();
                 SelectFirstExecutor = MainWindowViewModel.main.UsersAll.Where(x => x.Id == MainWindowViewModel.main.UpdProject.ProjectExecutorNavigation.Id).FirstOrDefault();
                 SelectSecondExecutor = MainWindowViewModel.main.UsersAll.Where(x => x.Id == MainWindowViewModel.main.UpdProject.ProjectSecondExecutorNavigation.Id).FirstOrDefault();
@@ -394,6 +402,17 @@ namespace TurbineRepair.ViewModel
             return _errorsByPropertyName.ContainsKey(propertyName) ? _errorsByPropertyName[propertyName] : null;
         }
 
+        private void ValidateProjectName()
+        {
+            ClearErrors(nameof(ProjectName));
+            if (string.IsNullOrEmpty(ProjectName))
+            {
+                ClearErrors(nameof(ProjectName));
+                AddError(nameof(ProjectName), "*Поле не может быть пустым.");
+                _checkProjectName = false;
+            }
+            else _checkProjectName = true;
+        }
 
         private void ValidateFirstExecutor()
         {
