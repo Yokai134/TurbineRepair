@@ -1,4 +1,4 @@
-<UserControl x:Class="TurbineRepair.View.ContentGUI.Authetication"
+﻿<UserControl x:Class="TurbineRepair.View.ContentGUI.Authetication"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -28,7 +28,7 @@
                 </Image>
             </StackPanel>
             <StackPanel HorizontalAlignment="Center">
-                <Label Content="Login"
+                <Label Content="Логин"
                        FontSize="20"
                        Foreground="Gray"
                        FontWeight="SemiBold"
@@ -42,39 +42,31 @@
                          MaxLength="32"
                          Text="{Binding LoginApp, UpdateSourceTrigger=PropertyChanged}"/>
 
-                <Label Content="Password"
+                <Label Content="Пароль"
                        FontSize="20"
                        Foreground="Gray"
                        FontWeight="SemiBold"
                        Margin="10,0,0,0"/>
-                <component:BindablePasswordBox
-                    Height="50"
-                    Password="{Binding PasswordApp, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <component:BindablePasswordBox Height="50"
+                                               Password="{Binding PasswordApp, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 <TextBlock Text="{Binding ErrorMessage}"
                        Margin="10,10"
                        Foreground="Red"
                        Visibility="Visible"/>
-                <StackPanel Margin="20,10"
-                            Orientation="Horizontal">
-                    <CheckBox x:Name="rememberData"/>
-                    <Label Content="Remember me"
-                           FontSize="15"
-                           Foreground="Gray"
-                           Margin="0,-6"/>
-                </StackPanel>
+
             </StackPanel>
             <StackPanel Width="350" 
                         Margin="0,60"
                         Orientation="Horizontal">
                 <Button Style="{DynamicResource ButtonAuthetication}" 
-                        Content="Exit"
+                        Content="Выход"
                         Width="150"
                         Height="50"
                         FontSize="20"
                         FontWeight="SemiBold"
                         Command="{Binding CloseAppCommand}"/>
                 <Button Style="{DynamicResource ButtonAuthetication}" 
-                        Content="Login"
+                        Content="Вход"
                         Width="150"
                         Height="50"
                         FontSize="20"
