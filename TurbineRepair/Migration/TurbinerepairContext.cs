@@ -53,7 +53,7 @@ public partial class TurbinerepairContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Host=dpg-cgo56qd269v5rja2d8c0-a.frankfurt-postgres.render.com;Port=5432;Database=turbinerepair;Username=admin;Password=GZ22rodq238OjsYamXMtoFQpWEh8mQ98");
+        => optionsBuilder.UseNpgsql("Host=dpg-cgo56qd269v5rja2d8c0-a.frankfurt-postgres.render.com;Port=5432;Database=Test;Username=admin;Password=GZ22rodq238OjsYamXMtoFQpWEh8mQ98");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

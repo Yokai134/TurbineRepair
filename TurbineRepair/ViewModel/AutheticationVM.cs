@@ -50,7 +50,7 @@ namespace TurbineRepair.ViewModel
                 MainWindowViewModel.main.Posts = postCurrent;
                 MainWindowViewModel.main.Deport = deportamentCurrent;
                 MainWindowViewModel.main.CurrentControl = new MainVM();
-                Application.Current.MainWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                Application.Current.MainWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
                 Application.Current.MainWindow.SizeToContent = SizeToContent.Manual;
                 Application.Current.MainWindow.Width = 1280;
                 Application.Current.MainWindow.Height = 750;

@@ -48,9 +48,14 @@ namespace TurbineRepair.ViewModel
             if (Application.Current.MainWindow.WindowState != WindowState.Maximized)
             {
                 Application.Current.MainWindow.WindowState = WindowState.Maximized;
+                SizeContent = true;
             }
             else
+            {
                 Application.Current.MainWindow.WindowState = WindowState.Normal;
+                SizeContent = false;
+            }
+                
         }
 
         #endregion
@@ -213,6 +218,13 @@ namespace TurbineRepair.ViewModel
 
         #region Prop
         /* ------------------------------------------ Property --------------------------------------------------*/
+
+        private bool _sizeContent;
+        public bool SizeContent
+        {
+            get => _sizeContent;
+            set => Set(ref _sizeContent, value);
+        }
 
         #region MainCurrentControl
 

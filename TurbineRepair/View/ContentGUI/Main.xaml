@@ -16,6 +16,18 @@
     </UserControl.DataContext>
 
     <Grid>
+        <Grid.Style>
+            <Style TargetType="{x:Type Grid}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding ElementName=SizeControl, Path=IsChecked}" Value="false">
+                        <Setter Property="Margin" Value="0"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding ElementName=SizeControl, Path=IsChecked}" Value="true">
+                        <Setter Property="Margin" Value="5"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Style>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -52,7 +64,7 @@
                            Height="25"
                            Source="/ResourceApp/Image/logo.png"/>
 
-                    <Label Content="Turbine repair"
+                    <Label Content="TurbineRepair"
                            FontWeight="SemiBold"
                            Foreground="Gray"/>
 
@@ -351,6 +363,7 @@
                     </StackPanel>
                     <StackPanel HorizontalAlignment="Stretch"
                                 Orientation="Horizontal">
+                       
                         <ToggleButton x:Name="ScaleChange"
                                       Width="25"
                                       Height="25"
@@ -378,6 +391,9 @@
                             </ToggleButton.Template>
 
                         </ToggleButton>
+                        <CheckBox IsChecked="{Binding SizeContent, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                  x:Name="SizeControl"
+                                  Height="0"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>

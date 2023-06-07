@@ -4,7 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:viewModel="clr-namespace:TurbineRepair.ViewModel"
-             xmlns:local="clr-namespace:TurbineRepair.View.ContentGUI.MainContentGUI"         
+             xmlns:local="clr-namespace:TurbineRepair.View.ContentGUI.MainContentGUI"   
+             xmlns:fa6="http://schemas.fontawesome.com/icons/svg"
+             xmlns:fa6p="http://schemas.fontawesome.com/icons/svg/properties"
              mc:Ignorable="d" 
              d:DesignHeight="520" d:DesignWidth="700">
     
@@ -21,6 +23,32 @@
             <RowDefinition Height="150"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition>
+                    <RowDefinition.Style>
+                        <Style TargetType="{x:Type RowDefinition}">
+                            <Setter Property="Height" Value="0"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=VisibleButton, Path=IsChecked}" Value="true">
+                                    <Setter Property="Height" Value="50"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </RowDefinition.Style>
+                </RowDefinition>
+            </Grid.RowDefinitions>
+            <CheckBox IsChecked="{Binding CheckEmployee}"
+                      x:Name="VisibleButton"
+                      Height="0"/>
+            <Button fa6p:FontAwesome.Icon="Solid_DeleteLeft"
+                    fa6p:FontAwesome.PrimaryColor="LightGray"
+                    Grid.Row="1"
+                    Command="{Binding BackEmployeeList}"
+                    Style="{StaticResource ButtonMain}"
+                    Margin="40,5"/>
+        </Grid>
         <StackPanel Margin="10"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center">
