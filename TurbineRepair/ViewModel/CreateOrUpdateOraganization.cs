@@ -170,6 +170,7 @@ namespace TurbineRepair.ViewModel
                     await MainWindowViewModel.main.UpdateData();
                     FailedAddOrUpdate = "Организация добавлена";
                     ForegroundFailedMessage = 1;
+                    Thread.Sleep(1000);
                     timer.Interval = TimeSpan.FromSeconds(1);
                     timer.Tick += RefreshContent;
                     timer.Start();

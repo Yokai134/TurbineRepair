@@ -58,7 +58,7 @@ namespace TurbineRepair.ViewModel
             }
             else
             {
-                ErrorMessage = "*Не вырный логин или пароль";
+                ErrorMessage = "*Не верный логин или пароль";
             }
 
         }
